@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/10/25 16:15:59 by pnolte           ###   ########.fr       */
+/*   Updated: 2022/10/26 16:18:47 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/libft/libft.h"
+#include <minishell.h>
 
 int main()
 {
