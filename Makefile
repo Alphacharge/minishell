@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/10/26 16:22:08 by rbetz            ###   ########.fr        #
+#    Updated: 2022/10/26 16:23:07 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ MAIN_O = $(addprefix $(OBJ_D)/, $(MAIN_F:%.c=%.o))
 SHAR_O = $(addprefix $(OBJ_D)/, $(SHAR_F:%.c=%.o))
 
 INC_F = $(INC_D)/$(NAME).h
-INC_D = ./include
+INC_D = ./inc
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
