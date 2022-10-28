@@ -6,84 +6,76 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/10/26 17:34:58 by rbetz            ###   ########.fr        #
+#    Updated: 2022/10/28 15:10:31 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME	:=	minishell
 
-MAIN_F = main.c
-BUIL_F = 
-ENVI_F = 
-ERRO_F = 
-HIST_F = 
-PARS_F = 
-PIPE_F = 
-REDI_F = 
-SIGN_F = 
+###			###			COMPILER		###			###
+CC		:=	cc
+CFLAGS	:=	-Wall -Wextra -Werror
+CDFLAGS	:=	#-g -fsanitize=address
 
-SRC_D = ./src
-BUIL_D = /builtins/
-ENVI_D = /environment/
-ERRO_D = /errorhandling/
-HIST_D = /history/
-PARS_D = /parsing/
-PIPE_D = /pipes/
-REDI_D = /redirects/
-SIGN_D = /signals/
-OBJ_D = ./obj
-MAIN_O = $(addprefix $(OBJ_D)/, $(MAIN_F:%.c=%.o))
-BUIL_O = $(addprefix $(OBJ_D)/, $(BUIL_F:%.c=%.o))
-ENVI_O = $(addprefix $(OBJ_D)/, $(ENVI_F:%.c=%.o))
-ERRO_O = $(addprefix $(OBJ_D)/, $(ERRO_F:%.c=%.o))
-HIST_O = $(addprefix $(OBJ_D)/, $(HIST_F:%.c=%.o))
-PARS_O = $(addprefix $(OBJ_D)/, $(PARS_F:%.c=%.o))
-PIPE_O = $(addprefix $(OBJ_D)/, $(PIPE_F:%.c=%.o))
-REDI_O = $(addprefix $(OBJ_D)/, $(REDI_F:%.c=%.o))
-SIGN_O = $(addprefix $(OBJ_D)/, $(SIGN_F:%.c=%.o))
+###			###			LIBRARYS		###			###
+LIBFT_D	:=	./lib/libft/
+LIB		:=	-L $(LIBFT_D) -l ft
 
-INC_F = $(INC_D)/$(NAME).h
-INC_D = ./inc
-HEADER_F = -I $(LIBFT_D) -I $(SRC_D)$(BUIL_D) -I $(SRC_D)$(ENVI_D) -I $(SRC_D)$(ERRO_D) \
-			-I $(SRC_D)$(HIST_D) -I $(SRC_D)$(PARS_D) -I $(SRC_D)$(PIPE_D) -I $(SRC_D)$(REDI_D) -I $(SRC_D)$(SIGN_D)
+###			###			HEADER			###			###
+INC_D	:=	./inc
+INC		:=	-I $(INC_D)/ -I $(LIBFT_D)
+CFLAGS	+=	$(INC)
 
-LIBFT= $(LIBFT_D)libft.a
-LIBFT_D= ./lib/libft/
+###			###			SOURCES			###			###
+VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
+			src/filedescriptors/ src/filedescriptors/ src/history/ src/parsing/ \
+			src/pipes/ src/redirects/ src/signal/ src/utils/
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-CDFLAGS = #-g -fsanitize=address
+SRC_F	:=	minishell.c
+SRC_F	+=	
+SRC_F	+=	get_env.c
+SRC_F	+=	clean.c errorhandling.c
+SRC_F	+=	execute.c
+SRC_F	+=	check_infile.c check_outfile.c close.c
+SRC_F	+=	
+SRC_F	+=	parse_args.c parse_progs.c
+SRC_F	+=	
+SRC_F	+=	
+SRC_F	+=	
+SRC_F	+=	combine_pathprog.c first_word.c
 
-RED = \033[1;31m
-GREEN = \033[1;32m
-YELL = \033[1;33m
-BLUE = \033[1;34m
-WHITE = \033[0m
+###			###			OBJECTS			###			###
+OBJ_D	:=	./obj
+OBJ_F	:=	$(patsubst %.c,$(OBJ_D)/%.o,$(SRC_F))
 
+###			###			COLORS			###			###
+RED		=	\033[1;31m
+GREEN	=	\033[1;32m
+YELL	=	\033[1;33m
+BLUE	=	\033[1;34m
+WHITE	=	\033[0m
+
+###			###			RULES			###			###
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_D) $(BUIL_O) $(ENVI_O) $(ERRO_O) $(HIST_O) $(PARS_O) $(PIPE_O) $(REDI_O) $(SIGN_O) $(MAIN_O)
-	$(CC) $(CFLAGS) -o $(NAME) $(MAIN_O) $(BUIL_O) $(ENVI_O) $(ERRO_O) $(HIST_O) $(PARS_O) $(PIPE_O) $(REDI_O) $(SIGN_O) -L $(LIBFT_D) -l ft
+$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+	$(CC) $(CFLAGS) $(LIB) -o $(NAME) $(OBJ_F)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
-
-debug: clean $(LIBFT) $(OBJ_D) $(BUIL_O) $(ENVI_O) $(ERRO_O) $(HIST_O) $(PARS_O) $(PIPE_O) $(REDI_O) $(SIGN_O) $(MAIN_O)
-	$(CC) $(CDFLAGS) -o $(NAME) $(MAIN_O) $(BUIL_O) $(ENVI_O) $(ERRO_O) $(HIST_O) $(PARS_O) $(PIPE_O) $(REDI_O) $(SIGN_O) -L $(LIBFT_D) -l ft
-	@echo "$(RED)--->$(BLUE)$(NAME) is compiled in $(RED)DEBUG$(YELL)MODE.$(WHITE)"
 	
-$(OBJ_D)/%.o: $(SRC_D)/%.c $(INC_F)
-	$(CC) $(CFLAGS) $(CDFLAGS) -I $(INC_D) $(HEADER_F) -c $< -o $@
+$(OBJ_D)/%.o: %.c
+	$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
 
 $(OBJ_D):
 	mkdir $@
 
-$(LIBFT):
+%.a:
 	make -C $(LIBFT_D)
 	
 clean:
 	@if [ -d "$(OBJ_D)" ]; then \
 			$(RM) -rf $(OBJ_D); \
 			make fclean -C $(LIBFT_D); \
-			echo "$(RED)Cleaning Objects:\n $(WHITE)$(MAIN_O) $(BUIL_O) $(ENVI_O) $(ERRO_O) $(HIST_O) $(PARS_O) $(PIPE_O) $(REDI_O) $(SIGN_O)";else \
+			echo "$(RED)Cleaning Objects:\n $(WHITE)$(OBJ_F)";else \
 			echo "$(GREEN)No Objects to remove.$(WHITE)"; \
 	fi;
 
@@ -96,4 +88,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus debug
+.PHONY: all clean fclean re
