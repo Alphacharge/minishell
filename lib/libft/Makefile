@@ -15,6 +15,12 @@ LIBFTSRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii
 			ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 LIBFTOBJ = $(LIBFTSRC:.c=.o)
 
+RED		=	\033[1;31m
+GREEN	=	\033[1;32m
+YELL	=	\033[1;33m
+BLUE	=	\033[1;34m
+WHITE	=	\033[0m
+
 all: $(NAME)
 
 %.o : %.c
@@ -24,9 +30,14 @@ $(NAME): $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)
 	ar rcs $(NAME) $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)
 
 clean:
-	rm -f $(wildcard *.o) $(wildcard get_next_line/*.o) $(wildcard ft_printf/*.o)
+	@echo "$(RED)Cleaning Objects:\n$(WHITE)$(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)"
+	@/bin/rm -f $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ) libft.h.gch
 
 fclean: clean
-	rm -f $(NAME)
+	@if [ -f "$(NAME)" ]; then \
+		/bin/rm -f $(NAME); \
+		echo "$(YELL)Cleaning Lib:\n$(WHITE)$(NAME)";else \
+		echo "No $(NAME) to remove."; \
+	fi;
 
 re: fclean all
