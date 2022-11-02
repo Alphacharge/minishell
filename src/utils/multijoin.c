@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/02 16:29:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/02 16:34:20 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*multijoin(int n, bool tofr, ...)
 	{
 		length = ft_strlen(args[i]);
 		ft_memcpy(str[pos], args[i++], length);
+		if (tofr == true)
+			free(args[i]);
 		pos += length;
 	}
 	va_end(args);
