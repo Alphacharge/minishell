@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:27:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/02 15:57:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,17 @@ typedef struct s_var
 	int		here_fd[2];
 }			t_var;
 
+typedef struct s_prompt
+{
+	char	*name;
+	char	*dir;
+	char	seperator;
+	char	endl;
+}				t_prompt;
+
+typedef struct s_data
+{
+	char		*input;
+	t_prompt	prompt;
+}				t_data;
 #endif
