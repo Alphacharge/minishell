@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/10/28 15:32:55 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/02 16:30:08 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARYS		###			###
 LIBFT_D	:=	./lib/libft/
-LIB		:=	-L $(LIBFT_D) -l ft
+LIB		:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline -l readline
 
 ###			###			HEADER			###			###
 INC_D	:=	./inc
@@ -42,7 +42,7 @@ SRC_F	+=	parse_args.c parse_progs.c
 SRC_F	+=	
 SRC_F	+=	
 SRC_F	+=	
-SRC_F	+=	combine_pathprog.c first_word.c
+SRC_F	+=	combine_pathprog.c first_word.c multijoin.c
 
 ###			###			OBJECTS			###			###
 OBJ_D	:=	./obj
