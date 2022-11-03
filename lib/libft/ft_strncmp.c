@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 11:07:26 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:33:25 by pnolte           ###   ########.fr       */
+/*   Updated: 2022/11/03 12:04:10 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
 	size_t	index;
-	size_t	index2;
 
 	index = 0;
-	index2 = 0;
 	while ((str1[index] != '\0' || str2[index] != '\0') && index < n)
 	{
 		if (str1[index] != str2[index])
