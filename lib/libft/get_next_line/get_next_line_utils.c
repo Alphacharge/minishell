@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/25 14:00:26 by pnolte            #+#    #+#             */
-/*   Updated: 2022/07/06 11:28:21 by pnolte           ###   ########.fr       */
+/*   Updated: 2022/11/03 12:05:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 char	*gnl_strchr(const char *str, int c)
 {
 	char			*p;
-	unsigned char	a;
 	int				i;
 
 	i = 0;
-	a = (unsigned char)c;
 	p = (char *)str;
 	if (p == NULL)
 		return (NULL);
