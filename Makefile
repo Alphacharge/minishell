@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/02 16:30:08 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/04 13:11:14 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ WHITE	=	\033[0m
 all: $(NAME)
 
 $(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
-	$(CC) $(CFLAGS) $(LIB) -o $(NAME) $(OBJ_F)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 	
 $(OBJ_D)/%.o: %.c

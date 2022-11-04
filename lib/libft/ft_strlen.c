@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/24 14:06:12 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:33:17 by pnolte           ###   ########.fr       */
+/*   Updated: 2022/11/04 13:06:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_strlen(const char *c)
 	int	index;
 
 	index = 0;
+	if (c == NULL)
+		return (0);
 	while (c[index] != '\0')
 		index++;
 	return (index);

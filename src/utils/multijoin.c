@@ -6,13 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/03 12:34:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/04 14:56:18 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-static char	*alloc(int n, char **arr)
+static char	*copy_input(bool tofr, int n, char **input)
 {
 	int		i;
 	int		len;
@@ -20,50 +20,52 @@ static char	*alloc(int n, char **arr)
 
 	i = 0;
 	len = 0;
-	str = NULL;
 	while (i < n)
-		len += ft_strlen(arr[i++]);
-	str = ft_calloc((len + 1), sizeof(char));
-	if (str == NULL)
-		return (NULL);
+		len += ft_strlen(input[i++]);
+	str = ft_calloc(len + 1, sizeof(char));
+	i = 0;
+	len = 0;
+	while (i < n)
+	{
+		ft_memcpy(&str[len], input[i], ft_strlen(input[i]));
+		len += ft_strlen(input[i]);
+		if (tofr == true)
+			free(input[i]);
+		i++;
+	}
 	return (str);
 }
 
-static void	read_args(char **input, va_list args, int n)
+static char	**read_input(int n, va_list args)
 {
-	int	i;
+	int		i;
+	char	**input;
 
 	i = 0;
+	input = ft_calloc(n + 1, sizeof(char *));
+	input[n] = NULL;
 	while (i < n)
-		input[i++] = va_arg(args, char *);
-	va_end(args);
+	{
+		input[i] = va_arg(args, char *);
+		i++;
+	}
+	return (input);
 }
 
-//accepts up to 64 strings to join together
+//tofr, frees the input if true, n is the amount of strings,
+//accepts endless strings to join together
 char	*multijoin(bool tofr, int n, ...)
 {
 	va_list	args;
+	char	**input;
 	char	*str;
-	char	*input[64];
-	int		i;
-	size_t	length;
-	length = 0;
-	if (n < 2 || n >= 64)
+
+	if (n < 2)
 		return (NULL);
 	va_start(args, n);
-	//segv
-	read_args(input, args, n);
-	str = alloc(n, input);
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < n)
-	{
-		ft_memcpy(&str[length], &input[i], ft_strlen(input[i]));
-		length += ft_strlen(input[i++]);
-	}
-	i = 0;
-	while (tofr == true && i < n)
-		free(input[i++]);
+	input = read_input(n, args);
+	str = copy_input(tofr, n, input);
+	va_end(args);
+	free(input);
 	return (str);
 }

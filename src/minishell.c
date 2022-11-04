@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/03 12:30:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/04 14:57:13 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	init_prompt(t_data *data)
 {
 	data->prompt.name = "minishell";
-	data->prompt.seperator = '#';
+	data->prompt.seperator = "@";
 	data->prompt.dir = "src";
-	data->prompt.endl = '$';
+	data->prompt.endl = "$:";
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -27,8 +27,11 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 	data = ft_calloc(1, sizeof(t_data));
 	init_prompt(data);
-	ft_printf(">%s<\n", multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl));
-	sleep(20);
+	char *test=multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl);
+	ft_printf(">%s<\n", test);
+	free(test);
+	free(data);
+	exit(0);
 	while (1)
 	{
 	data->input=readline(multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl));
