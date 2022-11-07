@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/04 14:57:13 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 10:04:03 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	init_prompt(t_data *data)
 	data->prompt.seperator = "@";
 	data->prompt.dir = "src";
 	data->prompt.endl = "$:";
+	data->prompt.prompt = NULL;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -27,18 +28,17 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 	data = ft_calloc(1, sizeof(t_data));
 	init_prompt(data);
-	char *test=multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl);
-	ft_printf(">%s<\n", test);
-	free(test);
-	free(data);
-	exit(0);
+	data->prompt.prompt=multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl);
+	ft_printf(">%s<\n", data->prompt);
 	while (1)
 	{
-	data->input=readline(multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl));
+	data->input=readline(data->prompt.prompt);
 	if (data->input != NULL && *data->input != '\0' && *(data->input) != '\n')
 		add_history(data->input);
 	ft_printf(">%s<\n", data->input);
 	}
+	free(data->prompt.prompt);
+	free(data);
 	//END TEST
 	var = ft_calloc(1, sizeof(t_var));
 	if (var == NULL)

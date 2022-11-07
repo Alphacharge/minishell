@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/04 11:11:35 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 09:09:20 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_prompt
 	char	*dir;
 	char	*seperator;
 	char	*endl;
+	char	*prompt;
 }				t_prompt;
 
 typedef struct s_data
