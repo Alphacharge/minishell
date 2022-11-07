@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:26 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:27:59 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 20:53:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 
-void	ft_error(t_var *var, int code);
+void	ft_error(t_var *var);
 void	clean(t_var *var);
 
 #endif

@@ -3,50 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/07 14:07:08 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:58:02 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	init_prompt(t_data *data)
+static t_prompt	*init_prompt(void)
 {
-	data->prompt.name = "minishell";
-	data->prompt.seperator = "@";
-	data->prompt.dir = "src";
-	data->prompt.endl = "$:";
-	data->prompt.prompt = NULL;
+	t_prompt	*prompt;
+
+	prompt = calloc(1, sizeof(t_prompt));
+	prompt->name = "minishell";
+	prompt->seperator = "@";
+	prompt->dir = "src";
+	prompt->endl = "$:";
+	prompt->prompt = multijoin(false, 4, prompt->name, prompt->seperator, prompt->dir, prompt->endl);
+	return (prompt);
 }
 
-int	main(int argc, char **argv, char **envp)
+int	found_exit(char *input)
 {
-	t_var	*var;
-	//TEST
-	t_data	*data;
-	data = ft_calloc(1, sizeof(t_data));
-	init_prompt(data);
-	data->prompt.prompt=multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl);
-	// ft_printf(">%s<\n", data->prompt);
-	while (1)
+	if (input == NULL)
+		return (0);
+	if (input[0] != 'e' || input[1] != 'x' || input[2] != 'i' || input[3] != 't')
+		return (0);
+	if (input[4] != '\0' && input[4] != ' ')
+		return (0);
+	return (1);
+}
+
+int	main()
+{
+	// t_var		*var;
+	t_prompt	*prompt;
+	char		*input;
+
+	prompt = init_prompt();
+	input = NULL;
+	while (found_exit(input) == 0)
 	{
-	data->input=readline(data->prompt.prompt);
-	if (data->input != NULL && *data->input != '\0' && *(data->input) != '\n')
-		add_history(data->input);
-	ft_printf(">%s<\n", data->input);
+		input = readline(prompt->prompt);
+		if (input != NULL && input[0] != '\0' && input[0] != '\n')
+			add_history(input);
+		printf(">%s<\n", input);
 	}
-	free(data->prompt.prompt);
-	free(data);
-	//END TEST
-	var = ft_calloc(1, sizeof(t_var));
-	if (var == NULL)
-		ft_error(var, 1);
-	if (envp == NULL)
-		ft_error(var, 5);
-	parse_args(var, argc, argv, envp);
-	parse_progs(var, argv, envp);
-	waitpid(-1, NULL, 0);
-	ft_error(var, 0);
+	input = ft_free(input);
+	prompt->prompt = ft_free(prompt->prompt);
+	prompt = ft_free(prompt);
+	//PIPEX START
+	// var = ft_calloc(1, sizeof(t_var));
+	// if (var == NULL)
+	// 	ft_error(var);
+	// if (envp == NULL)
+	// 	ft_error(var);
+	// parse_args(var, argc, argv, envp);
+	// parse_progs(var, argv, envp);
+	// waitpid(-1, NULL, 0);
+	//PIPEX END
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_outfile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:12:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:32:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:14:25 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	check_outfile(t_var *var, int argc, char **argv)
 		var->fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	free(file);
 	if (var->fd_out < 0)
-		ft_error(var, 4);
+		ft_error(var);
 }

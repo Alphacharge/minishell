@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
+#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/04 13:11:14 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/07 21:04:58 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,17 +32,16 @@ VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 			src/pipes/ src/redirects/ src/signal/ src/utils/
 
 SRC_F	:=	minishell.c
-SRC_F	+=	
+SRC_F	+=
 SRC_F	+=	get_env.c
 SRC_F	+=	clean.c errorhandling.c
 SRC_F	+=	execute.c
 SRC_F	+=	check_infile.c check_outfile.c close.c
-SRC_F	+=	
+SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
-SRC_F	+=	
-SRC_F	+=	
-SRC_F	+=	
+SRC_F	+=
 SRC_F	+=	combine_pathprog.c first_word.c multijoin.c
+SRC_F	+=	ft_free.c
 
 ###			###			OBJECTS			###			###
 OBJ_D	:=	./obj
@@ -61,20 +60,19 @@ all: $(NAME)
 $(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
-	
+
 $(OBJ_D)/%.o: %.c
-	$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
 
 $(OBJ_D):
 	mkdir $@
 
 %.a:
 	make -C $(LIBFT_D)
-	
+
 clean:
 	@if [ -d "$(OBJ_D)" ]; then \
 			$(RM) -rf $(OBJ_D); \
-			make fclean -C $(LIBFT_D); \
 			echo "$(RED)Cleaning Objects:\n $(WHITE)$(OBJ_F)";else \
 			echo "$(GREEN)No Objects to remove.$(WHITE)"; \
 	fi;

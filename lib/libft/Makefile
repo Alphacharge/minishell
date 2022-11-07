@@ -24,10 +24,10 @@ WHITE	=	\033[0m
 all: $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)
-	ar rcs $(NAME) $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)
+	@ar rcs $(NAME) $(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)
 
 clean:
 	@echo "$(RED)Cleaning Objects:\n$(WHITE)$(LIBFTOBJ) $(PRINTFOBJ) $(GNLOBJ)"

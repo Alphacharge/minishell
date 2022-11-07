@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:34:57 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/04 14:54:27 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:14:30 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void	first_fd(t_var *var)
 	{
 		if (dup2(var->here_fd[0], 0) < 0
 			|| dup2(var->fds[var->index_fd][1], 1) < 0)
-			ft_error(var, 9);
+			ft_error(var);
 		close(var->here_fd[0]);
 	}
 	else
 	{
 		if (dup2(var->fd_in, 0) < 0
 			|| dup2(var->fds[var->index_fd][1], 1) < 0)
-			ft_error(var, 9);
+			ft_error(var);
 		close(var->fd_in);
 	}
 }
