@@ -1,14 +1,18 @@
 -	prompt
--	create builtins 
--	environment 
+-	create builtins
+-	environment
 -	wildcards
 -	history
--	config 
+-	config
 -	signals
 -	quotes
 -	redirections
 -	heredoc
 -	returnvalues
+-	suppress libft output
+-	clean up rouven's pipex
+-	set up error messages
+-	null protection for strncmp
 
 
 How does Bash:
@@ -21,7 +25,7 @@ https://medium.com/geekculture/an-overview-of-the-working-of-the-bash-shell-f063
 5 builtin or extern?
 6 redirections and pipes
 7 execution
-8 
-9 
+8
+9
 
 https://pubs.opengroup.org/onlinepubs/007904975/utilities/xcu_chap02.html
