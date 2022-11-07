@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 09:09:20 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:16:39 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,28 @@ typedef struct s_prompt
 	char	*endl;
 	char	*prompt;
 }				t_prompt;
+
+typedef struct s_pipe
+{
+	int	type;
+	int	left;
+	int	right;
+}				t_pipe;
+
+typedef struct s_exec
+{
+	char	**argv;
+	char	**eargv;
+}				t_exec;
+
+typedef struct s_redir
+{
+	char	*file;
+	char	*efile;
+	char	*mode;
+	int		fd;
+	char	*cmd;
+}				t_redir;
 
 typedef struct s_data
 {

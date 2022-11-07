@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/07 10:04:03 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 14:07:08 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	main(int argc, char **argv, char **envp)
 	data = ft_calloc(1, sizeof(t_data));
 	init_prompt(data);
 	data->prompt.prompt=multijoin(false, 4, data->prompt.name, data->prompt.seperator, data->prompt.dir, data->prompt.endl);
-	ft_printf(">%s<\n", data->prompt);
+	// ft_printf(">%s<\n", data->prompt);
 	while (1)
 	{
 	data->input=readline(data->prompt.prompt);
