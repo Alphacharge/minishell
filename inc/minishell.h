@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/02 16:04:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/08 20:17:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# define VERBOSE	1
+
+# define BLTIN		0
+# define EXEC		1
+# define REDIR		2
+# define PIPE		3
+# define LIST		4
+# define BACK		5
 
 # include <stdlib.h> // malloc, free, exit
 # include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
@@ -26,6 +35,7 @@
 # include "builtins.h"
 # include "environment.h"
 # include "errorhandling.h"
+# include "memory.h"
 # include "history.h"
 # include "parsing.h"
 # include "pipes.h"
@@ -35,6 +45,5 @@
 # include "filedescriptors.h"
 # include "utils.h"
 # include "structs.h"
-
 
 #endif

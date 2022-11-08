@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/07 21:04:58 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/08 19:01:55 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,12 @@ VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 SRC_F	:=	minishell.c
 SRC_F	+=
 SRC_F	+=	get_env.c
-SRC_F	+=	clean.c errorhandling.c
+SRC_F	+=	clean.c errorhandling.c cleanup.c
 SRC_F	+=	execute.c
 SRC_F	+=	check_infile.c check_outfile.c close.c
 SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
+SRC_F	+=	set_input_pointers.c create_list.c
 SRC_F	+=
 SRC_F	+=	combine_pathprog.c first_word.c multijoin.c
 SRC_F	+=	ft_free.c

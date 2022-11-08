@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errorhandling.c                                    :+:      :+:    :+:   */
+/*   memory.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/08 17:16:20 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/08 19:00:43 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/08 19:01:28 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errorhandling.h"
+#ifndef MEMORY_H
+# define MEMORY_H
 
-void	ft_error(char *message)
-{
-	if (message == NULL)
-		perror("program:sourcefile ");
-	else
-		perror(message);
-	exit(EXIT_FAILURE);
-}
+# include <minishell.h>
+
+void	*free_cmds(t_cmd *current);
+
+#endif

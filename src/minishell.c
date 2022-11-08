@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/07 21:58:02 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/08 19:02:13 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,31 @@ static t_prompt	*init_prompt(void)
 	return (prompt);
 }
 
-int	found_exit(char *input)
-{
-	if (input == NULL)
-		return (0);
-	if (input[0] != 'e' || input[1] != 'x' || input[2] != 'i' || input[3] != 't')
-		return (0);
-	if (input[4] != '\0' && input[4] != ' ')
-		return (0);
-	return (1);
-}
-
 int	main()
 {
 	// t_var		*var;
 	t_prompt	*prompt;
 	char		*input;
+	char		**args;
+	t_cmd		*cmd_head;
 
 	prompt = init_prompt();
 	input = NULL;
-	while (found_exit(input) == 0)
+	cmd_head = NULL;
+	while (1)
 	{
 		input = readline(prompt->prompt);
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
 		printf(">%s<\n", input);
+		args = set_input_pointers(input);
+		cmd_head = create_list(args);
+		// execute(cmd_head);
+		input = ft_free(input);
+		args = ft_free(args);
+		free_cmds(cmd_head);
 	}
-	input = ft_free(input);
-	prompt->prompt = ft_free(prompt->prompt);
-	prompt = ft_free(prompt);
+	free_multiple(1, prompt->prompt, prompt);
 	//PIPEX START
 	// var = ft_calloc(1, sizeof(t_var));
 	// if (var == NULL)
