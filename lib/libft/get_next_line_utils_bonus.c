@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 16:08:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/19 13:00:34 by rbetz            ###   ########.fr       */
+/*   Created: 2022/05/09 12:05:07 by rbetz             #+#    #+#             */
+/*   Updated: 2022/10/31 13:14:04 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strjoin_ns(char *s1, char *s2)
 {
-	size_t	size;
-	char	*ptr;
+	char	*p1;
 
-	if (s == NULL)
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	size = (size_t)ft_strlen(s);
-	if (len > size)
-		len = size;
-	if (start >= size)
-		return (ft_strdup(""));
-	ptr = malloc(len + 1);
-	if (ptr == NULL)
+	p1 = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (p1 == NULL)
+	{
+		free(s1);
 		return (NULL);
-	ft_memcpy(ptr, &s[start], len);
-	ptr[len] = '\0';
-	return (ptr);
+	}
+	ft_memcpy(p1, s1, (size_t)ft_strlen(s1));
+	ft_memcpy(&p1[ft_strlen(s1)], s2, (size_t)ft_strlen(s2) + 1);
+	free(s1);
+	return (p1);
 }

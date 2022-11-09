@@ -3,44 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 10:09:19 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:32:55 by pnolte           ###   ########.fr       */
+/*   Created: 2022/04/01 15:02:13 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/06 17:10:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s1)
 {
-	char	*d;
-	int		size;
-	int		index;
+	char	*ptr;
 
-	size = 0;
-	while (s[size] != '\0')
-		size++;
-	d = malloc((size + 1) * sizeof(char));
-	if (d == NULL)
+	ptr = malloc(ft_strlen(s1)+1 * sizeof(char));
+	if (ptr == NULL)
 		return (NULL);
-	index = 0;
-	while (s[index] != '\0')
-	{
-		d[index] = s[index];
-		index++;
-	}
-	d[index] = '\0';
-	return (d);
+	return ((char *) ft_memcpy(ptr, s1, (size_t)ft_strlen(s1)+1));
 }
-
-// int	main(void)
-// {
-// 	const char	s[] = "Try to dup me!\n";
-// 	const char  *d;
-
-// 	d = strdup(s);
-// 	puts(d);
-// 	d = ft_strdup(s);
-// 	puts(d);
-// }

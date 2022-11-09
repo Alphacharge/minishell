@@ -3,50 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 10:27:03 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 17:30:11 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/28 09:59:11 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/10 13:38:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int c)
+char	*ft_strrchr(const char *s, int c)
 {
-	char			*p;
-	unsigned char	a;
+	int		len;
+	char	x;
 
-	a = (unsigned char)c;
-	p = (char *)str;
-	while (*p != '\0')
-		p++;
-	while (*p != a)
-	{
-		if (p == &str[0])
-		{
-			if (*p == a)
-				return (p);
-			return (NULL);
-		}
-		p--;
-	}
-	return (p);
+	x = (char)c;
+	len = ft_strlen(s);
+	while ((len != 0) && (s[len] != x))
+		len--;
+	if ((len == 0) && (s[len] != x))
+		return (0);
+	else
+		return ((char *)&s[len]);
 }
-
-// int	main(void)
-// {
-// 	const char	str[] = "http://www.tutorialspoint.com";
-// 	const char	ch = '.';
-// 	const char	c2 = ',';
-// 	char		*ret;
-
-// 	ret = strrchr(str, ch);
-// 	printf("String after (%c) is %s\n", ch, ret);
-// 	ret = strrchr(str, c2);
-// 	printf("String after (%c) is %s\n", c2, ret);
-// 	ret = ft_strrchr(str, ch);
-// 	printf("String after (%c) is %s\n", ch, ret);
-// 	ret = ft_strrchr(str, c2);
-// 	printf("String after (%c) is %s\n", c2, ret);
-// }

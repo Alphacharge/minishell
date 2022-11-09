@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_front.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 13:28:42 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:34:22 by pnolte           ###   ########.fr       */
+/*   Created: 2022/04/11 11:37:56 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/13 14:13:57 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	new -> next = *lst;
+	new->next = *lst;
 	*lst = new;
 }

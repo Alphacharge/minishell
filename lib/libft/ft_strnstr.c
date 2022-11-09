@@ -3,45 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 16:41:57 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:33:29 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/31 12:35:49 by rbetz             #+#    #+#             */
+/*   Updated: 2022/03/31 17:43:24 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+static char	*find_it(char *h, char *n, size_t nl, size_t sl)
 {
-	size_t	index;
-	size_t	index2;
+	size_t	i;
+	size_t	j;
 
-	index = 0;
-	if (needle[index] == 0)
-		return ((char *)haystack);
-	while (haystack[index] != '\0' && index < len)
+	i = 0;
+	j = 0;
+	while (h[i] != '\0' && i < sl)
 	{
-		index2 = 0;
-		while (haystack[index + index2] == needle[index2]
-			&& index + index2 < len)
+		if (h[i] == n[0])
 		{
-			if (needle[index2 + 1] == '\0')
-				return ((char *)(haystack += index));
-			index2++;
+			while (j < nl && i + j < sl)
+			{
+				if (h[i + j] == n[j])
+					j++;
+				else
+				{
+					j = 0;
+					break ;
+				}
+			}
+			if (j == nl)
+				return ((char *)&h[i]);
 		}
-		index++;
+		i++;
 	}
 	return (NULL);
 }
 
-// int	main(void)
-// {
-// 	const char	haystack[] = "see FF your FF return FF now FF";
-// 	const char	needle[] = "FF";
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	size_t	k;
+	size_t	l;
+	char	*hay;
+	char	*nee;
 
-// 	printf("LIBE: %s\n", strnstr(haystack, needle, 20));
-// 	printf("MINE: %s\n\n", ft_strnstr(haystack, needle, 20));
-// 	printf("Here the needle: %s\n", strnstr(haystack, needle, 2));
-// 	printf("Here the needle: %s", ft_strnstr(haystack, needle, 2));
-// }
+	k = ft_strlen(needle);
+	l = ft_strlen(haystack);
+	hay = (char *)haystack;
+	nee = (char *)needle;
+	if (k > l || k > len)
+		return (NULL);
+	if (haystack == NULL || needle == NULL || len < 1 || l == 0 || k == 0)
+		return (hay);
+	return (find_it(hay, nee, k, len));
+}

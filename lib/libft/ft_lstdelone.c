@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 10:17:43 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:34:52 by pnolte           ###   ########.fr       */
+/*   Created: 2022/04/11 18:25:58 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/12 17:16:31 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	if (lst == NULL)
-		return ;
-	(*del)(lst->content);
-	free(lst);
+	if (lst != NULL)
+	{
+		del(lst->content);
+		free(lst);
+	}
 }

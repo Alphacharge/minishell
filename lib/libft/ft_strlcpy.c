@@ -3,52 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 14:04:39 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:33:13 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/29 10:26:58 by rbetz             #+#    #+#             */
+/*   Updated: 2022/07/18 15:21:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	index;
-	size_t	src_leng;
+	size_t	sl;
 
-	index = 0;
-	src_leng = 0;
-	while (src[src_leng] != '\0')
-		src_leng++;
-	if (dstsize == 0)
-		return (src_leng);
-	while (src[index] != '\0' && index < dstsize - 1)
-	{
-		dst[index] = src[index];
-		index++;
-	}
-	dst[index] = '\0';
-	return (src_leng);
+	sl = ft_strlen(src);
+	if (sl < dstsize)
+		dstsize = sl + 1;
+	if (dstsize <= 0)
+		return (sl);
+	ft_memcpy(dst, src, dstsize);
+	dst[dstsize - 1] = '\0';
+	return (sl);
 }
-
-// int	main(void)
-// {
-// 	char	dst1[] = "You wont succed >D";
-// 	char	src2[] = "Succeded you have ;D";
-// 	char	dst3[] = "You wont succed >D";
-// 	char	src4[] = "Succeded you have ;D";
-// 	char	dst5[] = "You wont succed >D";
-// 	char	src6[] = "Succeded you have ;D";
-// 	char	dst7[] = "You wont succed >D";
-// 	char	src8[] = "Succeded you have ;D";
-
-// 	strlcpy(dst1, src2, 19);
-// 	puts(dst1);
-// 	strlcpy(dst3, src4, 1);
-// 	puts(dst3);
-// 	ft_strlcpy(dst5, src6, 19);
-// 	puts(dst5);
-// 	ft_strlcpy(dst7, src8, 1);
-// 	puts(dst7);
-// }

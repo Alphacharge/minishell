@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_ltoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 09:39:00 by rbetz             #+#    #+#             */
-/*   Updated: 2022/04/07 11:21:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/10/31 10:51:02 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_count(int c)
+static long	ft_countdigits(long c)
 {
-	int	n;
+	long	n;
 
 	n = 0;
 	if (c == 0)
@@ -27,13 +27,13 @@ static int	ft_count(int c)
 	return (n);
 }
 
-char	*ft_itoa(int n)
+char	*ft_ltoa(long n)
 {
 	char	*p;
-	int		i;
-	int		vz;
+	long	i;
+	long	vz;
 
-	i = ft_count(n);
+	i = ft_countdigits(n);
 	vz = 0;
 	if (n < 0)
 		vz = 1;

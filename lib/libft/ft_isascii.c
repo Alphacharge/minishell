@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 13:49:28 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:31:20 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/24 13:02:47 by rbetz             #+#    #+#             */
+/*   Updated: 2022/03/25 17:34:53 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 int	ft_isascii(int c)
 {
@@ -19,12 +17,3 @@ int	ft_isascii(int c)
 	else
 		return (0);
 }
-
-// int	main(void)
-// {
-// 	char	c;
-
-// 	c = -1;
-// 	printf("how is this not ascii %d\n", isascii(c));
-// 	printf("how is this not ascii %d\n", ft_isascii(c));
-// }
