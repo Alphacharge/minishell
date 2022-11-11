@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 10:41:28 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/11 09:58:34 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/11 17:27:24 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,33 +113,49 @@ t_env	*extract_env(char **envp)
 	}
 	return (env);
 }
+/*transfers the PATH variable in an double ** array*/
+char	**get_path_var(t_env *env)
+{
+	int		i;
+	char	**ptr;
 
-// void	get_env(t_var *var, char **envp)
-// {
-// 	int		i;
-// 	char	*line;
-// 	char	**ptr;
+	while (env != NULL)
+	{
+		if (ft_strncmp(env->name, "PATH", 4))
+		{
+			ptr = ft_split(env->value, ':');
+			break ;
+		}
+		env = env->next;
+	}
+	if (ptr == NULL)
+		return (NULL);
+	else
+		return (ptr);
+}
 
-// 	i = 0;
-// 	line = envp[i];
-// 	while (line != NULL)
-// 	{
-// 		if (!ft_strncmp(line, "PATH=", 5))
-// 			var->path = ft_split(&line[5], ':');
-// 		if (ft_strstr(line, "OLDPWD=") == NULL && 
-// 			ft_strstr(line, "PWD=") != NULL)
-// 			var->pwd = ft_substr(line, 4, ft_strlen(line));
-// 		i++;
-// 		line = envp[i];
-// 	}
-// 	if (var->path == NULL)
-// 	{
-// 		ptr = ft_calloc(1, sizeof(char **));
-// 		line = ft_strdup(".");
-// 		ptr[0] = line;
-// 		var->path = ptr;
-// 	}
-// }
+/*searchs the path for a programm*/
+char	*get_path(char **paths, char *executable)
+{
+	int		i;
+	int		success;
+	char	*test;
+
+	i = 0;
+	success = -1;
+	while (paths != NULL && paths[i] != NULL && success != 0)
+	{
+		test = multijoin(false, 2, paths[i], executable);
+		success = access(test, F_OK);
+		if (success == -1)
+			free(test);
+		i++;
+	}
+	if (success == 0)
+		return (paths[--i]);
+	else
+		return (NULL);
+}
 
 // int	main(int argc, char **argv, char **envp)
 // {
