@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 16:08:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/19 13:00:34 by rbetz            ###   ########.fr       */
+/*   Created: 2022/07/18 15:27:38 by rbetz             #+#    #+#             */
+/*   Updated: 2022/09/19 11:32:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+int	ft_strisdigit(char *str)
 {
-	size_t	size;
-	char	*ptr;
+	int	i;
 
-	if (s == NULL)
-		return (NULL);
-	size = (size_t)ft_strlen(s);
-	if (len > size)
-		len = size;
-	if (start >= size)
-		return (ft_strdup(""));
-	ptr = malloc(len + 1);
-	if (ptr == NULL)
-		return (NULL);
-	ft_memcpy(ptr, &s[start], len);
-	ptr[len] = '\0';
-	return (ptr);
+	i = 0;
+	if (str == NULL)
+		return (0);
+	while (str[i] != '\0')
+	{
+		if (str[i] < '0' || str[i] > '9')
+			return (0);
+		i++;
+	}
+	return (1);
 }

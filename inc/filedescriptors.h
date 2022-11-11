@@ -6,13 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:33:43 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:34:03 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/09 13:54:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILEDESCRIPTORS_H
 # define FILEDESCRIPTORS_H
 
+# include <fcntl.h>
 # include "libft.h"
 # include "utils.h"
 # include "errorhandling.h"

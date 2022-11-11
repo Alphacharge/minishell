@@ -3,37 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 13:57:32 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:32:26 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/23 12:09:34 by rbetz             #+#    #+#             */
+/*   Updated: 2022/03/29 17:33:00 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memset(void *str, int c, size_t n)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	char	*p;
+	char	*d;
+	size_t	i;
 
-	p = str;
-	while (n != 0)
+	d = (char *)b;
+	i = 0;
+	while (i < len)
 	{
-		n--;
-		p[n] = c;
+		d[i] = c;
+		i++;
 	}
-	return (p);
+	return (b);
 }
-
-// int	main(void)
-// {
-// 	char	str[] = "plz replace me";
-// 	char	str2[] = "plz replace me";
-
-// 	puts(str);
-// 	memset(str, '$', 7);
-// 	puts(str);
-// 	ft_memset(str2, '$', 7);
-// 	puts(str2);
-// 	return (0);
-// }

@@ -3,41 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 12:57:04 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 17:17:44 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/28 09:59:11 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/10 13:41:52 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *str, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	size_t			i;
-	unsigned char	*p;
-	unsigned char	a;
+	const char	*p;
 
-	p = (unsigned char *)str;
-	a = (unsigned char)c;
-	i = 0;
-	while (i < n)
+	p = (const char *)s;
+	while (n-- > 0)
 	{
-		if (*p == a)
+		if (*p == (char)c)
 			return ((void *)p);
-		i++;
 		p++;
 	}
 	return (NULL);
 }
-
-// int	main(void)
-// {
-// 	char s[] = {0, 1, 2 ,3 ,4 ,5};
-// 	char *ret;
-
-// 	ret = memchr(s, 2 + 256, 3);
-// 	printf("%s", ret);
-// 	ret = ft_memchr(s, 2 + 256, 3);
-// 	printf("%s", ret);
-// }

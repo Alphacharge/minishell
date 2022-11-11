@@ -3,48 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 13:56:08 by pnolte            #+#    #+#             */
-/*   Updated: 2022/04/13 11:32:23 by pnolte           ###   ########.fr       */
+/*   Created: 2022/03/24 17:34:37 by rbetz             #+#    #+#             */
+/*   Updated: 2022/03/29 17:44:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+static void	ft_move(char *a, char *b, size_t v)
 {
-	char		*dest1;
-	const char	*src1;
-	size_t		index;
+	size_t	i;
 
-	dest1 = dest;
-	src1 = src;
-	index = 1;
-	if (dest1 > src1)
+	i = 0;
+	if (a < b)
 	{
-		while (index <= n)
+		while (i < v)
 		{
-			dest1[n - index] = src1[n - index];
-			index++;
+			a[i] = b[i];
+			i++;
 		}
 	}
 	else
-		ft_memcpy(dest1, src1, n);
-	return (dest1);
+	{
+		while (v > 0)
+		{
+			a[v -1] = b[v -1];
+			v--;
+		}
+	}
 }
 
-// int	main(void)
-// {
-// 	char	dest1[] = "memove is easy";
-// 	char	dest2[] = "";
-// 	char	src1[] = "memmo3";
-// 	char	src2[] = "";
-// 	char	overlap[] = "123456789";
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	char			*d;
+	char			*s;
 
-// 	ft_memmove(overlap, overlap +3, 6);
-// 	memmove(dest1, src1, 4);
-// 	puts(overlap);
-// 	ft_memmove(dest2, src2, 4);
-// 	puts(dest2);
-// }
+	d = (char *)dst;
+	s = (char *)src;
+	if (len > 0 && (dst != NULL || src != NULL))
+	{
+		ft_move(d, s, len);
+	}
+	return (dst);
+}

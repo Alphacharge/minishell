@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   first_word.c                                       :+:      :+:    :+:   */
+/*   ft_first_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:25:13 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/04 14:53:40 by rbetz            ###   ########.fr       */
+/*   Created: 2022/09/12 16:00:51 by rbetz             #+#    #+#             */
+/*   Updated: 2022/10/31 10:46:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "structs.h"
-#include "utils.h"
+#include "libft.h"
 
-char	*first_word(const char *str, char c, int rev)
+/*Returns a malloced string to first occurens of c in str from beginning*/
+/*or if rev = 1 from the end*/
+char	*ft_first_word(const char *str, char c, int rev)
 {
 	int		i;
 	int		len;

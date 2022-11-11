@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnolte <pnolte@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/11 14:13:21 by pnolte            #+#    #+#             */
-/*   Updated: 2022/07/20 12:18:19 by pnolte           ###   ########.fr       */
+/*   Created: 2022/04/11 14:47:02 by rbetz             #+#    #+#             */
+/*   Updated: 2022/04/13 14:13:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,17 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
+	int	i;
+	int	size;
+
+	i = 0;
 	if (lst == NULL)
 		return (NULL);
-	while (lst != NULL)
+	size = ft_lstsize(lst)-1;
+	while (i < size)
+	{
 		lst = lst->next;
+		i++;
+	}
 	return (lst);
 }
