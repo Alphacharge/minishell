@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/08 17:23:30 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:22:05 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static void	execute_child(t_var *var, char **envp)
 	{
 		if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
 		|| dup2(var->fd_out, 1) < 0)
-			ft_error(var);
+			ft_error(NULL);
 		close(var->fd_out);
 	}
 	else
 	{
 		if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
 		|| dup2(var->fds[var->index_fd][1], 1) < 0)
-			ft_error(var);
+			ft_error(NULL);
 		close(var->fds[var->index_fd - 1][0]);
 		close(var->fds[var->index_fd][1]);
 	}
@@ -47,4 +47,21 @@ void	execute_programs(t_var *var, char **envp)
 	close_fds(var);
 	var->here = 0;
 	var->index_fd++;
+}
+
+/*Placeholder function for executing a linked list of commands.*/
+int	execute(t_cmd *cmd_head)
+{
+	t_cmd	*current;
+
+	current = cmd_head;
+	while (current != NULL)
+	{
+		if (ft_strncmp(current->argv[0], "cd", 2) == 0)
+			builtin_cd(current);
+		else if (ft_strncmp(current->argv[0], "exit", 4) == 0)
+			return (builtin_exit(current));
+		current = current->next;
+	}
+	return (0);
 }

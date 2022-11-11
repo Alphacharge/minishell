@@ -6,17 +6,19 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/08 17:16:20 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:25:44 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errorhandling.h"
 
-void	ft_error(char *message)
+/*Prints error message and returns 1.*/
+int	ft_error(char *message)
 {
+//PLACEHOLDER: pattern for error messages
 	if (message == NULL)
 		perror("program:sourcefile ");
 	else
 		perror(message);
-	exit(EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }

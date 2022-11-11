@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/08 19:01:55 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/11 17:21:32 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	:=	minishell
 ###			###			COMPILER		###			###
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
-CDFLAGS	:=	#-g -fsanitize=address
+CDFLAGS	:=	-g -fsanitize=address
 
 ###			###			LIBRARYS		###			###
 LIBFT_D	:=	./lib/libft/
@@ -28,7 +28,8 @@ CFLAGS	+=	$(INC)
 
 ###			###			SOURCES			###			###
 VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
-			src/filedescriptors/ src/filedescriptors/ src/history/ src/parsing/ \
+			src/filedescriptors/ src/filedescriptors/ src/history/ src/memory \
+			src/parsing/ \
 			src/pipes/ src/redirects/ src/signal/ src/utils/
 
 SRC_F	:=	minishell.c
@@ -36,6 +37,7 @@ SRC_F	+=
 SRC_F	+=	get_env.c
 SRC_F	+=	clean.c errorhandling.c cleanup.c
 SRC_F	+=	execute.c
+SRC_F	+=	builtins.c
 SRC_F	+=	check_infile.c check_outfile.c close.c
 SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c

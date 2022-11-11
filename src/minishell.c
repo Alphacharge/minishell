@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/08 19:02:13 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:34:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	main()
 		printf(">%s<\n", input);
 		args = set_input_pointers(input);
 		cmd_head = create_list(args);
-		// execute(cmd_head);
+		if (execute(cmd_head) != 0)
+			break ;
 		input = ft_free(input);
 		args = ft_free(args);
 		free_cmds(cmd_head);

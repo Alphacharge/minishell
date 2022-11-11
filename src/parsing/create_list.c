@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:23:19 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/11 14:15:31 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:23:29 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ t_cmd	*create_list(char **args)
 	{
 		cmd = ft_calloc(1, sizeof(t_cmd));
 		if (cmd == NULL)
-			return (ft_error("minishell:create_list"), 1);
+			return (ft_error("minishell:create_list"), NULL);
 		if (prev != NULL)
 			prev->next = cmd;
-		cmd->arg = args[i];
-		cmd->type = check_type(cmd->arg);
+//here we need to allocate a NULL-terminated string array for execve
+		cmd->type = check_type(args[i]);
 		cmd->next = NULL;
 		prev = cmd;
 		if (head == NULL)

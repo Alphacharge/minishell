@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:33:24 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/11 17:35:27 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include "structs.h"
 # include "errorhandling.h"
 # include "filedescriptors.h"
+# include "builtins.h"
 
 void	execute_programs(t_var *var, char **envp);
+int		execute(t_cmd *cmd_head);
 
 #endif
