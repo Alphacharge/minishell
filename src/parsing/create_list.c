@@ -6,13 +6,13 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:23:19 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/08 18:45:13 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/11 14:15:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static int	check_builtins(char *s)
+static int	check_type(char *s)
 {
 	if (s[0] == 'c' && s[1] == 'd')
 		return (BLTIN);
