@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:22:49 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/09 14:40:17 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/11 09:59:03 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include "structs.h"
 # include "libft.h"
+# include "utils.h"
 
 typedef struct s_env
 {
@@ -25,5 +26,10 @@ typedef struct s_env
 }					t_env;
 
 void	get_env(t_var *var, char **envp);
+
+t_env	*extract_env(char **envp);
+void	print_env(t_env *env, int fd);
+void	delete_env(t_env *env);
+char	**create_envp_from_env(t_env *env);
 
 #endif
