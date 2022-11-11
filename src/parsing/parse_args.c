@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 09:27:08 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 13:17:13 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:15:16 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	find_limiter(t_var *var, char **argv)
 void	parse_args(t_var *var, int argc, char **argv, char **envp)
 {
 	if (argc < 5)
-		ft_error(var, 2);
+		ft_error(var);
 	if (argc > 5 && ft_strncmp(argv[1], "here_doc", 8) == 0)
 		var->here = 1;
 	else

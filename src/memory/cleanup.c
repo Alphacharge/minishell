@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 21:45:02 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/08 19:00:19 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "memory.h"
 
-# include <stdbool.h>
+void	*free_cmds(t_cmd *current)
+{
+	t_cmd	*prev;
 
-# include "structs.h"
-# include "libft.h"
-
-char	*first_word(const char *str, char c, int rev);
-char	*combine_pathprog(char *path, char *prog);
-char	*multijoin(bool tofrn, int n, ...);
-void	free_multiple(int n, ...);
-void	*ft_free(void *pointer);
-
-#endif
+	prev = NULL;
+	if (current == NULL)
+		return (NULL);
+	while (current->next != NULL)
+	{
+		prev = current;
+		current = current->next;
+		ft_free(prev);
+	}
+	return (ft_free(current));
+}

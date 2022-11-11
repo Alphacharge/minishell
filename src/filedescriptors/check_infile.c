@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_infile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:12:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:32:42 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/07 21:14:19 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	check_infile(t_var *var, char **argv)
 	if (access(file, F_OK) < 0)
 	{
 		free(file);
-		ft_error(var, 3);
+		ft_error(var);
 	}
 	if (access(file, R_OK) < 0)
 	{
 		free(file);
-		ft_error(var, 6);
+		ft_error(var);
 	}
 	var->fd_in = open(file, O_RDONLY);
 	free(file);
 	if (var->fd_in < 0)
-		ft_error(var, 7);
+		ft_error(var);
 }

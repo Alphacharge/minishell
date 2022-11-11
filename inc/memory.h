@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   memory.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 21:45:02 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/08 19:00:43 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/08 19:01:28 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef MEMORY_H
+# define MEMORY_H
 
-# include <stdbool.h>
+# include <minishell.h>
 
-# include "structs.h"
-# include "libft.h"
-
-char	*first_word(const char *str, char c, int rev);
-char	*combine_pathprog(char *path, char *prog);
-char	*multijoin(bool tofrn, int n, ...);
-void	free_multiple(int n, ...);
-void	*ft_free(void *pointer);
+void	*free_cmds(t_cmd *current);
 
 #endif
