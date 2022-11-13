@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:22:49 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 13:19:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/13 19:40:01 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENVIRONMENT_H
 # define ENVIRONMENT_H
 
+# include "minishell.h"
 # include "structs.h"
 # include "libft.h"
 

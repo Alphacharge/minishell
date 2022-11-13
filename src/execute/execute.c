@@ -6,11 +6,12 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/11 17:22:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:51:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "structs.h"
 
 static void	execute_child(t_var *var, char **envp)
 {

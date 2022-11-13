@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/11 17:21:32 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/13 20:04:06 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ NAME	:=	minishell
 ###			###			COMPILER		###			###
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
-CDFLAGS	:=	-g -fsanitize=address
+CDFLAGS	:=	-g #-fsanitize=address
 
-###			###			LIBRARYS		###			###
+###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
 LIB		:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline -l readline
 
@@ -43,7 +43,7 @@ SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
 SRC_F	+=	set_input_pointers.c create_list.c
 SRC_F	+=
-SRC_F	+=	combine_pathprog.c first_word.c multijoin.c
+SRC_F	+=	combine_pathprog.c #multijoin.c first_word.c
 SRC_F	+=	ft_free.c
 
 ###			###			OBJECTS			###			###

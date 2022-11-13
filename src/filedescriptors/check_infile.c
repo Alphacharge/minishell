@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 10:12:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 21:14:19 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:28:29 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ void	check_infile(t_var *var, char **argv)
 	if (access(file, F_OK) < 0)
 	{
 		free(file);
-		ft_error(var);
+		ft_error(NULL);
 	}
 	if (access(file, R_OK) < 0)
 	{
 		free(file);
-		ft_error(var);
+		ft_error(NULL);
 	}
 	var->fd_in = open(file, O_RDONLY);
 	free(file);
 	if (var->fd_in < 0)
-		ft_error(var);
+		ft_error(NULL);
 }

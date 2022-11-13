@@ -6,11 +6,10 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 16:12:55 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/11 17:36:11 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:44:59 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//placeholder
 #include "builtins.h"
 
 //Placeholder. Can be extended or removed if needed.

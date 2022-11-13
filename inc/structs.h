@@ -6,15 +6,14 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/11 17:22:43 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:47:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-# include <unistd.h>
-# include <stdlib.h>
+# include "minishell.h"
 
 typedef struct s_var
 {

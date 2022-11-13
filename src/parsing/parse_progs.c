@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:00:51 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 21:15:22 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 18:30:42 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	split_arg(t_var *var, char **argv, int i)
 		var->args[i - 2 - var->here] = ft_split(argv[i], ' ');
 		if (var->args[i - 2 - var->here] == NULL
 			|| ft_strlen(var->args[i - 2 - var->here][0]) == 0)
-			ft_error(var);
+			ft_error(NULL);
 	}
 }
 
@@ -55,7 +55,7 @@ void	parse_progs(t_var *var, char **argv, char **envp)
 		if (var->scs != 0)
 		{
 			close_fds(var);
-			ft_error(var);
+			ft_error(NULL);
 		}
 		execute_programs(var, envp);
 		j++;

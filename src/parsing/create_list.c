@@ -6,18 +6,51 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:23:19 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/11 17:23:29 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 19:35:18 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
+//Returns index of next token. Placeholder.
+static int	is_token(char *s)
+{
+	if (s[0] == '\'' || s[0] == '\"' || s[0] == '<' || s[0] == '>' || s[0] == '&' || s[0] == '|' || s[0] == '$')
+		return (1);
+	return (0);
+}
+
+/*Returns type macro of given command.*/
 static int	check_type(char *s)
 {
 	if (s[0] == 'c' && s[1] == 'd')
 		return (BLTIN);
 	if (s[0] == 'e' && s[1] == 'x' && s[2] == 'i' && s[3] == 't' && s[4] == '\0')
 		return (BLTIN);
+	return (-1);
+}
+
+static char	**create_argv(char *command)
+{
+	int		words;
+	int		i;
+	char	**argv;
+
+	words = 0;
+	i = 0;
+	argv = NULL;
+	while (command + words != NULL && is_token(command + words) == 0)
+		words++;
+	argv = ft_calloc(words, sizeof(char *));
+	if (argv == NULL)
+		return (ft_error("minishell: create_argv:"), NULL);
+	while (i < words)
+	{
+		argv[i] = command + i;
+		i++;
+	}
+	argv[i] = NULL;
+	return (argv);
 }
 
 t_cmd	*create_list(char **args)
@@ -41,6 +74,9 @@ t_cmd	*create_list(char **args)
 		if (prev != NULL)
 			prev->next = cmd;
 //here we need to allocate a NULL-terminated string array for execve
+		cmd->argv = create_argv(args[i]);
+		if (cmd->argv == NULL)
+			return (free_cmds(head), NULL);
 		cmd->type = check_type(args[i]);
 		cmd->next = NULL;
 		prev = cmd;
@@ -48,5 +84,7 @@ t_cmd	*create_list(char **args)
 			head = cmd;
 		i++;
 	}
+	if (VERBOSE == 1)
+		printf("created %i nodes\n", i);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/11 17:35:27 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/13 20:06:17 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "errorhandling.h"
 # include "filedescriptors.h"
 # include "builtins.h"
+# include "minishell.h"
 
 void	execute_programs(t_var *var, char **envp);
 int		execute(t_cmd *cmd_head);
