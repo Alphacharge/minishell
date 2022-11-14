@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/14 12:29:17 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/14 15:27:57 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // 	return (prompt);
 // }
 
-int	main()
+int	main(int argc, char **argv, char **envp)
 {
 	// t_var		*var;
 	char	*prompt;
@@ -45,7 +45,7 @@ int	main()
 		printf(">%s<\n", input);
 		args = set_input_pointers(input);
 		cmd_head = create_list(args);
-		if (execute(cmd_head) != 0)
+		if (execute(cmd_head, envp) != 0)
 			break ;
 		input = ft_free(input);
 		args = ft_free(args);

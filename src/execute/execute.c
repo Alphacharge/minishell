@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 12:07:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/14 15:28:23 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 // }
 
 /*Placeholder function for executing a linked list of commands.*/
-int	execute(t_cmd *cmd_head)
+int	execute(t_cmd *cmd_head, char **envp)
 {
 	t_cmd	*current;
 
@@ -62,6 +62,8 @@ int	execute(t_cmd *cmd_head)
 			builtin_cd(current);
 		else if (ft_strncmp(current->argv[0], "exit", 4) == 0)
 			return (builtin_exit(current));
+		else
+			execve(current->argv[0], current->argv, envp);
 		current = current->next;
 	}
 	return (0);
