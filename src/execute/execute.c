@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 15:28:23 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:58:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 // }
 
 /*Placeholder function for executing a linked list of commands.*/
-int	execute(t_cmd *cmd_head, char **envp)
+int	execute(t_cmd *cmd_head)
 {
 	t_cmd	*current;
 
@@ -62,8 +62,9 @@ int	execute(t_cmd *cmd_head, char **envp)
 			builtin_cd(current);
 		else if (ft_strncmp(current->argv[0], "exit", 4) == 0)
 			return (builtin_exit(current));
-		else
-			execve(current->argv[0], current->argv, envp);
+//here any other program will be executed
+		// else
+		// 	execve(current->argv[0], current->argv, getenv());
 		current = current->next;
 	}
 	return (0);

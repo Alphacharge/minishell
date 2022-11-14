@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/14 15:27:57 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:33:39 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@
 // 	return (prompt);
 // }
 
-int	main(int argc, char **argv, char **envp)
+int	main()
 {
 	// t_var		*var;
 	char	*prompt;
-	char		*input;
-	char		**args;
-	t_cmd		*cmd_head;
+	char	*input;
+	char	**args;
+	t_cmd	*cmd_head;
 
 	// prompt = init_prompt();
 	prompt = "minishell: ";
@@ -45,7 +45,8 @@ int	main(int argc, char **argv, char **envp)
 		printf(">%s<\n", input);
 		args = set_input_pointers(input);
 		cmd_head = create_list(args);
-		if (execute(cmd_head, envp) != 0)
+printf("list created\n");
+		if (execute(cmd_head) != 0)
 			break ;
 		input = ft_free(input);
 		args = ft_free(args);
