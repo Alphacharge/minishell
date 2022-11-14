@@ -6,13 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 13:21:07 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/14 10:55:04 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-static void	execute_child(t_var *var, char **envp)
+static void	execute_child(int *fds, char *exe, char **envp)
 {
 	if (var->index_fd == 0)
 		first_fd(var);
@@ -31,20 +31,18 @@ static void	execute_child(t_var *var, char **envp)
 		close(var->fds[var->index_fd - 1][0]);
 		close(var->fds[var->index_fd][1]);
 	}
-	execve(var->exec, var->args[var->index_fd], envp);
+	execve(exe, var->args[var->index_fd], envp);
 }
 
-void	execute_programs(t_var *var, char **envp)
+void	execute_programs(t_exec *exec, t_env *env)
 {
-	pid_t		pid;
+	pid_t	pid;
+	int		fds[2];
 
-	free(var->args[var->index_fd][0]);
-	var->args[var->index_fd][0] = ft_strdup(var->exec);
-	pipe(var->fds[var->index_fd]);
+	pipe(fds);
 	pid = fork();
 	if (pid == 0)
-		execute_child(var, envp);
-	close_fds(var);
-	var->here = 0;
-	var->index_fd++;
+		execute_child(fds, exec, create_envp_from_env(env));
+	close(fds[0]);
+	close(fds[1]);
 }
