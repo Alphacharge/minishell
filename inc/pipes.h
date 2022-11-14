@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:36:20 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/13 20:07:04 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:30:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPES_H
 # define PIPES_H
 
-# include "minishell.h"
+// # include "minishell.h"
 
 #endif

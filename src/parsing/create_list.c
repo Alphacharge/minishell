@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:23:19 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/13 19:35:18 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:45:53 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_cmd	*create_list(char **args)
 		if (cmd->argv == NULL)
 			return (free_cmds(head), NULL);
 		cmd->type = check_type(args[i]);
+		printf("%s\n", cmd->argv[1]);
 		cmd->next = NULL;
 		prev = cmd;
 		if (head == NULL)

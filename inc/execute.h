@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/13 20:06:17 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:35:17 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 # include <stdlib.h> // malloc, free, exit
 # include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
+# include <stdio.h> // printf
 # include "structs.h"
-# include "errorhandling.h"
-# include "filedescriptors.h"
+# include "libft.h"
+// # include "errorhandling.h"
+// # include "filedescriptors.h"
 # include "builtins.h"
-# include "minishell.h"
+// # include "minishell.h"
 
-void	execute_programs(t_var *var, char **envp);
+// void	execute_programs(t_var *var, char **envp);
 int		execute(t_cmd *cmd_head);
 
 #endif
