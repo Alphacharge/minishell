@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 12:30:37 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:52:32 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include "libft.h"
 # include "builtins.h"
 # include "environment.h"
+# include "execute.h"
 # include "errorhandling.h"
 # include "memory.h"
 # include "history.h"

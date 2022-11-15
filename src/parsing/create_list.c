@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 17:23:19 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/14 19:36:40 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:48:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "errorhandling.h"
 
 //Returns index of next token. Placeholder.
 // static int	is_token(char *s)

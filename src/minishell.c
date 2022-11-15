@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/15 11:42:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:54:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd		*cmd_head;
 	t_env		*env;
 	// t_exec		*tmpexe;
-
+	(void)argc;
+	(void)argv;
 	prompt = init_prompt();
 	input = NULL;
 	cmd_head = NULL;

@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/15 11:26:16 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/15 15:02:50 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME	:=	minishell
 ###			###			COMPILER		###			###
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
-CDFLAGS	:=	-g #-fsanitize=address
+CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
@@ -34,7 +34,7 @@ VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 
 SRC_F	:=	minishell.c
 SRC_F	+=
-SRC_F	+=	get_env.c
+SRC_F	+=	environment.c path.c
 SRC_F	+=	clean.c errorhandling.c cleanup.c
 SRC_F	+=	execute.c
 SRC_F	+=	builtins.c
@@ -43,7 +43,7 @@ SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
 SRC_F	+=	set_input_pointers.c create_list.c
 SRC_F	+=
-SRC_F	+=	combine_pathprog.c first_word.c multijoin.c skip_space.c
+SRC_F	+=	combine_pathprog.c multijoin.c skip_space.c
 SRC_F	+=	ft_free.c
 
 ###			###			OBJECTS			###			###
@@ -64,6 +64,10 @@ $(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 
+debug: $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+	$(CC) $(CDFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
+	@echo "$(RED)--->$(BLUE)$(NAME) is compiled in $(YELL)DEBUG$(RED)MODE!$(WHITE)"
+
 $(OBJ_D)/%.o: %.c
 	@$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
 
@@ -71,11 +75,12 @@ $(OBJ_D):
 	mkdir $@
 
 %.a:
-	make -C $(LIBFT_D)
+	make -j -C $(LIBFT_D)
 
 clean:
 	@if [ -d "$(OBJ_D)" ]; then \
 			$(RM) -rf $(OBJ_D); \
+			make fclean -C $(LIBFT_D); \
 			echo "$(RED)Cleaning Objects:\n $(WHITE)$(OBJ_F)";else \
 			echo "$(GREEN)No Objects to remove.$(WHITE)"; \
 	fi;

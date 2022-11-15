@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 11:27:35 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:38:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 // # include "structs.h"
 # include "libft.h"
 
-char	*first_word(const char *str, char c, int rev);
 char	*combine_pathprog(char *path, char *prog);
 char	*multijoin(bool tofrn, int n, ...);
 void	free_multiple(int n, ...);

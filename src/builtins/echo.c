@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/15 14:45:22 by rbetz            ###   ########.fr       */
+/*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
+/*   Updated: 2022/11/15 14:11:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "memory.h"
-#include "utils.h"
+#include "builtins.h"
+#include "libft.h"
+#include <stdio.h>
 
-void	*free_cmds(t_cmd *current)
+void	echo(int argc, char **argv)
 {
-	t_cmd	*prev;
+	int	i;
 
-	prev = NULL;
-	if (current == NULL)
-		return (NULL);
-	while (current->next != NULL)
-	{
-		prev = current;
-		current = current->next;
-		ft_free(prev);
-	}
-	return (ft_free(current));
+	i = 1;
+	if (argc < 1)
+		printf("\n");
+	else if (ft_strncmp(argv[i], "-n", 2) == 0)
 }

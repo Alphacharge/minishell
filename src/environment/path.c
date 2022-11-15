@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 09:46:55 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:55:40 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /*transfers the PATH variable in an double ** array*/
 char	**get_path_var(t_env *env)
 {
-	int		i;
 	char	**ptr;
 
+	ptr = NULL;
 	while (env != NULL)
 	{
 		if (ft_strncmp(env->name, "PATH", 4))
