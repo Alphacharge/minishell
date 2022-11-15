@@ -6,13 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:36:20 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 15:43:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/14 12:30:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPES_H
 # define PIPES_H
 
-# include <minishell.h>
+// # include "minishell.h"
 
 #endif

@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:26 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/08 17:16:48 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:29:49 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERRORHANDLING_H
 # define ERRORHANDLING_H
 
-# include "structs.h"
+// # include "minishell.h"
+// # include "structs.h"
 # include <stdlib.h>
 # include <stdio.h>
 
-void	ft_error(char *message);
-void	clean(t_var *var);
+int		ft_error(char *message);
+// void	clean(t_var *var);
 
 #endif

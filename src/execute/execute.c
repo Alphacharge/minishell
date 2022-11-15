@@ -6,11 +6,12 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 10:59:15 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 11:35:00 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
+#include "structs.h"
 
 static void	execute_child(int *fds, char *exe, char **envp)
 {

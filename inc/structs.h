@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/08 17:12:17 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:33:10 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define STRUCTS_H
 
 # include <unistd.h>
-# include <stdlib.h>
+// # include "minishell.h"
 
 typedef struct s_var
 {
@@ -63,11 +63,11 @@ typedef struct s_redir
 	char	*cmd;
 }				t_redir;
 
-//b --- builtin
 typedef struct s_cmd
 {
 	char			type;
-	char			*arg;
+	char			*path;
+	char			**argv;
 	struct s_cmd	*next;
 }					t_cmd;
 
