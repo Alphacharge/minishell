@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/04 14:56:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 10:52:55 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static char	**read_input(int n, va_list args)
 	return (input);
 }
 
-//tofr, frees the input if true, n is the amount of strings,
-//accepts endless strings to join together
+/*tofr, frees the input if true, n is the amount of strings,*/
+/*accepts endless strings to join together*/
 char	*multijoin(bool tofr, int n, ...)
 {
 	va_list	args;
