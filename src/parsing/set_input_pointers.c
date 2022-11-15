@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/15 11:14:14 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 11:18:46 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**set_input_pointers(char *input)
 		//replacement of spaces by null bytes
 		// while (input[i] == ' ')
 		// 	input[i++] = '\0';
-		while (input[i] == ' ')
+		while (ft_isspace(input[i]))
 			i++;
 		if (input[i] == '\0')
 			break ;
@@ -61,7 +61,7 @@ char	**set_input_pointers(char *input)
 		if (VERBOSE == 1)
 			printf("set_input_pointers: setting pointer %i to %s\n", i_args, args[i_args]);
 		i_args++;
-		while (input[i] != ' ' && input[i] != '\0')
+		while (input[i] != '\0' && !ft_isspace(input[i]))
 			i++;
 	}
 	args[i_args] = NULL;
