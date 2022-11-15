@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 15:32:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 10:59:15 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	execute_child(int *fds, char *exe, char **envp)
 	execve(exe, var->args[var->index_fd], envp);
 }
 
-void	execute_programs(t_exec *exec, t_env *env)
+void	executor(t_exec *exec, t_env *env)
 {
 	pid_t	pid;
 	int		fds[2];

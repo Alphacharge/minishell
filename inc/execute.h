@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/28 14:33:24 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 11:05:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include "errorhandling.h"
 # include "filedescriptors.h"
 
-void	execute_programs(t_var *var, char **envp);
+void	executor(t_exec *exec, t_env *env);
 
 #endif
