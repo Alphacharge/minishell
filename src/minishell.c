@@ -6,11 +6,24 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/15 11:34:21 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 11:42:12 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static t_prompt	*init_prompt(void)
+{
+	t_prompt	*prompt;
+
+	prompt = calloc(1, sizeof(t_prompt));
+	prompt->name = "minishell";
+	prompt->seperator = "@";
+	prompt->dir = "src";
+	prompt->endl = "$:";
+	prompt->prompt = multijoin(false, 4, prompt->name, prompt->seperator, prompt->dir, prompt->endl);
+	return (prompt);
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -27,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	env = extract_env(envp);
 	while (1)
 	{
-		input = readline(prompt);
+		input = readline(prompt->prompt);
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
 		printf(">%s<\n", input);
