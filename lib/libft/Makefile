@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 14:21:20 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/11 14:41:57 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/15 10:42:11 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC = ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c \
 		ft_atol.c ft_ltoa.c ft_strstr.c ft_strreplace.c ft_strisdigit.c \
 		ft_printf.c ft_printflibft.c \
 		get_next_line_bonus.c get_next_line_utils_bonus.c \
-		ft_first_word.c
+		ft_first_word.c ft_isspace.c
 
 SRCOBJ=$(SRC:.c=.o)
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/08 19:01:55 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/15 10:45:29 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
 SRC_F	+=	set_input_pointers.c create_list.c
 SRC_F	+=
-SRC_F	+=	combine_pathprog.c first_word.c multijoin.c
+SRC_F	+=	combine_pathprog.c first_word.c multijoin.c skip_space.c
 SRC_F	+=	ft_free.c
 
 ###			###			OBJECTS			###			###
