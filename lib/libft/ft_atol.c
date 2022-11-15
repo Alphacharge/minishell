@@ -6,19 +6,11 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 17:27:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/10/31 10:40:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 14:49:38 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static long	ft_isspace(char c)
-{	
-	if (c == '\t' || c == '\v' || c == '\f'
-		|| c == '\r' || c == '\n' || c == ' ')
-		return (1);
-	return (0);
-}
 
 long	ft_atol(char *str)
 {
