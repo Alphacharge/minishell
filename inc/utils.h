@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/07 21:45:02 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/15 10:44:57 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ char	*combine_pathprog(char *path, char *prog);
 char	*multijoin(bool tofrn, int n, ...);
 void	free_multiple(int n, ...);
 void	*ft_free(void *pointer);
+char	*skip_space(char *ptr);
 
 #endif
