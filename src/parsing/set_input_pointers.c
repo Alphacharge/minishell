@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_input_pointers.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/14 19:30:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/15 11:14:14 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	count_args(char *input)
 		return (0);
 	while (input[i] != '\0')
 	{
-		while (input[i] == ' ')
+		while (ft_isspace(input[i]))
 			i++;
-		while (input[i] != ' ' && input[i] != '\0')
+		while (input[i] != '\0' && !ft_isspace(input[i]))
 			i++;
 		number_args++;
 	}
