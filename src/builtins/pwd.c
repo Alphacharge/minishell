@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 10:45:04 by rbetz            ###   ########.fr       */
+/*   Created: 2022/11/16 10:32:18 by rbetz             #+#    #+#             */
+/*   Updated: 2022/11/16 11:57:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include <unistd.h>
 #include "libft.h"
-#include <stdio.h>
 
-void	echo(int argc, char **argv)
+void	pwd(int argc, char **argv)
 {
-	int	i;
+	char	*dir;
 
-	i = 1;
-	if (argc == 1)
-		write(1, "\n", 1);
-	else if (argc > 1 && ft_strncmp(argv[i], "-n", 2) == 0)
+	if (argc != 1)
 	{
-		while (i < argc)
-		{
-			write(1, &argv[i], ft_strlen(argv[i]));
-			i++;
-		}
+		write(2, "pwd: bad option: ", 17);
+		if (argv[1] != NULL)
+			write(2, argv[1], ft_strlen(argv[1]));
+		write(2, '\n', 1);
 	}
 	else
 	{
-		while (i < argc)
+		dir = getcwd(NULL, 0);
+		if (dir == NULL)
+			write(1, '\n', 1);
+		else
 		{
-			write(1, &argv[i], ft_strlen(argv[i]));
-			i++;
+			ft_putendl_fd(dir, 1);
+			free(dir);
 		}
-		write(1, "\n", 1);
 	}
 }
-//i think it will not work properly with -n, it will print -n
