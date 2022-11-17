@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 15:50:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:06:44 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ typedef struct s_redir
 
 typedef struct s_cmd
 {
+	int				type;
 	char			**argv;
+	char			operator;
 	struct s_cmd	*next;
 }					t_cmd;
 

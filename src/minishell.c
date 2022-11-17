@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/17 17:39:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/17 18:44:50 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd		*cmd_head;
 	t_env		*env;
 	// t_exec		*tmpexe;
+
 	(void)argc;
 	(void)argv;
 	prompt = init_prompt();
@@ -44,15 +45,14 @@ int	main(int argc, char **argv, char **envp)
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
 		printf(">%s<\n", input);
-		//working on this:
 		cmd_head = str_to_lst(input, env);
 		// tmpexe =
-		int ret;
-		ret = execve(cmd_head->argv[0], cmd_head->argv, envp);
+		if (VERBOSE == 1)
+			printf("first operator: |%c|\n", cmd_head->operator);
+		if (execve(cmd_head->argv[0], cmd_head->argv, envp) < 0)
+			ft_error("execve:");
 		//Fehler liegt hier im environment!!, uebergebe jetzt das originale, muss morgen schauen warum es mit unserem nicht geht
-
-		
-		printf("EXEC_RET:%d\n", ret);
+//		PUSHEN NICHT VERGESSEN :)
 		// executor(tmpexe, create_envp_from_env(env));
 		input = ft_free(input);
 		free_cmds(cmd_head);

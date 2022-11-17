@@ -6,13 +6,20 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/17 17:31:02 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/17 19:15:52 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 //  ls -l     -a|"c"a"t" -e
+
+static char	*skip_to_token(char *s)
+{
+	while (s[0] != '\0' && is_token(s[0]) == 0)
+		s++;
+	return (s);
+}
 
 /*Counts length until next space or token and subtracts number of found
 quotation marks.*/
@@ -36,7 +43,6 @@ static int	arg_len(char *s)
 		}
 		i++;
 	}
-	printf("arg_len: counted length |%i|\n", i - quotations);
 	return (i - quotations);
 }
 
@@ -62,15 +68,15 @@ static char	*input_to_arg(char *s)
 		j++;
 	}
 	arg[len] = '\0';
-	if (VERBOSE == 1)
-		printf("input_to_arg: allocated argument |%s|\n", arg);
+	// if (VERBOSE == 1)
+	// 	printf("input_to_arg: allocated string |%s|\n", arg);
 	return (arg);
 }
 
 /*Skips one argument containing any amount of quotation marks.*/
 char	*skip_argument(char *s)
 {
-	while (s[0] != '\0' && ft_isspace(s[0]) == 0)
+	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
 	{
 		if (s[0] == '\"')
 		{
@@ -98,18 +104,25 @@ static int	count_args(char *s)
 	while (s[0] != '\0' && is_token(s[0]) == 0)
 	{
 		s = skip_space(s);
-		if (is_token(s[0]) == 1)
+		if (s[0] == '\0' || is_token(s[0]) == 1)
 			break ;
 		args++;
 		s = skip_argument(s);
 	}
-	if (VERBOSE == 1)
-		printf("count_args: counted %i\n", args);
 	return (args);
 }
 
+//checks the type of the command; subject to change
+static void	set_type(t_cmd *cmd)
+{
+	if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
+		cmd->type = BLTIN;
+	else
+		cmd->type = EXEC;
+}
+
 /*Creates an array of strings until null byte or token is encountered.*/
-static char	**create_argv(char *s, t_env *env)
+static char	**create_argv(char *s)
 {
 	char	**argv;
 	int		nr;
@@ -124,10 +137,6 @@ static char	**create_argv(char *s, t_env *env)
 	{
 		s = skip_space(s);
 		argv[i] = input_to_arg(s);
-		if (i == 0)
-			argv[0] = get_path(get_path_var(env), argv[0]);
-		if (VERBOSE == 1)
-			printf("argv[0]: |%s|\n", argv[0]);
 		i++;
 		s = skip_argument(s);
 	}
@@ -139,6 +148,7 @@ static char	**create_argv(char *s, t_env *env)
 static t_cmd	*create_node(char *s, t_env *env)
 {
 	t_cmd	*cmd;
+	char	*exec_name;
 
 	cmd = NULL;
 	if (s == NULL || s[0] == '\0')
@@ -147,9 +157,14 @@ static t_cmd	*create_node(char *s, t_env *env)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
-	cmd->argv = create_argv(s, env);
+	cmd->argv = create_argv(s);
 	if (cmd->argv == NULL)
 		return (NULL);
+	//path will only be searched for exec type at the moment!
+	set_type(cmd);
+	//argv[0] is not freed and overwritten; need to fix leaks here
+	if (cmd->type == EXEC)
+		cmd->argv[0] = get_path(get_path_var(env), cmd->argv[0]);
 	return (cmd);
 }
 
@@ -176,12 +191,15 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 			head = cmd;
 		cmd->next = NULL;
 		prev = cmd;
-		while (input[0] != '\0' && is_token(input[0]) == 0)
-			input++;
-		if (is_token(input[0]) == 1)
-			input++;
 		if (VERBOSE == 1)
 			printf("str_to_lst: created node for |%s|\n", cmd->argv[0]);
+		input = skip_to_token(input);
+		if (input[0] == '\0')
+			break ;
+		//needs extra rules for special tokens
+		cmd->operator = input[0];
+		while (is_token(input[0]) == 1)
+			input++;
 	}
 	return (head);
 }

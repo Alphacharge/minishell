@@ -5,14 +5,10 @@
 -	history
 -	config
 -	signals
--	quotes
+-	quotes --- double quotes working, single quotes missing --- $ not yet recognized
 -	redirections
 -	heredoc
 -	returnvalues
--	suppress libft output
--	clean up rouven's pipex
--	set up error messages
--	null protection for strncmp
 
 
 How does Bash:
