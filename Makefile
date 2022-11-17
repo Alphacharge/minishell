@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/15 19:37:21 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/17 16:12:53 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,15 +37,15 @@ SRC_F	+=
 SRC_F	+=	environment.c path.c
 SRC_F	+=	clean.c errorhandling.c cleanup.c
 SRC_F	+=	execute.c
-SRC_F	+=	builtins.c
 SRC_F	+=	check_infile.c check_outfile.c close.c
 SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
-SRC_F	+=	str_to_lst.c
-SRC_F	+=	is_token.c
-SRC_F	+=	skip_word.c
+SRC_F	+=	str_to_lst.c is_token.c
+SRC_F	+=
+SRC_F	+=	cd.c echo.c env.c pwd.c
 SRC_F	+=
 SRC_F	+=	combine_pathprog.c multijoin.c skip_space.c
+SRC_F	+=	skip_word.c
 SRC_F	+=	ft_free.c
 
 ###			###			OBJECTS			###			###
