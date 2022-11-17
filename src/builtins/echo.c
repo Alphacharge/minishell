@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 10:45:04 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 09:06:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include <stdio.h>
 
+/*is printing all args, -n needs to be in first arg*/
 void	echo(int argc, char **argv)
 {
 	int	i;

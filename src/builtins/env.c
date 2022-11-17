@@ -6,13 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:48:08 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 11:59:04 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 09:04:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "libft.h"
 
+/*accepts no args, prints env*/
 void	env(int argc, char **argv, t_env *env)
 {
 	if (argc != 1)

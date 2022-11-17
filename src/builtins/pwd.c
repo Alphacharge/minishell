@@ -6,13 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:32:18 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 11:57:06 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 09:05:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
 
+/*accepts no args*/
 void	pwd(int argc, char **argv)
 {
 	char	*dir;
