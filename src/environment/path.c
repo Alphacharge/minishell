@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 14:55:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 17:34:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_path_var(t_env *env)
 	ptr = NULL;
 	while (env != NULL)
 	{
-		if (ft_strncmp(env->name, "PATH", 4))
+		if (ft_strncmp(env->name, "PATH", 4) == 0)
 		{
 			ptr = ft_split(env->value, ':');
 			break ;
@@ -44,14 +44,15 @@ char	*get_path(char **paths, char *executable)
 	success = -1;
 	while (paths != NULL && paths[i] != NULL && success != 0)
 	{
-		test = multijoin(false, 2, paths[i], executable);
+		test = multijoin(false, 3, paths[i], "/", executable);
 		success = access(test, F_OK);
 		if (success == -1)
 			free(test);
 		i++;
 	}
-	if (success == 0)
-		return (paths[--i]);
-	else
+
+	if (success != 0)
 		return (NULL);
+	else
+		return (test);
 }
