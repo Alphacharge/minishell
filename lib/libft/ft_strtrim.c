@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 10:59:32 by rbetz             #+#    #+#             */
-/*   Updated: 2022/04/07 20:14:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 16:05:13 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_isinset(char const c, char const *ptr)
+int	ft_isinset(char const c, char const *ptr)
 {
 	int	i;
 

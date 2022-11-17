@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   skip_word.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 16:51:37 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/15 16:36:51 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/15 19:38:00 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "utils.h"
 
-# include <stdbool.h>
+int	is_word(char c)
+{
+	if (c != '\0' && ft_isspace(c) == 0 && is_token(c) == 0)
+		return (1);
+	return (0);
+}
 
-// # include ".h"
-// # include "structs.h"
-# include "libft.h"
+/*Skips characters until it encounters whitespace or token.*/
+char	*skip_word(char *s)
+{
+	int	i;
 
-char	*combine_pathprog(char *path, char *prog);
-char	*multijoin(bool tofrn, int n, ...);
-void	free_multiple(int n, ...);
-void	*ft_free(void *pointer);
-char	*skip_space(char *ptr);
-char	*skip_word(char *s);
-int		is_word(char c);
-int		is_token(char c);
-
-#endif
+	i = 0;
+	while (is_word(s[i]) == 1)
+		i++;
+	return (s + i);
+}

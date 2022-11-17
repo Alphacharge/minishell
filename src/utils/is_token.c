@@ -1,31 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   is_token.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 16:51:37 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/15 16:42:42 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/15 17:16:33 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "utils.h"
 
-# include <stdbool.h>
-
-// # include ".h"
-// # include "structs.h"
-# include "libft.h"
-
-char	*combine_pathprog(char *path, char *prog);
-char	*multijoin(bool tofrn, int n, ...);
-void	free_multiple(int n, ...);
-void	*ft_free(void *pointer);
-char	*skip_space(char *ptr);
-char	*skip_word(char *s);
-int		is_word(char c);
-int		is_token(char c);
-
-#endif
+/*Checks for shell tokens but not for quotation marks.*/
+int	is_token(char c)
+{
+	if (c == '|' || c == '<' || c == '>' || c == '$')
+		return (1);
+	return (0);
+}

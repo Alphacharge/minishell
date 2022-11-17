@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
+#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/15 15:02:50 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/15 19:37:21 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ SRC_F	+=	builtins.c
 SRC_F	+=	check_infile.c check_outfile.c close.c
 SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
-SRC_F	+=	set_input_pointers.c create_list.c
+SRC_F	+=	str_to_lst.c
+SRC_F	+=	is_token.c
+SRC_F	+=	skip_word.c
 SRC_F	+=
 SRC_F	+=	combine_pathprog.c multijoin.c skip_space.c
 SRC_F	+=	ft_free.c
