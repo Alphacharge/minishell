@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 15:23:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 16:14:18 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	cd(int argc, char **argv, t_env *env)
 		write(2, "cd: string not in pwd: ", 23);
 		if (argv[1] != NULL)
 			write(2, argv[1], ft_strlen(argv[1]));
-		write(2, '\n', 1);
+		write(2, "\n", 1);
 	}
 	if (ret == -1)
 	{
 		write(2, "cd: no such file or directory: ", 30);
 		if (argv[1] != NULL)
 			write(2, argv[1], ft_strlen(argv[1]));
-		write(2, '\n', 1);
+		write(2, "\n", 1);
 	}
 	else
 		update_pwd(argv[1], env);

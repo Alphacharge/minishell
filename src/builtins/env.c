@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:48:08 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/16 11:59:04 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 16:14:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	env(int argc, char **argv, t_env *env)
 		write(2, "env: illegal option ", 20);
 		if (argv[1] != NULL)
 			write(2, argv[1], ft_strlen(argv[1]));
-		write(2, '\n', 1);
+		write(2, "\n", 1);
 	}
 	else
 		print_env(env, 1);
