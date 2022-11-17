@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/15 14:54:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 19:38:47 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_prompt	*prompt;
 	char		*input;
-	char		**args;
 	t_cmd		*cmd_head;
 	t_env		*env;
 	// t_exec		*tmpexe;
@@ -45,12 +44,11 @@ int	main(int argc, char **argv, char **envp)
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
 		printf(">%s<\n", input);
-		args = set_input_pointers(input);
-		cmd_head = create_list(args);
-		// tmpexe = 
+		//working on this:
+		cmd_head = str_to_lst(input);
+		// tmpexe =
 		// executor(tmpexe, create_envp_from_env(env));
 		input = ft_free(input);
-		args = ft_free(args);
 		free_cmds(cmd_head);
 	}
 	free_multiple(1, prompt->prompt, prompt);

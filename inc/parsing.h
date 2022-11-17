@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:19:48 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 11:15:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/15 19:35:26 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 // void	parse_progs(t_var *var, char **argv, char **envp);
 // void	parse_args(t_var *var, int argc, char **argv, char **envp);
-char	**set_input_pointers(char *input);
-t_cmd	*create_list(char **args);
+t_cmd	*str_to_lst(char *input);
 
 #endif
