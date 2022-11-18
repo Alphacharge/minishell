@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 16:14:18 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/18 10:21:34 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "environment.h"
 #include "libft.h"
 
-void	update_pwd(char *var, t_env *env)
+static void	update_pwd(char *var, t_env *env)
 {
 	t_env	*tmp;
 	char	*old;
@@ -35,6 +35,7 @@ void	update_pwd(char *var, t_env *env)
 	tmp->value = multijoin(true, 2, var, tmp->value);
 }
 
+/*accepts 1 arg or no arg 4 home, needs env to change pwd*/
 void	cd(int argc, char **argv, t_env *env)
 {
 	int	ret;
