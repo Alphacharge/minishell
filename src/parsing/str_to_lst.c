@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 10:29:55 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 10:32:34 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ static t_cmd	*create_node(char *s, t_env *env)
 {
 	t_cmd	*cmd;
 	char	*exec_name;
-	t_env	*env;
+	char	**paths;
 
 	cmd = NULL;
 	if (s == NULL || s[0] == '\0')
@@ -162,16 +162,16 @@ static t_cmd	*create_node(char *s, t_env *env)
 	if (cmd->argv == NULL)
 		return (NULL);
 	set_type(cmd);
-	if (env == NULL)
+	if (paths == NULL)
 		return(free(cmd), NULL);
 	//path will only be searched for exec type at the moment!
 	//argv[0] is not freed and overwritten; need to fix leaks here
 	if (cmd->type == EXEC)
 	{
-		env = get_path_var(env);
-		cmd->argv[0] = get_path(env, cmd->argv[0]);
+		paths = get_path_var(env);
+		cmd->argv[0] = get_path(paths, cmd->argv[0]);
 	}
-	return (free(env), cmd);
+	return (free(paths), cmd);
 }
 
 //problems: stuck if there is no space between command and token
