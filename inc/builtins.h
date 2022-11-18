@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:39:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 09:06:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/17 09:07:57 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,5 @@
 void	echo(int argc, char **argv);
 void	env(int argc, char **argv, t_env *env);
 void	pwd(int argc, char **argv);
+void	cd(int argc, char **argv, t_env *env);
 #endif
