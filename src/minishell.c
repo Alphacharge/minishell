@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/18 15:20:47 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:44:39 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_cmd		*cmd_head;
 	t_env		*env;
+	int			ret;
 
 	(void)argc;
 	(void)argv;
@@ -38,21 +39,25 @@ int	main(int argc, char **argv, char **envp)
 	input = NULL;
 	cmd_head = NULL;
 	env = extract_env(envp);
-	while (1)
+	ret = -1;
+	while (ret < 0)
 	{
 		input = readline(prompt->prompt);
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
-		printf(">%s<\n", input);
+		// printf(">%s<\n", input);
 		cmd_head = str_to_lst(input, env);
-		if (VERBOSE == 1)
-			printf("first operator: |%c|\n", cmd_head->operator);
-		if (execve(cmd_head->argv[0], cmd_head->argv, envp) < 0)
-			ft_error("execve:");
-		// if (executor(cmd_head, env)
+		// if (VERBOSE == 1)
+		// 	printf("first operator: |%c|\n", cmd_head->operator);
+		// if (execve(cmd_head->argv[0], cmd_head->argv, envp) < 0)
+		// 	ft_error("execve:");
+		ret = execute_list(cmd_head, env);
+		// if (VERBOSE == 1)
+		// printf("executor done\n");
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
 	free_multiple(1, prompt->prompt, prompt);
-	return (0);
+	system("leaks minishell");
+	return (ret);
 }

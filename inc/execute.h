@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 11:33:27 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 18:33:12 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,11 @@
 # include "structs.h"
 # include "errorhandling.h"
 # include "filedescriptors.h"
+# include "minishell.h"
+# include "environment.h"
+# include "execute.h"
 
-void	executor(t_exec *exec, t_env *env);
+// void	executor(t_exec *exec, t_env *env);
+int		execute_list(t_cmd *lst, t_env *env);
 
 #endif

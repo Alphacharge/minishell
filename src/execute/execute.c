@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 14:57:09 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 18:43:59 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
 #include "execute.h"
-#include "structs.h"
 
 // static void	execute_child(int *fds, char *exe, char **envp)
 // {
@@ -36,17 +34,48 @@
 // 	execve(exe, var->args[var->index_fd], envp);
 // }
 
-void	executor(t_exec *exec, t_env *env)
-{
-	pid_t	pid;
-	int		fds[2];
-
-	(void)exec;
-	(void)env;
-	pipe(fds);
-	pid = fork();
+// void	executor(t_exec *exec, t_env *env)
+// {
+// 	pid_t	pid;
+	// int		fds[2];
+	// (void)exec;
+	// (void)env;
+	// pipe(fds);
+	// pid = fork();
 	// if (pid == 0)
-		// execute_child(fds, exec, create_envp_from_env(env));
-	close(fds[0]);
-	close(fds[1]);
+	// 	execute_child(fds, exec, create_envp_from_env(env));
+	// close(fds[0]);
+	// close(fds[1]);
+// }
+
+static void	exec_cmd(t_cmd *cmd, t_env *env)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == 0)
+		execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+	if (pid < 0)
+		ft_error("minishell: exec_cmd:");
+}
+
+/*If exit is found, exit status is returned. Otherwise return value is -1.*/
+int	execute_list(t_cmd *lst, t_env *env)
+{
+	t_cmd	*current;
+
+	current = lst;
+	while (current != NULL)
+	{
+		if (current->type == 0)
+		{
+			if (ft_strncmp(lst->argv[0], "cd", 3) == 0)
+				cd(lst->argv, env);
+		}
+		if (current->type == 1)
+			exec_cmd(current, env);
+		current = current->next;
+		waitpid(-1, NULL, 0);
+	}
+	return (-1);
 }

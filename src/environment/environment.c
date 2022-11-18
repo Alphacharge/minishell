@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 09:47:30 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 18:21:49 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ char	**create_envp_from_env(t_env *env)
 		env = env->next;
 	}
 	return (envp);
+}
+
+char	*get_env_var(t_env *env, const char *name)
+{
+	while (env != NULL)
+	{
+		if (ft_strncmp(name, env->name, ft_strlen(name)) == 0)
+			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
 }
 
 /*creates a linked list from the **envp*/

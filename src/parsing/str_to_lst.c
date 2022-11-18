@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 16:02:45 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/18 18:44:56 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ static t_cmd	*create_node(char *s, t_env *env)
 		paths = get_path_var(env);
 		cmd->argv[0] = get_path(paths, cmd->argv[0]);
 	}
-	return (ft_free(paths), ft_free(cmd_name), cmd);
+	return (free_ptr_array((void **)paths), ft_free(cmd_name), cmd);
 }
 
 //problems: stuck if there is no space between command and token
@@ -198,8 +198,8 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 			head = cmd;
 		cmd->next = NULL;
 		prev = cmd;
-		if (VERBOSE == 1)
-			printf("str_to_lst: created node for |%s|\n", cmd->argv[0]);
+		// if (VERBOSE == 1)
+		// 	printf("str_to_lst: created node for |%s|\n", cmd->argv[0]);
 		input = skip_to_token(input);
 		if (input[0] == '\0')
 			break ;
