@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 10:21:34 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:24:03 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ static void	update_pwd(char *var, t_env *env)
 	char	*old;
 
 	tmp = env;
-	while (tmp != NULL && !ft_strncmp(tmp->name, "PWD", 3))
+	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
 	old = tmp->value;
 	tmp = env;
-	while (tmp != NULL && !ft_strncmp(tmp->name, "OLDPWD", 6))
+	while (tmp != NULL && !ft_strcmp(tmp->name, "OLDPWD"))
 		tmp = tmp->next;
 	free(tmp->value);
 	tmp->value = old;
 	tmp = env;
-	while (tmp != NULL && !ft_strncmp(tmp->name, "PWD", 3))
+	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
 	tmp->value = multijoin(true, 2, var, tmp->value);
 }
