@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/07 21:45:23 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:25:50 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-//Frees memory of n arguments if they are not pointing to NULL.
+/*Frees a string array and every string pointer inside.*/
+void	*free_str_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	if (array == NULL)
+		return (NULL);
+	while (array[i] != NULL)
+		free(array[i++]);
+	free(array);
+	return (NULL);
+}
+
+/*Frees memory of n arguments if they are not pointing to NULL.
+Pointers are only freed, but not NULL pointers.*/
 void	free_multiple(int n, ...)
 {
 	va_list	args;
@@ -32,7 +47,7 @@ void	free_multiple(int n, ...)
 	va_end(args);
 }
 
-//Frees pointer and returns NULL.
+/*Frees pointer and returns NULL.*/
 void	*ft_free(void *pointer)
 {
 	if (pointer != NULL)

@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/17 16:12:53 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/18 16:27:56 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,9 @@ SRC_F	+=	str_to_lst.c is_token.c
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c pwd.c
 SRC_F	+=
-SRC_F	+=	combine_pathprog.c multijoin.c skip_space.c
-SRC_F	+=	skip_word.c
-SRC_F	+=	ft_free.c
+SRC_F	+=	combine_pathprog.c multijoin.c
+SRC_F	+=	skip.c
+SRC_F	+=	free.c
 
 ###			###			OBJECTS			###			###
 OBJ_D	:=	./obj

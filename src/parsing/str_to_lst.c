@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 10:32:34 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:02:45 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,10 +148,12 @@ static char	**create_argv(char *s)
 static t_cmd	*create_node(char *s, t_env *env)
 {
 	t_cmd	*cmd;
-	char	*exec_name;
 	char	**paths;
+	char	*cmd_name;
 
 	cmd = NULL;
+	paths = NULL;
+	cmd_name = NULL;
 	if (s == NULL || s[0] == '\0')
 		return (NULL);
 	s = skip_space(s);
@@ -162,16 +164,15 @@ static t_cmd	*create_node(char *s, t_env *env)
 	if (cmd->argv == NULL)
 		return (NULL);
 	set_type(cmd);
-	if (paths == NULL)
-		return(free(cmd), NULL);
 	//path will only be searched for exec type at the moment!
 	//argv[0] is not freed and overwritten; need to fix leaks here
 	if (cmd->type == EXEC)
 	{
+		cmd_name = cmd->argv[0];
 		paths = get_path_var(env);
 		cmd->argv[0] = get_path(paths, cmd->argv[0]);
 	}
-	return (free(paths), cmd);
+	return (ft_free(paths), ft_free(cmd_name), cmd);
 }
 
 //problems: stuck if there is no space between command and token

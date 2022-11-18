@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/17 18:44:50 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:20:47 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_cmd		*cmd_head;
 	t_env		*env;
-	// t_exec		*tmpexe;
 
 	(void)argc;
 	(void)argv;
@@ -46,14 +45,11 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		printf(">%s<\n", input);
 		cmd_head = str_to_lst(input, env);
-		// tmpexe =
 		if (VERBOSE == 1)
 			printf("first operator: |%c|\n", cmd_head->operator);
 		if (execve(cmd_head->argv[0], cmd_head->argv, envp) < 0)
 			ft_error("execve:");
-		//Fehler liegt hier im environment!!, uebergebe jetzt das originale, muss morgen schauen warum es mit unserem nicht geht
-//		PUSHEN NICHT VERGESSEN :)
-		// executor(tmpexe, create_envp_from_env(env));
+		// if (executor(cmd_head, env)
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
