@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/18 18:44:39 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 11:43:57 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
-	free_multiple(1, prompt->prompt, prompt);
+	free_multiple(2, prompt->prompt, prompt);
 	system("leaks minishell");
 	return (ret);
 }

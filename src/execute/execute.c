@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 18:43:59 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:28:08 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,15 @@
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	int	pid;
+	// int	ret;
 
+	// ret = 1;
 	pid = fork();
 	if (pid == 0)
 		execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
 	if (pid < 0)
 		ft_error("minishell: exec_cmd:");
+	// ft_error(NULL);
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
@@ -69,13 +72,17 @@ int	execute_list(t_cmd *lst, t_env *env)
 	{
 		if (current->type == 0)
 		{
-			if (ft_strncmp(lst->argv[0], "cd", 3) == 0)
+			if (ft_strncmp(lst->argv[0], "exit", 5) == 0)
+				return (shell_exit(lst->argv));
+			else if (ft_strncmp(lst->argv[0], "cd", 3) == 0)
 				cd(lst->argv, env);
 		}
 		if (current->type == 1)
+		{
 			exec_cmd(current, env);
+			waitpid(-1, NULL, 0);
+		}
 		current = current->next;
-		waitpid(-1, NULL, 0);
 	}
 	return (-1);
 }

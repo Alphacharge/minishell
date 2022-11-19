@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 18:48:01 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:18:41 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,17 @@ void	cd(char **argv, t_env *env)
 	if (argv[1] == NULL)
 		ret = chdir(get_env_var(env, "HOME"));
 	else if (argv[2] != NULL)
+	{
 		printf("cd: too many arguments\n");
+		return ;
+	}
 	else if (argv[1][0] > 0)
 		ret = chdir(argv[1]);
 	if (ret == -1)
 	{
-		write(2, "cd: no such file or directory: ", 30);
-		if (argv[1] != NULL)
-			write(2, argv[1], ft_strlen(argv[1]));
+		ft_error("minishell: cd:");
+		// if (argv[1] != NULL)
+		// 	write(2, argv[1], ft_strlen(argv[1]));
 		write(2, "\n", 1);
 	}
 	else

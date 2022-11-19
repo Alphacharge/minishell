@@ -6,11 +6,12 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 16:34:14 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:00:25 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include <stdio.h>
 
 /*Frees an array and every pointer inside.*/
 void	*free_ptr_array(void **array)

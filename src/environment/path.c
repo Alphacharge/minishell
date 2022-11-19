@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 17:34:03 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:37:15 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ char	*get_path(char **paths, char *executable)
 			free(test);
 		i++;
 	}
-
 	if (success != 0)
 		return (NULL);
 	else

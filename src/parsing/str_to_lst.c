@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 18:44:56 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:42:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,12 @@ static int	count_args(char *s)
 	return (args);
 }
 
-//checks the type of the command; subject to change
+//exit, cd check
 static void	set_type(t_cmd *cmd)
 {
-	if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
+	if (ft_strncmp("exit", cmd->argv[0], 5) == 0)
+		cmd->type = BLTIN;
+	else if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
 		cmd->type = BLTIN;
 	else
 		cmd->type = EXEC;
@@ -164,15 +166,22 @@ static t_cmd	*create_node(char *s, t_env *env)
 	if (cmd->argv == NULL)
 		return (NULL);
 	set_type(cmd);
-	//path will only be searched for exec type at the moment!
-	//argv[0] is not freed and overwritten; need to fix leaks here
 	if (cmd->type == EXEC)
 	{
 		cmd_name = cmd->argv[0];
 		paths = get_path_var(env);
 		cmd->argv[0] = get_path(paths, cmd->argv[0]);
+		free_ptr_array((void **)paths);
+		if (cmd->argv[0] == NULL)
+		{
+			printf("minishell: %s: command not found\n", cmd_name);
+			cmd->argv[0] = cmd_name;
+			cmd_name = free_ptr_array((void **)cmd->argv);
+			cmd = ft_free(cmd);
+		}
+		ft_free(cmd_name);
 	}
-	return (free_ptr_array((void **)paths), ft_free(cmd_name), cmd);
+	return (cmd);
 }
 
 //problems: stuck if there is no space between command and token
