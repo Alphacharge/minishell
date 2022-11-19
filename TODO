@@ -9,7 +9,7 @@
 -	redirections
 -	heredoc
 -	returnvalues
--	"object being freed was not allocated" error
+-	improve ctrl + C
 
 
 How does Bash:

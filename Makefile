@@ -6,7 +6,7 @@
 #    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/18 17:50:22 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/19 13:22:01 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ CFLAGS	+=	$(INC)
 ###			###			SOURCES			###			###
 VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 			src/filedescriptors/ src/history/ src/memory \
-			src/parsing/ src/pipes/ src/redirects/ src/signal/ src/utils/
+			src/parsing/ src/pipes/ src/redirects/ src/signals/ src/utils/
 
 SRC_F	:=	minishell.c
 SRC_F	+=
@@ -42,6 +42,8 @@ SRC_F	+=	parse_args.c parse_progs.c
 SRC_F	+=	str_to_lst.c is_token.c
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
+SRC_F	+=
+SRC_F	+=	signals.c
 SRC_F	+=
 SRC_F	+=	combine_pathprog.c multijoin.c
 SRC_F	+=	skip.c

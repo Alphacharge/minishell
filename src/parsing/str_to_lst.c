@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/19 12:42:03 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:46:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static char	*input_to_arg(char *s)
 		j++;
 	}
 	arg[len] = '\0';
-	// if (VERBOSE == 1)
-	// 	printf("input_to_arg: allocated string |%s|\n", arg);
 	return (arg);
 }
 
@@ -207,8 +205,6 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 			head = cmd;
 		cmd->next = NULL;
 		prev = cmd;
-		// if (VERBOSE == 1)
-		// 	printf("str_to_lst: created node for |%s|\n", cmd->argv[0]);
 		input = skip_to_token(input);
 		if (input[0] == '\0')
 			break ;

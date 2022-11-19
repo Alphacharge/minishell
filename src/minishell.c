@@ -6,11 +6,13 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/19 11:43:57 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/19 14:25:36 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_new = 0;
 
 static t_prompt	*init_prompt(void)
 {
@@ -35,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	set_signals();
 	prompt = init_prompt();
 	input = NULL;
 	cmd_head = NULL;
@@ -43,17 +46,22 @@ int	main(int argc, char **argv, char **envp)
 	while (ret < 0)
 	{
 		input = readline(prompt->prompt);
+		// printf(">%s<\n", input);
+		if (g_new == 1)
+		{
+			g_new = 0;
+			continue ;
+		}
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
-		// printf(">%s<\n", input);
+		if (input == NULL)
+		{
+			write(1,"\n", 1);
+			ret = shell_exit(NULL);
+			break ;
+		}
 		cmd_head = str_to_lst(input, env);
-		// if (VERBOSE == 1)
-		// 	printf("first operator: |%c|\n", cmd_head->operator);
-		// if (execve(cmd_head->argv[0], cmd_head->argv, envp) < 0)
-		// 	ft_error("execve:");
 		ret = execute_list(cmd_head, env);
-		// if (VERBOSE == 1)
-		// printf("executor done\n");
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/15 14:52:32 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/19 13:05:07 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # include "parsing.h"
 # include "pipes.h"
 # include "redirects.h"
-# include "signal.h"
+# include "signals.h"
 # include "execute.h"
 // # include "filedescriptors.h"
 # include "utils.h"
