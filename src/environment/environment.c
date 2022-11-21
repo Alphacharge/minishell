@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 09:35:42 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 13:22:03 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ char	**create_envp_from_env(t_env *env)
 		i++;
 		tmp = tmp->next;
 	}
-	envp = ft_calloc(i, sizeof(char *));
+	envp = ft_calloc(i + 1, sizeof(char *));
+	envp[i] = NULL;
 	i = 0;
 	while (env != NULL)
 	{
