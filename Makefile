@@ -6,12 +6,12 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/21 14:53:43 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/21 15:46:26 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	minishell
-
+OS		:=	shell(uname)
 ###			###			COMPILER		###			###
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
@@ -19,12 +19,19 @@ CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
-LIB		:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline/lib -l readline
+LIB_MAC	:=	-L $(LIBFT_D) -l ft -L $(HOME)/.brew/opt/readline/lib -l readline
+LIB		:=	-L $(LIBFT_D) -l ft -l readline
 
 ###			###			HEADER			###			###
 INC_D	:=	./inc
-INC		:=	-I $(INC_D)/ -I $(LIBFT_D) -I ${HOME}/.brew/opt/readline/include
-CFLAGS	+=	$(INC)
+INC_ALL	:=	-I $(INC_D)/ -I $(LIBFT_D)
+ifeq ($(OS), Darwin)
+	INC_MAC	+=	$(INC_ALL) -I $(HOME)/.brew/opt/readline/include
+	CFLAGS	+=	$(INC_MAC)
+else
+	INC		+=	$(INC_ALL) -I /usr/include/readline/readline.h
+	CFLAGS	+=	$(INC)
+endif
 
 ###			###			SOURCES			###			###
 VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
@@ -63,12 +70,18 @@ WHITE	=	\033[0m
 ###			###			RULES			###			###
 all: $(NAME)
 
+ifeq ($(OS), Darwin)
+$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
+	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
+else
 $(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
+endif
 
 debug: $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
-	$(CC) $(CDFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
+	$(CC) $(CDFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled in $(YELL)DEBUG$(RED)MODE!$(WHITE)"
 
 $(OBJ_D)/%.o: %.c
