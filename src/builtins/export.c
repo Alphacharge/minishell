@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 09:28:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 09:42:33 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_env	*export(char *name, char *value, t_env *env)
 		return (env);
 	if (head == NULL)
 	{
-		head == new_env();
+		head = new_env();
 		if (head == NULL)
 			return (NULL);
 		head->name = name;

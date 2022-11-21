@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 16:33:14 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:41:54 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char	*skip_space(char *ptr);
 char	*skip_word(char *s);
 int		is_word(char c);
 int		is_token(char c);
+int		ft_strcmp(char *s1, char *s2);
 
 #endif

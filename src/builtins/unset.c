@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 09:39:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 09:45:17 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ t_env	*unset(char *var, t_env *env)
 	t_env	*head;
 	t_env	*tmp;
 
+	head = env;
 	if (var == NULL || env == NULL)
 		return (NULL);
 	if (!ft_strcmp(var, env->name))
+	{
 		head = env->next;
+		free(env);
+	}
 	else
 	{
 		tmp = env;

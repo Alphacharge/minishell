@@ -6,12 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 15:19:41 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 16:22:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 09:48:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
+/*returns the differece of s1 and s2, -1 if a string is NULL*/
+/*returns 0 if there is no difference*/
 int	ft_strcmp(char *s1, char *s2)
 {
 	int	len1;
@@ -19,7 +21,7 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	if (s1 == NULL || s2 == NULL)
-		return (NULL);
+		return (-1);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
 	i = 0;
