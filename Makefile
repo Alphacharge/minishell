@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/21 09:47:17 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/21 14:53:43 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
-LIB		:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline -l readline
+LIB		:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline/lib -l readline
 
 ###			###			HEADER			###			###
 INC_D	:=	./inc
-INC		:=	-I $(INC_D)/ -I $(LIBFT_D)
+INC		:=	-I $(INC_D)/ -I $(LIBFT_D) -I ${HOME}/.brew/opt/readline/include
 CFLAGS	+=	$(INC)
 
 ###			###			SOURCES			###			###
