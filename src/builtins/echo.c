@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 09:06:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/18 16:24:26 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	echo(int argc, char **argv)
 	i = 1;
 	if (argc == 1)
 		write(1, "\n", 1);
-	else if (argc > 1 && ft_strncmp(argv[i], "-n", 2) == 0)
+	else if (argc > 1 && ft_strcmp(argv[i], "-n") == 0)
 	{
 		while (i < argc)
 		{

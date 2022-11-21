@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/19 12:18:41 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:37:07 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ static void	update_pwd(char *var, t_env *env)
 	char	*old;
 
 	tmp = env;
-	while (tmp != NULL && ft_strncmp(tmp->name, "PWD", 3) != 0)
+	while (tmp != NULL && ft_strcmp(tmp->name, "PWD") != 0)
 		tmp = tmp->next;
 	old = tmp->value;
 	tmp = env;
-	while (tmp != NULL && !ft_strncmp(tmp->name, "OLDPWD", 6))
+	while (tmp != NULL && !ft_strcmp(tmp->name, "OLDPWD"))
 		tmp = tmp->next;
 //searching for freeing error
 printf("update_pwd: freeing%p\n", tmp->value);
 	ft_free(tmp->value);
 	tmp->value = old;
 	tmp = env;
-	while (tmp != NULL && !ft_strncmp(tmp->name, "PWD", 3))
+	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
 	tmp->value = multijoin(true, 2, var, tmp->value);
 }
