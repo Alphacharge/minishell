@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/19 13:32:12 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 09:39:15 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	shell_exit(char **argv)
 	int	status;
 
 	if (argv && argv[1] != NULL && argv[2] != NULL)
-		return (write(1, "minishell: exit: too many arguments\n", 37), -1);
+		return (write(2, "minishell: exit: too many arguments\n", 37), -1);
 	write(1, "exit\n", 5);
 	if (argv == NULL || argv[1] == NULL)
 		return (EXIT_SUCCESS);
