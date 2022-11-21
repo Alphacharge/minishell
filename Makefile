@@ -6,30 +6,34 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/21 15:46:26 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/21 16:47:17 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	:=	minishell
-OS		:=	shell(uname)
+
+###			###			COMPABILITY		###			###
+OS		:=	$(shell uname)
+
 ###			###			COMPILER		###			###
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -g
 CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
-LIB_MAC	:=	-L $(LIBFT_D) -l ft -L $(HOME)/.brew/opt/readline/lib -l readline
+LIB_MAC	:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline/lib -l readline
 LIB		:=	-L $(LIBFT_D) -l ft -l readline
 
 ###			###			HEADER			###			###
 INC_D	:=	./inc
 INC_ALL	:=	-I $(INC_D)/ -I $(LIBFT_D)
+
 ifeq ($(OS), Darwin)
-	INC_MAC	+=	$(INC_ALL) -I $(HOME)/.brew/opt/readline/include
+	INC_MAC	:=	$(INC_ALL) -I ~/.brew/opt/readline/include
 	CFLAGS	+=	$(INC_MAC)
 else
-	INC		+=	$(INC_ALL) -I /usr/include/readline/readline.h
+	INC		:=	$(INC_ALL) -I /usr/include/readline
 	CFLAGS	+=	$(INC)
 endif
 
@@ -85,7 +89,7 @@ debug: $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled in $(YELL)DEBUG$(RED)MODE!$(WHITE)"
 
 $(OBJ_D)/%.o: %.c
-	@$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
 
 $(OBJ_D):
 	mkdir $@
