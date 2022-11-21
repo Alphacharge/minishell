@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 09:37:07 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 11:22:34 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,20 @@ static void	update_pwd(char *var, t_env *env)
 	char	*old;
 
 	tmp = env;
-	while (tmp != NULL && ft_strcmp(tmp->name, "PWD") != 0)
+	while (tmp != NULL && ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
 	old = tmp->value;
 	tmp = env;
-	while (tmp != NULL && !ft_strcmp(tmp->name, "OLDPWD"))
+	while (tmp != NULL && ft_strcmp(tmp->name, "OLDPWD"))
 		tmp = tmp->next;
-//searching for freeing error
-printf("update_pwd: freeing%p\n", tmp->value);
 	ft_free(tmp->value);
 	tmp->value = old;
 	tmp = env;
 	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
-	tmp->value = multijoin(true, 2, var, tmp->value);
+	old = tmp->value;
+	tmp->value = multijoin(false, 2, var, tmp->value);
+	ft_free(tmp->value);
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
