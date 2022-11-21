@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/21 14:53:53 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:08:53 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 		free_cmds(cmd_head);
 	}
 	delete_env(env);
-	rl_clear_history();
+	// rl_clear_history();
 	free_multiple(2, prompt->prompt, prompt);
 	system("leaks minishell");
 	return (ret);

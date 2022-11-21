@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 14:32:15 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:10:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,22 @@ t_env	*new_env(void)
 	else
 		return (env);
 }
-
+#include <stdio.h>
 /*frees the env link list*/
 void	delete_env(t_env *env)
 {
 	t_env	*tmp;
 
 	tmp = env;
+	// print_env(env, 2);
 	while (tmp != NULL)
 	{
+		// printf("Line\t%s\n", tmp->name);
+		//error here with double freeing pwd
 		ft_free(tmp->name);
+		tmp->name = NULL;
 		ft_free(tmp->value);
+		tmp->value = NULL;
 		tmp = tmp->next;
 	}
 	while (env != NULL)
