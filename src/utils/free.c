@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/19 12:00:25 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:29:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ void	*free_ptr_array(void **array)
 	if (array == NULL)
 		return (NULL);
 	while (array[i] != NULL)
-		free(array[i++]);
+	{
+		free(array[i]);
+		array[i++] = NULL;
+	}
 	free(array);
+	array = NULL;
 	return (NULL);
 }
 
@@ -42,7 +46,10 @@ void	free_multiple(int n, ...)
 	{
 		pointer = va_arg(args, void *);
 		if (pointer != NULL)
+		{
 			free(pointer);
+			pointer = NULL;
+		}
 		n--;
 	}
 	va_end(args);
@@ -52,6 +59,9 @@ void	free_multiple(int n, ...)
 void	*ft_free(void *pointer)
 {
 	if (pointer != NULL)
+	{
 		free(pointer);
+		pointer = NULL;
+	}
 	return (NULL);
 }

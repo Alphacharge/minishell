@@ -6,12 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 09:45:17 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 14:31:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "libft.h"
+#include "utils.h"
 
 /*accepts var to unset in env*/
 t_env	*unset(char *var, t_env *env)
@@ -25,7 +26,7 @@ t_env	*unset(char *var, t_env *env)
 	if (!ft_strcmp(var, env->name))
 	{
 		head = env->next;
-		free(env);
+		ft_free(env);
 	}
 	else
 	{
@@ -36,7 +37,7 @@ t_env	*unset(char *var, t_env *env)
 			if (!ft_strcmp(var, env->name))
 			{
 				tmp->next = env->next;
-				free(env);
+				ft_free(env);
 				break ;
 			}
 			tmp = env;

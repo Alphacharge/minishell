@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   multijoin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/17 17:20:52 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:30:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+#include "libft.h"
 
 static char	*copy_input(bool tofr, int n, char **input)
 {
@@ -25,12 +26,15 @@ static char	*copy_input(bool tofr, int n, char **input)
 	str = ft_calloc(len + 1, sizeof(char));
 	i = 0;
 	len = 0;
-	while (i < n)
+	while (str != NULL && i < n)
 	{
 		ft_memcpy(&str[len], input[i], ft_strlen(input[i]));
 		len += ft_strlen(input[i]);
 		if (tofr == true)
+		{
 			free(input[i]);
+			input[i] = NULL;
+		}
 		i++;
 	}
 	return (str);
@@ -67,5 +71,6 @@ char	*multijoin(bool tofr, int n, ...)
 	str = copy_input(tofr, n, input);
 	va_end(args);
 	free(input);
+	input = NULL;
 	return (str);
 }

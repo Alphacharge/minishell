@@ -6,12 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:32:18 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 10:21:06 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 14:31:32 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "libft.h"
+#include "utils.h"
 
 /*accepts no args*/
 void	pwd(int argc, char **argv)
@@ -33,7 +34,7 @@ void	pwd(int argc, char **argv)
 		else
 		{
 			ft_putendl_fd(dir, 1);
-			free(dir);
+			ft_free(dir);
 		}
 	}
 }
