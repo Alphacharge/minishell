@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
+#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/21 16:47:17 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/21 18:45:33 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OS		:=	$(shell uname)
 
 ###			###			COMPILER		###			###
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror -g
+CFLAGS	:=	-Wall -Wextra -Werror
 CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
@@ -45,7 +45,7 @@ VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 SRC_F	:=	minishell.c
 SRC_F	+=
 SRC_F	+=	environment.c path.c
-SRC_F	+=	clean.c errorhandling.c 
+SRC_F	+=	clean.c errorhandling.c
 SRC_F	+=	execute.c
 SRC_F	+=	cleanup.c
 SRC_F	+=
@@ -57,8 +57,8 @@ SRC_F	+=
 SRC_F	+=	signals.c
 SRC_F	+=
 SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c
-SRC_F	+=	
-SRC_F	+=	
+SRC_F	+=
+SRC_F	+=
 
 ###			###			OBJECTS			###			###
 OBJ_D	:=	./obj

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 17:09:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:47:10 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static void	update_pwd(char *var, t_env *env)
 	//Invalid free is under this line
 	old = tmp->value;
 	tmp->value = multijoin(false, 2, var, tmp->value);
-	ft_free(old);
-	old = NULL;
+	old = ft_free(old);
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/

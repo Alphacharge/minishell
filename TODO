@@ -9,7 +9,7 @@
 -	redirections
 -	heredoc
 -	returnvalues
--	improve ctrl + C
+-	remove display of ^C and ^\, remove newline for ^\
 
 
 How does Bash:

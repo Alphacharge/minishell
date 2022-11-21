@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by pnolte            #+#    #+#             */
-/*   Updated: 2022/11/21 17:08:53 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 20:26:54 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_new = 0;
 
 static t_prompt	*init_prompt(void)//t_env *env)
 {
@@ -47,17 +45,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		input = readline(prompt->prompt);
 		// printf(">%s<\n", envp[1]);
-		if (g_new == 1)
-		{
-			g_new = 0;
-			continue ;
-		}
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 			add_history(input);
 		if (input == NULL)
 		{
-			write(1,"\n", 1);
-			ret = shell_exit(NULL);
+			//exit still after linebreak
+			write(1, "exit\n", 4);
+			ret = 0;
 			break ;
 		}
 		cmd_head = str_to_lst(input, env);
@@ -68,6 +62,6 @@ int	main(int argc, char **argv, char **envp)
 	delete_env(env);
 	// rl_clear_history();
 	free_multiple(2, prompt->prompt, prompt);
-	system("leaks minishell");
+	// system("leaks minishell");
 	return (ret);
 }
