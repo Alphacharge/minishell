@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 14:28:08 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 17:09:23 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	update_pwd(char *var, t_env *env)
 	tmp = env;
 	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
 		tmp = tmp->next;
+	//Invalid free is under this line
 	old = tmp->value;
 	tmp->value = multijoin(false, 2, var, tmp->value);
 	ft_free(old);
