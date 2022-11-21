@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 13:22:03 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/21 14:32:15 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,41 @@ t_env	*new_env(void)
 void	delete_env(t_env *env)
 {
 	t_env	*tmp;
-	t_env	*tmp_prev;
 
 	tmp = env;
 	while (tmp != NULL)
 	{
-		free(tmp->name);
-		free(tmp->value);
-		tmp_prev = tmp;
+		ft_free(tmp->name);
+		ft_free(tmp->value);
 		tmp = tmp->next;
-		free(tmp_prev);
+	}
+	while (env != NULL)
+	{
+		tmp = env->next;
+		ft_free(env);
+		env = tmp;
 	}
 }
+// t_env	*tmp;
+	// 
+	// tmp = env;
+	// while (tmp != NULL)
+	// {
+		// if (tmp->name != NULL)
+			// free(tmp->name);
+		// if (tmp->value != NULL)
+			// free(tmp->value);
+		// tmp->name = NULL;
+		// tmp->value = NULL;
+		// tmp = tmp->next;
+	// }
+	// while (env != NULL)
+	// {
+		// if (env->next != NULL)
+			// tmp = env->next;
+		// free(env);
+		// env = tmp;
+	// }
 
 /*is printing env linklist to fd your choice*/
 void	print_env(t_env *env, int fd)

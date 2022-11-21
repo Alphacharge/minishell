@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/19 12:37:15 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:32:33 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*get_path(char **paths, char *executable)
 		test = multijoin(false, 3, paths[i], "/", executable);
 		success = access(test, F_OK);
 		if (success == -1)
-			free(test);
+			ft_free(test);
 		i++;
 	}
 	if (success != 0)
