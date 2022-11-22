@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:55:52 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:35:05 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define UTILS_H
 
 # include <stdbool.h>
-
-// # include ".h"
-// # include "structs.h"
 # include "libft.h"
 
 char	*combine_pathprog(char *path, char *prog);

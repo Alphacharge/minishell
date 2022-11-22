@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 12:05:51 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/22 16:06:20 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <unistd.h>
 # include <sys/types.h>
-// # include "minishell.h"
+# include "environment.h"
 
 typedef struct s_var
 {
@@ -68,8 +68,9 @@ typedef struct s_cmd
 {
 	int				type;
 	char			**argv;
-	char			operator;
-	struct s_cmd	*next;
+	struct s_env	*env;
+	struct s_cmd	*pipe;
+	struct s_redir	*redir;
 }					t_cmd;
 
 typedef struct s_data

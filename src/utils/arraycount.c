@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:53:27 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/22 14:54:57 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:12:28 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	arraycount(char **array)
 
 	i = 0;
 	if (array == NULL)
-		return (NULL);
+		return (0);
 	while (array[i] != NULL)
 		i++;
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/19 12:46:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:08:16 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 //  ls -l     -a|"c"a"t" -e
 
-static char	*skip_to_token(char *s)
+static char	*skip_to_pipe(char *s)
 {
-	while (s[0] != '\0' && is_token(s[0]) == 0)
+	while (s[0] != '\0' && s[0] != '|')
 		s++;
 	return (s);
 }
@@ -160,6 +160,9 @@ static t_cmd	*create_node(char *s, t_env *env)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
+	cmd->env = env;
+	cmd->pipe = NULL;
+	cmd->redir = NULL;
 	cmd->argv = create_argv(s);
 	if (cmd->argv == NULL)
 		return (NULL);
@@ -199,19 +202,22 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 		cmd = create_node(input, env);
 		if (cmd == NULL)
 			break ;
-		if (prev != NULL)
-			prev->next = cmd;
 		if (head == NULL)
 			head = cmd;
-		cmd->next = NULL;
+		if (prev != NULL)
+			prev->pipe = cmd;
 		prev = cmd;
-		input = skip_to_token(input);
+		//if we implement & the whole logic of this loop needs to be changed
+		input = skip_to_pipe(input);
 		if (input[0] == '\0')
 			break ;
-		//needs extra rules for special tokens
-		cmd->operator = input[0];
-		while (is_token(input[0]) == 1)
+		else if (input[0] == '|')
 			input++;
+		if (input[0] == '|' || input[0] == '&' || input[0] == ';')
+		{
+			printf("minishell: syntax error near unexpected token '%c'\n", input[0]);
+			return (free_cmds(head));
+		}
 	}
 	return (head);
 }
