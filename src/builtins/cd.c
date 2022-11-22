@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 17:24:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/22 10:32:54 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ static void	update_pwd(char *var, t_env *env)
 	old = tmp->value;
 	//wrong absolut path
 	tmp->value = multijoin(false, 2, var, tmp->value);
-	ft_free(old);
-	old = NULL;
+	old = ft_free(old);
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
