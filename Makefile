@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/21 18:45:33 by fkernbac         ###   ########.fr        #
+#    Updated: 2022/11/22 17:00:02 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,14 @@ NAME	:=	minishell
 
 ###			###			COMPABILITY		###			###
 OS		:=	$(shell uname)
+BREWU	:=	/Users/$(USER)/.brewconfig.zsh
+
+###			###			MINISHELL		###			###
+CONFIG	:=	.ms_config
 
 ###			###			COMPILER		###			###
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -g
 CDFLAGS	:=	#-g -fsanitize=address
 
 ###			###			LIBRARIES		###			###
@@ -56,7 +60,7 @@ SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 SRC_F	+=
 SRC_F	+=	signals.c
 SRC_F	+=
-SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c
+SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c
 SRC_F	+=
 SRC_F	+=
 
@@ -72,14 +76,15 @@ BLUE	=	\033[1;34m
 WHITE	=	\033[0m
 
 ###			###			RULES			###			###
-all: $(NAME)
+all:
+	@$(MAKE) $(NAME) -j
 
 ifeq ($(OS), Darwin)
-$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+$(NAME): $(CONFIG) $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 else
-$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+$(NAME): $(CONFIG) $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 endif
@@ -96,6 +101,21 @@ $(OBJ_D):
 
 %.a:
 	make -j -C $(LIBFT_D)
+
+$(CONFIG):
+	@if [ ! -f "$(CONFIG)" ]; then \
+		if [ "$(OS)" = "Linux" ]; then \
+			apt-get install -y libreadline-dev >> /dev/null 2>&1 && touch $(CONFIG) \
+		;else \
+			if [ -f $(BREWU) ]; then \
+				echo "check brew for readline"; \
+				brew install readline >> /dev/null 2>&1 && touch $(CONFIG) \
+			;else \
+				curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | bash; \
+				brew install readline >> /dev/null 2>&1 && touch $(CONFIG); \
+			fi; \
+		fi; \
+	fi;
 
 clean:
 	@if [ -d "$(OBJ_D)" ]; then \
