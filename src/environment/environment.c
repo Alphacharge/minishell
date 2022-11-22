@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 17:10:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/22 11:21:35 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,15 +117,34 @@ char	**create_envp_from_env(t_env *env)
 	return (envp);
 }
 
-char	*get_env_var(t_env *env, const char *name)
+/*returns the value of a env variable*/
+char	*get_env_var(t_env *env, char *name)
 {
 	while (env != NULL)
 	{
-		if (ft_strncmp(name, env->name, ft_strlen(name)) == 0)
+		if (ft_strcmp(name, env->name) == 0)
 			return (env->value);
 		env = env->next;
 	}
 	return (NULL);
+}
+
+/*sets a variable to a new value, if the var not exist nothing changed*/
+t_env	*set_env_var(t_env *env, char *name, char *value)
+{
+	t_env	*head;
+
+	head = env;
+	if (env == NULL || name == NULL || value == NULL)
+		return (head);
+	while (env != NULL && ft_strcmp(env->name, name) != 0)
+		env = env->next;
+	if (env != NULL)
+	{
+		ft_free(env->value);
+		env->value = value;
+	}
+	return (head);
 }
 
 /*creates a linked list from the **envp*/
