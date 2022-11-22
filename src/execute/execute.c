@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/19 12:56:52 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:04:56 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,20 @@ int	execute_list(t_cmd *lst, t_env *env)
 	{
 		if (current->type == 0)
 		{
-			if (ft_strncmp(lst->argv[0], "exit", 5) == 0)
-				return (shell_exit(lst->argv));
-			else if (ft_strncmp(lst->argv[0], "cd", 3) == 0)
+			if (lst->argv[0][0] == 'c')
 				cd(lst->argv, env);
+			else if (lst->argv[0][0] == 'p')
+				pwd(arraycount(lst->argv), lst->argv);
+			else if (lst->argv[0][0] == 'u')
+				unset(arraycount(lst->argv), lst->argv, env);
+			else if (strcmp(lst->argv[0], "echo") == 0)
+				echo(arraycount(lst->argv), lst->argv);
+			else if (strrcmp(lst->argv[0], "env") == 0)
+				print_env(env, 1);
+			else if (strcmp(lst->argv[0], "exit") == 0)
+				return (shell_exit(lst->argv));
+			else if (strcmp(lst->argv[0], "export") == 0)
+				export(arraycount(lst->argv), lst->argv, env);
 		}
 		if (current->type == 1)
 			exec_cmd(current, env);

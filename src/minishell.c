@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 11:51:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/22 14:05:39 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
-	// delete_env(env);
+	delete_env(env);
 	// rl_clear_history();
 	free_multiple(2, prompt->prompt, prompt);
 	// system("leaks minishell");

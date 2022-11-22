@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
+/*   arraycount.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/28 09:39:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:58:14 by fkernbac         ###   ########.fr       */
+/*   Created: 2022/11/22 14:53:27 by fkernbac          #+#    #+#             */
+/*   Updated: 2022/11/22 14:54:57 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTINS_H
-# define BUILTINS_H
+#include "utils.h"
 
-# include "environment.h"
+/*Returns argc value for argv.*/
+int	arraycount(char **array)
+{
+	int	i;
 
-void	cd(char **argv, t_env *env);
-void	echo(int argc, char **argv);
-void	env(int argc, char **argv, t_env *env);
-int		shell_exit(char **argv);
-t_env	*export(char *name, char *value, t_env *env);
-void	pwd(int argc, char **argv);
-t_env	*unset(char *var, t_env *env);
-
-
-#endif
+	i = 0;
+	if (array == NULL)
+		return (NULL);
+	while (array[i] != NULL)
+		i++;
+	return (i);
+}
