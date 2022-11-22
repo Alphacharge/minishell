@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 16:06:20 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:57:47 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ typedef struct s_exec
 typedef struct s_redir
 {
 	char	*file;
-	char	*efile;
-	char	*mode;
-	int		fd;
-	char	*cmd;
+	// char	*efile;
+	// char	*mode;
+	// int		fd;
+	// char	*cmd;
+	struct s_redir	*next;
 }				t_redir;
 
 typedef struct s_cmd

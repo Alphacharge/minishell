@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_first_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:00:51 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/11 09:23:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/22 18:49:46 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*Returns a malloced string to first occurens of c in str from beginning*/
+/*Returns a malloced string to first occurence of c in str from beginning*/
 /*or if rev = 1 from lim +1 to the end*/
 char	*ft_first_word(const char *str, char c, int rev)
 {

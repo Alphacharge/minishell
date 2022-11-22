@@ -6,13 +6,36 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/22 16:08:16 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 19:47:23 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 //  ls -l     -a|"c"a"t" -e
+
+FIX THIS FUNCTION
+
+/*Skips one argument containing any amount of quotation marks.*/
+char	*skip_argument(char *s)
+{
+	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
+	{
+		if (s[0] == '\"')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\"')
+				s++;
+		}
+		if (s[0] == '\'')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\'')
+				s++;
+		}
+		s = skip_word(s);
+	}
+	return (s);
+}
 
 static char	*skip_to_pipe(char *s)
 {
@@ -20,6 +43,20 @@ static char	*skip_to_pipe(char *s)
 		s++;
 	return (s);
 }
+
+// static char	*skip_redirection(char *s)
+// {
+// 	while (s[0] != '\0' && s[0] == '>')
+// 	{
+// 		s++;
+// 		if (s[0] != '\0' && s[0] == '>')
+// 			s++;
+// 		s = skip_space(s);
+// 		s = skip_argument(s);
+// 		s = skip_space(s);
+// 	}
+// 	return (s);
+// }
 
 /*Counts length until next space or token and subtracts number of found
 quotation marks.*/
@@ -55,7 +92,10 @@ static char	*input_to_arg(char *s)
 
 	i = 0;
 	j = 0;
+	if (s == NULL || s[0] == '\0')
+		return (NULL);
 	len = arg_len(s);
+printf("found arg length %i\n", len);
 	arg = ft_calloc(len + 1, sizeof(char));
 	if (arg == NULL)
 		return (NULL);
@@ -68,46 +108,8 @@ static char	*input_to_arg(char *s)
 		j++;
 	}
 	arg[len] = '\0';
+printf("allocated argument |%s|\n", arg);
 	return (arg);
-}
-
-/*Skips one argument containing any amount of quotation marks.*/
-char	*skip_argument(char *s)
-{
-	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
-	{
-		if (s[0] == '\"')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\"')
-				s++;
-		}
-		if (s[0] == '\'')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\'')
-				s++;
-		}
-		s = skip_word(s);
-	}
-	return (s);
-}
-
-/*Returns number of arguments until next token. Quotation marks are handled.*/
-static int	count_args(char *s)
-{
-	int	args;
-
-	args = 0;
-	while (s[0] != '\0' && is_token(s[0]) == 0)
-	{
-		s = skip_space(s);
-		if (s[0] == '\0' || is_token(s[0]) == 1)
-			break ;
-		args++;
-		s = skip_argument(s);
-	}
-	return (args);
 }
 
 //exit, cd check
@@ -121,8 +123,68 @@ static void	set_type(t_cmd *cmd)
 		cmd->type = EXEC;
 }
 
+//2>&1
+/*Returns number of arguments until next token. Quotation marks are handled.*/
+static int	count_args(char *s)
+{
+	int	args;
+
+	args = 0;
+	while (s[0] != '\0' && s[0] != '|')
+	{
+		s = skip_space(s);
+		if (s[0] != '\0' && is_token(s[0]) == 0)
+			args++;
+		s = skip_argument(s);
+		s = skip_space(s);
+		if (s[0] == '>')
+		{
+			s++;
+			if (s[0] == '>')
+				s++;
+			s = skip_space(s);
+			if (s[0] == '\0' || is_token(s[0]) == 1)
+				return (printf("minishell: syntax error near unexpected token '%c'\n", s[0]), -1);
+			s = skip_argument(s);
+			s = skip_space(s);
+printf("skipped to |%s|\n", s);
+		}
+	}
+	return (args);
+}
+
+char	*add_redir(char *s, t_cmd *cmd)
+{
+	t_redir	*current;
+
+printf("found redirection\n");
+	current = cmd->redir;
+	if (s[0] == '>')
+		s++;
+	if (s[0] == '>')
+		s++;
+	s = skip_space(s);
+	if (current == NULL)
+	{
+		cmd->redir = ft_calloc(1, sizeof(t_redir));
+		cmd->redir->file = get_word(s);
+printf("adding first redirection %s\n", cmd->redir->file);
+	}
+	else
+	{
+		while (current->next != NULL)
+			current = current->next;
+		current->next = ft_calloc(1, sizeof(t_redir));
+		current->next->file = get_word(s);
+printf("adding redirection %s\n", current->next->file);
+	}
+	s = skip_argument(s);
+	s = skip_space(s);
+	return (s);
+}
+
 /*Creates an array of strings until null byte or token is encountered.*/
-static char	**create_argv(char *s)
+static char	**create_argv(char *s, t_cmd *cmd)
 {
 	char	**argv;
 	int		nr;
@@ -130,15 +192,23 @@ static char	**create_argv(char *s)
 
 	i = 0;
 	nr = count_args(s);
+	if (nr < 0)
+		return (NULL);
 	argv = ft_calloc(nr + 1, sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
 	while (i < nr)
 	{
+printf("searching in string |%s|\n", s);
 		s = skip_space(s);
+		while (s[0] == '>' || s[0] == '<')
+			s = add_redir(s, cmd);
 		argv[i] = input_to_arg(s);
+		if (argv[i] == NULL)
+			return (free_ptr_array((void **)argv), NULL);
 		i++;
 		s = skip_argument(s);
+		s = skip_space(s);
 	}
 	argv[i] = NULL;
 	return (argv);
@@ -163,9 +233,10 @@ static t_cmd	*create_node(char *s, t_env *env)
 	cmd->env = env;
 	cmd->pipe = NULL;
 	cmd->redir = NULL;
-	cmd->argv = create_argv(s);
+	cmd->argv = create_argv(s, cmd);
 	if (cmd->argv == NULL)
 		return (NULL);
+printf("argv %s %s\n", cmd->argv[0], cmd->argv[1]);
 	set_type(cmd);
 	if (cmd->type == EXEC)
 	{
@@ -177,7 +248,8 @@ static t_cmd	*create_node(char *s, t_env *env)
 		{
 			printf("minishell: %s: command not found\n", cmd_name);
 			cmd->argv[0] = cmd_name;
-			cmd_name = free_ptr_array((void **)cmd->argv);
+			free_ptr_array((void **)cmd->argv);
+			cmd_name = NULL;
 			cmd = ft_free(cmd);
 		}
 		ft_free(cmd_name);
@@ -211,13 +283,9 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 		input = skip_to_pipe(input);
 		if (input[0] == '\0')
 			break ;
+		//any other token will be handled as argument
 		else if (input[0] == '|')
 			input++;
-		if (input[0] == '|' || input[0] == '&' || input[0] == ';')
-		{
-			printf("minishell: syntax error near unexpected token '%c'\n", input[0]);
-			return (free_cmds(head));
-		}
 	}
 	return (head);
 }

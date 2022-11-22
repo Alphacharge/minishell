@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 16:14:20 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:18:03 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	execute_list(t_cmd *lst, t_env *env)
 
 	current = lst;
 	ret = -1;
+	//commands are executed one after another; needs to be changed to pipe
 	while (current != NULL)
 	{
 		if (current->type == 0)

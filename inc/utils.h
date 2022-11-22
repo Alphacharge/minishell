@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 15:35:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/22 19:00:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int		is_word(char c);
 int		is_token(char c);
 int		ft_strcmp(char *s1, char *s2);
 int		arraycount(char **array);
+char	*get_word(char	*s);
 
 #endif
