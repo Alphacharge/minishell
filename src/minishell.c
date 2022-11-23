@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 19:04:44 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:50:59 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	print_cmds(t_cmd *lst)
 	int		i;
 
 	i = 0;
+	printf("\n-------------------\n");
 	while (lst != NULL)
 	{
 		while (lst->argv[i] != NULL)
@@ -28,7 +29,7 @@ static void	print_cmds(t_cmd *lst)
 		redir = lst->redir;
 		while (redir != NULL)
 		{
-			printf("redir %s ", lst->redir->file);
+			printf("> %s ", redir->file);
 			redir = redir->next;
 		}
 		if (lst->pipe != NULL)

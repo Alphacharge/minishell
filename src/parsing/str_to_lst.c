@@ -6,14 +6,14 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/22 19:47:23 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 13:49:18 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 //  ls -l     -a|"c"a"t" -e
 
-FIX THIS FUNCTION
+//FIX THIS FUNCTION
 
 /*Skips one argument containing any amount of quotation marks.*/
 char	*skip_argument(char *s)
@@ -43,20 +43,6 @@ static char	*skip_to_pipe(char *s)
 		s++;
 	return (s);
 }
-
-// static char	*skip_redirection(char *s)
-// {
-// 	while (s[0] != '\0' && s[0] == '>')
-// 	{
-// 		s++;
-// 		if (s[0] != '\0' && s[0] == '>')
-// 			s++;
-// 		s = skip_space(s);
-// 		s = skip_argument(s);
-// 		s = skip_space(s);
-// 	}
-// 	return (s);
-// }
 
 /*Counts length until next space or token and subtracts number of found
 quotation marks.*/
@@ -95,7 +81,6 @@ static char	*input_to_arg(char *s)
 	if (s == NULL || s[0] == '\0')
 		return (NULL);
 	len = arg_len(s);
-printf("found arg length %i\n", len);
 	arg = ft_calloc(len + 1, sizeof(char));
 	if (arg == NULL)
 		return (NULL);
@@ -108,7 +93,6 @@ printf("found arg length %i\n", len);
 		j++;
 	}
 	arg[len] = '\0';
-printf("allocated argument |%s|\n", arg);
 	return (arg);
 }
 
@@ -147,7 +131,6 @@ static int	count_args(char *s)
 				return (printf("minishell: syntax error near unexpected token '%c'\n", s[0]), -1);
 			s = skip_argument(s);
 			s = skip_space(s);
-printf("skipped to |%s|\n", s);
 		}
 	}
 	return (args);
@@ -157,7 +140,6 @@ char	*add_redir(char *s, t_cmd *cmd)
 {
 	t_redir	*current;
 
-printf("found redirection\n");
 	current = cmd->redir;
 	if (s[0] == '>')
 		s++;
@@ -168,7 +150,7 @@ printf("found redirection\n");
 	{
 		cmd->redir = ft_calloc(1, sizeof(t_redir));
 		cmd->redir->file = get_word(s);
-printf("adding first redirection %s\n", cmd->redir->file);
+		cmd->redir->next = NULL;
 	}
 	else
 	{
@@ -176,9 +158,9 @@ printf("adding first redirection %s\n", cmd->redir->file);
 			current = current->next;
 		current->next = ft_calloc(1, sizeof(t_redir));
 		current->next->file = get_word(s);
-printf("adding redirection %s\n", current->next->file);
+		current->next->next = NULL;
 	}
-	s = skip_argument(s);
+	s = skip_word(s);
 	s = skip_space(s);
 	return (s);
 }
@@ -199,16 +181,15 @@ static char	**create_argv(char *s, t_cmd *cmd)
 		return (NULL);
 	while (i < nr)
 	{
-printf("searching in string |%s|\n", s);
 		s = skip_space(s);
-		while (s[0] == '>' || s[0] == '<')
-			s = add_redir(s, cmd);
 		argv[i] = input_to_arg(s);
 		if (argv[i] == NULL)
 			return (free_ptr_array((void **)argv), NULL);
 		i++;
 		s = skip_argument(s);
 		s = skip_space(s);
+		while (s[0] == '>' || s[0] == '<')
+			s = add_redir(s, cmd);
 	}
 	argv[i] = NULL;
 	return (argv);
@@ -236,7 +217,6 @@ static t_cmd	*create_node(char *s, t_env *env)
 	cmd->argv = create_argv(s, cmd);
 	if (cmd->argv == NULL)
 		return (NULL);
-printf("argv %s %s\n", cmd->argv[0], cmd->argv[1]);
 	set_type(cmd);
 	if (cmd->type == EXEC)
 	{
