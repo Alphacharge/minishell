@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 13:49:18 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 14:25:30 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int	arg_len(char *s)
 	return (i - quotations);
 }
 
+/*Returns the next word in s as newly allocated string. Handles quotations.*/
 static char	*input_to_arg(char *s)
 {
 	int		i;
@@ -149,7 +150,7 @@ char	*add_redir(char *s, t_cmd *cmd)
 	if (current == NULL)
 	{
 		cmd->redir = ft_calloc(1, sizeof(t_redir));
-		cmd->redir->file = get_word(s);
+		cmd->redir->file = input_to_arg(s);
 		cmd->redir->next = NULL;
 	}
 	else
@@ -157,7 +158,7 @@ char	*add_redir(char *s, t_cmd *cmd)
 		while (current->next != NULL)
 			current = current->next;
 		current->next = ft_calloc(1, sizeof(t_redir));
-		current->next->file = get_word(s);
+		current->next->file = input_to_arg(s);
 		current->next->next = NULL;
 	}
 	s = skip_word(s);
