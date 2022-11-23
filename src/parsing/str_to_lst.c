@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/19 12:46:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:36:26 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ static void	set_type(t_cmd *cmd)
 	if (ft_strncmp("exit", cmd->argv[0], 5) == 0)
 		cmd->type = BLTIN;
 	else if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
+		cmd->type = BLTIN;
+	else if (ft_strcmp("unset", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
 	else
 		cmd->type = EXEC;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 15:04:56 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:32:29 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	execute_list(t_cmd *lst, t_env *env)
 				unset(arraycount(lst->argv), lst->argv, env);
 			else if (strcmp(lst->argv[0], "echo") == 0)
 				echo(arraycount(lst->argv), lst->argv);
-			else if (strrcmp(lst->argv[0], "env") == 0)
+			else if (strcmp(lst->argv[0], "env") == 0)
 				print_env(env, 1);
 			else if (strcmp(lst->argv[0], "exit") == 0)
 				return (shell_exit(lst->argv));
-			else if (strcmp(lst->argv[0], "export") == 0)
-				export(arraycount(lst->argv), lst->argv, env);
+			// else if (strcmp(lst->argv[0], "export") == 0)
+				// export(arraycount(lst->argv), lst->argv, env);
 		}
 		if (current->type == 1)
 			exec_cmd(current, env);
