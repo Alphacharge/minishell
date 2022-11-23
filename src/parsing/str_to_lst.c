@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 14:12:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/23 15:33:20 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,8 @@ static void	set_type(t_cmd *cmd)
 	else if (ft_strcmp("unset", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
 	else if (ft_strcmp("env", cmd->argv[0]) == 0)
+		cmd->type = BLTIN;
+	else if (ft_strcmp("export", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
 	else
 		cmd->type = EXEC;
