@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 11:36:26 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/23 14:12:23 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,13 @@ static int	count_args(char *s)
 //exit, cd check
 static void	set_type(t_cmd *cmd)
 {
-	if (ft_strncmp("exit", cmd->argv[0], 5) == 0)
+	if (ft_strcmp("exit", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
 	else if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
 		cmd->type = BLTIN;
 	else if (ft_strcmp("unset", cmd->argv[0]) == 0)
+		cmd->type = BLTIN;
+	else if (ft_strcmp("env", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
 	else
 		cmd->type = EXEC;
