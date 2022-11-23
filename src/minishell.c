@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:05:39 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 11:42:24 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static t_prompt	*init_prompt(void)//t_env *env)
 	t_prompt	*prompt;
 
 	prompt = calloc(1, sizeof(t_prompt));
-	prompt->name = "minishell";
-	prompt->seperator = "@";
-	prompt->dir = "src";
-	prompt->endl = "$:";
+	prompt->name = "\033[1;32mminishell";
+	prompt->seperator = "\033[1;31m@";
+	prompt->dir = "\033[1;33msrc";
+	prompt->endl = "$:\033[0m";
 	prompt->prompt = multijoin(false, 4, prompt->name, prompt->seperator, prompt->dir, prompt->endl);
 	return (prompt);
 }
