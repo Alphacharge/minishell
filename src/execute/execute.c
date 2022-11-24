@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/23 15:33:05 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 12:00:00 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	execute_list(t_cmd *lst, t_env *env)
 			else if (strcmp(lst->argv[0], "echo") == 0)
 				echo(arraycount(lst->argv), lst->argv);
 			else if (strcmp(lst->argv[0], "export") == 0)
-				export(arraycount(lst->argv), lst->argv, env);
+				env = export(arraycount(lst->argv), lst->argv, env);
 			else if (strcmp(lst->argv[0], "env") == 0)
 				print_env(env, 1);
 			else if (strcmp(lst->argv[0], "exit") == 0)

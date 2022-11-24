@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:31:26 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/24 11:22:23 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,10 @@ t_env	*set_env_var(t_env *env, char *name, char *value)
 		env = env->next;
 	if (env != NULL)
 	{
-		ft_free(env->value);
+		// printf("%s\n", env->value);
+		free_multiple(1, &env->value);
 		env->value = value;
+	// printf("%s\n", env->value);
 	}
 	return (head);
 }

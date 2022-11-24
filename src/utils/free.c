@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/21 17:09:29 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 11:12:47 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ Pointers are only freed, but not NULL pointers.*/
 void	free_multiple(int n, ...)
 {
 	va_list	args;
-	void	*pointer;
+	void	**pointer;
 
 	pointer = NULL;
 	if (n <= 0)
@@ -44,11 +44,11 @@ void	free_multiple(int n, ...)
 	va_start(args, n);
 	while (n > 0)
 	{
-		pointer = va_arg(args, void *);
-		if (pointer != NULL)
+		pointer = va_arg(args, void **);
+		if (*pointer != NULL)
 		{
-			free(pointer);
-			pointer = NULL;
+			free(*pointer);
+			*pointer = NULL;
 		}
 		n--;
 	}
