@@ -6,40 +6,57 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/23 16:31:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 11:59:05 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
 #include "libft.h"
-
+#include <stdio.h>
 static void	export_print(t_env *env)
 {
 	while (env != NULL)
 	{
 		write(1, "declare -x ", 11);
 		write(1, env->name, ft_strlen(env->name));
-		write(1, "=\"", 2);
-		write(1, env->value, ft_strlen(env->value));
+		if (env->value != NULL)
+		{
+			write(1, "=\"", 2);
+			write(1, env->value, ft_strlen(env->value));
+		}
 		write(1, "\"\n", 2);
+		env = env->next;
 	}
 }
 
 static t_env	*update_values(int argc, char **argv, t_env *env)
 {
-	int	i;
+	char	*name;
+	char	*value;
+	int		i;
 
 	i = 1;
 	while (i < argc)
 	{
-		//check 4 values to update
+		if (argv[i] != NULL)
+		{
+			name = ft_first_word(argv[i], '=', 0);
+			value = ft_first_word(argv[i], '=', 1);
+			// printf("%s\n", value);
+			env = set_env_var(env, name, value);
+			if (name != NULL)
+				free_multiple(1, &name);
+		}
+		i++;
 	}
+	return (env);
 }
 
 t_env	*export(int argc, char **argv, t_env *env)
 {
 	t_env	*head;
 	t_env	*new;
+	char	*name;
 	int		i;
 	
 	head = env;
@@ -49,15 +66,30 @@ t_env	*export(int argc, char **argv, t_env *env)
 	head = update_values(argc, argv, env);
 	while (i < argc)
 	{
-		new = new_env();
-		if (new == NULL)
-			return (head);
-		new->name = ft_first_word(argv[i], '=', 0);
-		new->value = ft_first_word(argv[i], '=', 1);
-		new->next = env;
-		head = new;
+		env = head;
+				printf("$$%s,%s\n", head->name, head->value);
+		if (argv[i] != NULL)
+		{
+			name = ft_first_word(argv[i], '=', 0);
+			if (get_env_var(env, name) == NULL)
+			{
+				new = new_env();
+				if (new == NULL)
+					return (free_multiple(1, &name), head);
+				new->name = name;
+				new->value = ft_first_word(argv[i], '=', 1);
+				new->next = env;
+				head = new;
+				printf("%s,%s\n", head->name, head->value);
+				printf("%s,%s\n", env->name, env->value);
+				printf("%s,%s\n", new->name, new->value);
+			}
+			else
+				free_multiple(1, &name);
+		}
 		i++;
 	}
+				printf("$$%s,%s\n", head->name, head->value);
 	return (head);
 }
 
