@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:59:05 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:18:15 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	export_print(t_env *env)
 
 static t_env	*update_values(int argc, char **argv, t_env *env)
 {
+	t_env	*ret;
 	char	*name;
 	char	*value;
 	int		i;
@@ -43,7 +44,11 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 			name = ft_first_word(argv[i], '=', 0);
 			value = ft_first_word(argv[i], '=', 1);
 			// printf("%s\n", value);
-			env = set_env_var(env, name, value);
+			ret = set_env_var(env, name, value);
+			if (ret == NULL)
+				free_multiple(1, &value);
+			else
+				env = ret;
 			if (name != NULL)
 				free_multiple(1, &name);
 		}
@@ -67,10 +72,11 @@ t_env	*export(int argc, char **argv, t_env *env)
 	while (i < argc)
 	{
 		env = head;
-				printf("$$%s,%s\n", head->name, head->value);
+				// printf("$$%s,%s\n", head->name, head->value);
 		if (argv[i] != NULL)
 		{
 			name = ft_first_word(argv[i], '=', 0);
+			printf(">>%s\n", name);
 			if (get_env_var(env, name) == NULL)
 			{
 				new = new_env();
@@ -80,16 +86,16 @@ t_env	*export(int argc, char **argv, t_env *env)
 				new->value = ft_first_word(argv[i], '=', 1);
 				new->next = env;
 				head = new;
-				printf("%s,%s\n", head->name, head->value);
-				printf("%s,%s\n", env->name, env->value);
-				printf("%s,%s\n", new->name, new->value);
+				// printf("%s,%s\n", head->name, head->value);
+				// printf("%s,%s\n", env->name, env->value);
+				// printf("%s,%s\n", new->name, new->value);
 			}
 			else
 				free_multiple(1, &name);
 		}
 		i++;
 	}
-				printf("$$%s,%s\n", head->name, head->value);
+				// printf("$$%s,%s\n", head->name, head->value);
 	return (head);
 }
 

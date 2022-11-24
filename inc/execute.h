@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:56:47 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:55:27 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,6 @@
 # include "builtins.h"
 
 // void	executor(t_exec *exec, t_env *env);
-int		execute_list(t_cmd *lst, t_env *env);
+int		execute_list(t_cmd *lst, t_env **env);
 
 #endif

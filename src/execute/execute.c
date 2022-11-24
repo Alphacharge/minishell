@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 12:00:00 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:05:50 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
-int	execute_list(t_cmd *lst, t_env *env)
+int	execute_list(t_cmd *lst, t_env **env)
 {
 	t_cmd	*current;
 
@@ -74,24 +74,24 @@ int	execute_list(t_cmd *lst, t_env *env)
 		if (current->type == 0)
 		{
 			if (lst->argv[0][0] == 'c')
-				cd(lst->argv, env);
+				cd(lst->argv, *env);
 			else if (lst->argv[0][0] == 'p')
 				pwd(arraycount(lst->argv), lst->argv);
 			else if (lst->argv[0][0] == 'u')
-				unset(arraycount(lst->argv), lst->argv, env);
+				*env = unset(arraycount(lst->argv), lst->argv, *env);
 			else if (strcmp(lst->argv[0], "echo") == 0)
 				echo(arraycount(lst->argv), lst->argv);
 			else if (strcmp(lst->argv[0], "export") == 0)
-				env = export(arraycount(lst->argv), lst->argv, env);
+				*env = export(arraycount(lst->argv), lst->argv, *env);
 			else if (strcmp(lst->argv[0], "env") == 0)
-				print_env(env, 1);
+				print_env(*env, 1);
 			else if (strcmp(lst->argv[0], "exit") == 0)
 				return (shell_exit(lst->argv));
 			// else if (strcmp(lst->argv[0], "export") == 0)
 				// export(arraycount(lst->argv), lst->argv, env);
 		}
 		if (current->type == 1)
-			exec_cmd(current, env);
+			exec_cmd(current, *env);
 		current = current->next;
 	}
 	return (-1);

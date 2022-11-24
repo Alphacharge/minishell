@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:22:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/24 16:14:26 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	delete_env(t_env *env)
 	{
 		// printf("Line\t%s\n", tmp->name);
 		//error here with double freeing pwd
-		ft_free(tmp->name);
+		free_multiple(1, &tmp->name);
 		tmp->name = NULL;
-		ft_free(tmp->value);
+		free_multiple(1, &tmp->value);
 		tmp->value = NULL;
 		tmp = tmp->next;
 	}
 	while (env != NULL)
 	{
 		tmp = env->next;
-		ft_free(env);
+		free_multiple(1, &env);
 		env = tmp;
 	}
 }
@@ -129,7 +129,7 @@ char	*get_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
-/*sets a variable to a new value, if the var not exist nothing changed*/
+/*sets a variable to a new value, if the var not exist it returns NULL*/
 t_env	*set_env_var(t_env *env, char *name, char *value)
 {
 	t_env	*head;
