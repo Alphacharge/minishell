@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 09:50:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,7 @@
 #include "builtins.h"
 #include "errorhandling.h"
 
-// static void	update_pwd(char *var, t_env *env)
-// {
-// 	t_env	*tmp;
-// 	char	*old;
-// // needs to be changed :D function from env and export
-// 	tmp = env;
-// 	while (tmp != NULL && ft_strcmp(tmp->name, "PWD"))
-// 		tmp = tmp->next;
-// 	old = tmp->value;
-// 	tmp = env;
-// 	while (tmp != NULL && ft_strcmp(tmp->name, "OLDPWD"))
-// 		tmp = tmp->next;
-// 	ft_free(tmp->value);
-// 	tmp->value = old;
-// 	tmp = env;
-// 	while (tmp != NULL && !ft_strcmp(tmp->name, "PWD"))
-// 		tmp = tmp->next;
-// 	//Invalid free is under this line
-// 	old = tmp->value;
-// 	//wrong absolut path
-// 	tmp->value = multijoin(false, 2, var, tmp->value);
-// 	old = ft_free(old);
-// }
+/*change oldpwd to pwd and set new pwd*/
 static t_env	*update_pwd(char *var, t_env *env)
 {
 	char	*dir;
@@ -76,8 +54,6 @@ void	cd(char **argv, t_env *env)
 	if (ret == -1)
 	{
 		ft_error("minishell: cd:");
-		// if (argv[1] != NULL)
-		// 	write(2, argv[1], ft_strlen(argv[1]));
 		write(2, "\n", 1);
 	}
 	else

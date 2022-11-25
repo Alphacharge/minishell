@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:13:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 09:35:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 		if (input == NULL)
 		{
 			//exit still after linebreak
-			write(1, "exit\n", 4);
+			write(1, "exit\n", 5);
 			ret = 0;
 			break ;
 		}
