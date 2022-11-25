@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:29:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 17:07:12 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include "environment.h"
+# include "history.h"
 
 typedef struct s_var
 {
@@ -76,7 +77,9 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	char		*input;
-	t_prompt	prompt;
-}				t_data;
+	char			*input;
+	struct s_prompt	*prompt;
+	struct s_hist	hist;
+	struct s_env	*env;
+}					t_data;
 #endif

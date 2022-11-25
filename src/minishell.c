@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:48:30 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 17:08:05 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_prompt	*init_prompt(void)//t_env *env)
 {
 	t_prompt	*prompt;
 
-	prompt = calloc(1, sizeof(t_prompt));
+	prompt = ft_calloc(1, sizeof(t_prompt));
 	prompt->name = "minishell";
 	prompt->seperator = "@";
 	prompt->dir = "src";
@@ -51,33 +51,40 @@ static t_prompt	*init_prompt(void)//t_env *env)
 	prompt->prompt = multijoin(false, 8, GREEN, prompt->name, RED, prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
 	return (prompt);
 }
+static t_data	*initialize_minishell(char **envp)
+{
+	t_data	*data;
 
+	data = ft_calloc(1, sizeof(t_data));
+	if (data == NULL)
+		return (NULL);
+	data->env = extract_env(envp);
+	data->prompt = init_prompt();
+	data->hist = init_history();
+	set_signals();
+	return (data);
+}
 int	main(int argc, char **argv, char **envp)
 {
-	t_prompt	*prompt;
+	t_data		*data;
 	char		*input;
 	t_cmd		*cmd_head;
-	t_env		*env;
-	t_hist		hist;
 	int			ret;
 
 	(void)argc;
 	(void)argv;
-	set_signals();
-	env = extract_env(envp);
-	prompt = init_prompt();
-	hist = init_history();
+	data = initialize_minishell(envp);
 	input = NULL;
 	cmd_head = NULL;
 	ret = -1;
 	while (ret < 0)
 	{
-		input = readline(prompt->prompt);
+		input = readline(data->prompt->prompt);
 		// printf(">%s<\n", envp[1]);
 		if (input != NULL && input[0] != '\0' && input[0] != '\n')
 		{
 			add_history(input);
-			ft_putendl_fd(input, hist.fd);
+			ft_putendl_fd(input, data->hist.fd);
 		}
 		if (input == NULL)
 		{
@@ -86,18 +93,14 @@ int	main(int argc, char **argv, char **envp)
 			ret = 0;
 			break ;
 		}
-		cmd_head = str_to_lst(input, env);
+		cmd_head = str_to_lst(input, data->env);
 		if (VERBOSE == 1)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, &env);
+		ret = execute_list(cmd_head, &data->env);
 		free_multiple(1, &input);
 		free_cmds(cmd_head);
 	}
-	close(hist.fd);
-	rl_clear_history();
-	// exit(0);
-	delete_env(env);
-	free_multiple(2, prompt->prompt, prompt);
+	ms_cleanup(data);
 	// system("leaks minishell");
 	return (ret);
 }
