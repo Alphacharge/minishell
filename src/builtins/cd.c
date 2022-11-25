@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 09:50:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:25:58 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,30 @@ static t_env	*update_pwd(char *var, t_env *env)
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
-void	cd(char **argv, t_env *env)
+void	cd(int argc, char **argv, t_env *env)
 {
 	int	ret;
 
 	ret = 0;
-	if (argv[1] == NULL)
-		ret = chdir(get_env_var(env, "HOME"));
-	else if (argv[2] != NULL)
+	if (argc == 1)
+		ret = chdir("~");
+	else if (argc == 2)
 	{
-		printf("cd: too many arguments\n");
-		return ;
+		if (argv[1] != NULL && ft_strlen(argv[1]) > 0)
+			ret = chdir(argv[1]);
 	}
-	else if (argv[1][0] > 0)
-		ret = chdir(argv[1]);
+	else
+	{
+		write(2, "cd: string not in pwd: ", 23);
+		if (argv[1] != NULL)
+			write(2, argv[1], ft_strlen(argv[1]));
+		write(2, "\n", 1);
+	}
 	if (ret == -1)
 	{
-		ft_error("minishell: cd:");
+		write(2, "cd: no such file or directory: ", 30);
+		if (argv[1] != NULL)
+			write(2, argv[1], ft_strlen(argv[1]));
 		write(2, "\n", 1);
 	}
 	else
