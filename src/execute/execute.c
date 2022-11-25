@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 16:05:50 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:42:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,34 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 		ft_error(cmd->argv[0]);
 }
 
+int	exec_builtin(t_cmd *cmd, t_env *env)
+{
+	if (cmd->argv[0][0] == 'c')
+		cd(cmd->argv, env);
+	else if (cmd->argv[0][0] == 'p')
+		pwd(arraycount(cmd->argv), cmd->argv);
+	// else if (cmd->argv[0][0] == 'u')
+	// 	unset(arraycount(cmd->argv), cmd->argv, env);
+	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
+		echo(arraycount(cmd->argv), cmd->argv);
+	else if (ft_strcmp(cmd->argv[0], "env") == 0)
+		print_env(env, 1);
+	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
+		return (shell_exit(cmd->argv));
+	// else if (strcmp(cmd->argv[0], "export") == 0)
+	// 	export(arraycount(cmd->argv), cmd->argv, env);
+	return (-1);
+}
+
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
 int	execute_list(t_cmd *lst, t_env **env)
 {
 	t_cmd	*current;
+	int		ret;
 
 	current = lst;
+	ret = -1;
+	//commands are executed one after another; needs to be changed to pipe
 	while (current != NULL)
 	{
 		if (current->type == 0)
@@ -94,5 +116,5 @@ int	execute_list(t_cmd *lst, t_env **env)
 			exec_cmd(current, *env);
 		current = current->next;
 	}
-	return (-1);
+	return (ret);
 }

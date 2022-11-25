@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 15:55:27 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:41:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "structs.h"
 # include "errorhandling.h"
 # include "filedescriptors.h"
-# include "minishell.h"
 # include "environment.h"
 # include "execute.h"
 # include "builtins.h"
+# include "utils.h"
 
 // void	executor(t_exec *exec, t_env *env);
 int		execute_list(t_cmd *lst, t_env **env);

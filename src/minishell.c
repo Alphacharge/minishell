@@ -6,11 +6,38 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 09:35:06 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:44:13 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	print_cmds(t_cmd *lst)
+{
+	t_redir	*redir;
+	int		i;
+
+	i = 0;
+	printf("\n-------------------\n");
+	while (lst != NULL)
+	{
+		while (lst->argv[i] != NULL)
+		{
+			printf("%s ", lst->argv[i]);
+			i++;
+		}
+		redir = lst->redir;
+		while (redir != NULL)
+		{
+			printf("> %s ", redir->file);
+			redir = redir->next;
+		}
+		if (lst->pipe != NULL)
+			printf("| ");
+		lst = lst->pipe;
+	}
+	printf("\n-------------------\n");
+}
 
 static t_prompt	*init_prompt(void)//t_env *env)
 {
@@ -55,6 +82,8 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		cmd_head = str_to_lst(input, env);
+		if (VERBOSE == 1)
+			print_cmds(cmd_head);
 		ret = execute_list(cmd_head, env);
 		input = ft_free(input);
 		free_cmds(cmd_head);

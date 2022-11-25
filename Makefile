@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/22 17:00:02 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/25 10:44:31 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 SRC_F	+=
 SRC_F	+=	signals.c
 SRC_F	+=
-SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c
+SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c get_word.c
 SRC_F	+=
 SRC_F	+=
 

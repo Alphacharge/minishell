@@ -6,17 +6,40 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:43:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
 //  ls -l     -a|"c"a"t" -e
 
-static char	*skip_to_token(char *s)
+//FIX THIS FUNCTION
+
+/*Skips one argument containing any amount of quotation marks.*/
+char	*skip_argument(char *s)
 {
-	while (s[0] != '\0' && is_token(s[0]) == 0)
+	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
+	{
+		if (s[0] == '\"')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\"')
+				s++;
+		}
+		if (s[0] == '\'')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\'')
+				s++;
+		}
+		s = skip_word(s);
+	}
+	return (s);
+}
+
+static char	*skip_to_pipe(char *s)
+{
+	while (s[0] != '\0' && s[0] != '|')
 		s++;
 	return (s);
 }
@@ -46,6 +69,7 @@ static int	arg_len(char *s)
 	return (i - quotations);
 }
 
+/*Returns the next word in s as newly allocated string. Handles quotations.*/
 static char	*input_to_arg(char *s)
 {
 	int		i;
@@ -55,6 +79,8 @@ static char	*input_to_arg(char *s)
 
 	i = 0;
 	j = 0;
+	if (s == NULL || s[0] == '\0')
+		return (NULL);
 	len = arg_len(s);
 	arg = ft_calloc(len + 1, sizeof(char));
 	if (arg == NULL)
@@ -71,47 +97,47 @@ static char	*input_to_arg(char *s)
 	return (arg);
 }
 
-/*Skips one argument containing any amount of quotation marks.*/
-char	*skip_argument(char *s)
+//exit, cd check
+static void	set_type(t_cmd *cmd)
 {
-	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
-	{
-		if (s[0] == '\"')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\"')
-				s++;
-		}
-		if (s[0] == '\'')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\'')
-				s++;
-		}
-		s = skip_word(s);
-	}
-	return (s);
+	if (ft_strncmp("exit", cmd->argv[0], 5) == 0)
+		cmd->type = BLTIN;
+	else if (ft_strncmp("cd", cmd->argv[0], 3) == 0)
+		cmd->type = BLTIN;
+	else
+		cmd->type = EXEC;
 }
 
+//2>&1
 /*Returns number of arguments until next token. Quotation marks are handled.*/
 static int	count_args(char *s)
 {
 	int	args;
 
 	args = 0;
-	while (s[0] != '\0' && is_token(s[0]) == 0)
+	while (s[0] != '\0' && s[0] != '|')
 	{
 		s = skip_space(s);
-		if (s[0] == '\0' || is_token(s[0]) == 1)
-			break ;
-		args++;
+		if (s[0] != '\0' && is_token(s[0]) == 0)
+			args++;
 		s = skip_argument(s);
+		s = skip_space(s);
+		if (s[0] == '>')
+		{
+			s++;
+			if (s[0] == '>')
+				s++;
+			s = skip_space(s);
+			if (s[0] == '\0' || is_token(s[0]) == 1)
+				return (printf("minishell: syntax error near unexpected token '%c'\n", s[0]), -1);
+			s = skip_argument(s);
+			s = skip_space(s);
+		}
 	}
 	return (args);
 }
 
-//exit, cd check
-static void	set_type(t_cmd *cmd)
+char	*add_redir(char *s, t_cmd *cmd)
 {
 	if (ft_strcmp("exit", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
@@ -123,12 +149,35 @@ static void	set_type(t_cmd *cmd)
 		cmd->type = BLTIN;
 	else if (ft_strcmp("export", cmd->argv[0]) == 0)
 		cmd->type = BLTIN;
+	t_redir	*current;
+
+	current = cmd->redir;
+	if (s[0] == '>')
+		s++;
+	if (s[0] == '>')
+		s++;
+	s = skip_space(s);
+	if (current == NULL)
+	{
+		cmd->redir = ft_calloc(1, sizeof(t_redir));
+		cmd->redir->file = input_to_arg(s);
+		cmd->redir->next = NULL;
+	}
 	else
-		cmd->type = EXEC;
+	{
+		while (current->next != NULL)
+			current = current->next;
+		current->next = ft_calloc(1, sizeof(t_redir));
+		current->next->file = input_to_arg(s);
+		current->next->next = NULL;
+	}
+	s = skip_word(s);
+	s = skip_space(s);
+	return (s);
 }
 
 /*Creates an array of strings until null byte or token is encountered.*/
-static char	**create_argv(char *s)
+static char	**create_argv(char *s, t_cmd *cmd)
 {
 	char	**argv;
 	int		nr;
@@ -136,6 +185,8 @@ static char	**create_argv(char *s)
 
 	i = 0;
 	nr = count_args(s);
+	if (nr < 0)
+		return (NULL);
 	argv = ft_calloc(nr + 1, sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
@@ -143,8 +194,13 @@ static char	**create_argv(char *s)
 	{
 		s = skip_space(s);
 		argv[i] = input_to_arg(s);
+		if (argv[i] == NULL)
+			return (free_ptr_array((void **)argv), NULL);
 		i++;
 		s = skip_argument(s);
+		s = skip_space(s);
+		while (s[0] == '>' || s[0] == '<')
+			s = add_redir(s, cmd);
 	}
 	argv[i] = NULL;
 	return (argv);
@@ -166,7 +222,10 @@ static t_cmd	*create_node(char *s, t_env *env)
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (NULL);
-	cmd->argv = create_argv(s);
+	cmd->env = env;
+	cmd->pipe = NULL;
+	cmd->redir = NULL;
+	cmd->argv = create_argv(s, cmd);
 	if (cmd->argv == NULL)
 		return (NULL);
 	set_type(cmd);
@@ -180,7 +239,8 @@ static t_cmd	*create_node(char *s, t_env *env)
 		{
 			printf("minishell: %s: command not found\n", cmd_name);
 			cmd->argv[0] = cmd_name;
-			cmd_name = free_ptr_array((void **)cmd->argv);
+			free_ptr_array((void **)cmd->argv);
+			cmd_name = NULL;
 			cmd = ft_free(cmd);
 		}
 		ft_free(cmd_name);
@@ -205,18 +265,17 @@ t_cmd	*str_to_lst(char *input, t_env *env)
 		cmd = create_node(input, env);
 		if (cmd == NULL)
 			break ;
-		if (prev != NULL)
-			prev->next = cmd;
 		if (head == NULL)
 			head = cmd;
-		cmd->next = NULL;
+		if (prev != NULL)
+			prev->pipe = cmd;
 		prev = cmd;
-		input = skip_to_token(input);
+		//if we implement & the whole logic of this loop needs to be changed
+		input = skip_to_pipe(input);
 		if (input[0] == '\0')
 			break ;
-		//needs extra rules for special tokens
-		cmd->operator = input[0];
-		while (is_token(input[0]) == 1)
+		//any other token will be handled as argument
+		else if (input[0] == '|')
 			input++;
 	}
 	return (head);

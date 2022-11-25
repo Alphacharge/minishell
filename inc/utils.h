@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:50 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:42:00 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 # define UTILS_H
 
 # include <stdbool.h>
-
-// # include ".h"
-// # include "structs.h"
 # include "libft.h"
 
 char	*combine_pathprog(char *path, char *prog);
@@ -30,5 +27,6 @@ int		is_word(char c);
 int		is_token(char c);
 int		ft_strcmp(char *s1, char *s2);
 int		arraycount(char **array);
+char	*get_word(char	*s);
 
 #endif

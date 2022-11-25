@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 10:43:04 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*free_cmds(t_cmd *current)
 	{
 		free_ptr_array((void *)current->argv);
 		prev = current;
-		current = current->next;
+		current = current->pipe;
 		ft_free(prev);
 	}
 	return (NULL);
