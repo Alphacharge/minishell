@@ -6,12 +6,13 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 14:25:30 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:45:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 //  ls -l     -a|"c"a"t" -e
+//     echo hello$HOME>test
 
 //FIX THIS FUNCTION
 
@@ -44,32 +45,70 @@ static char	*skip_to_pipe(char *s)
 	return (s);
 }
 
+static char	*skip_variable(char *s)
+{
+	while (*s != '\0' && *s != ' ' && *s != '|' && *s != '$' && *s != '\"' && *s != '\'')
+		s++;
+	return (s);
+}
+
+static int	var_length(s)
+{
+	
+}
+
 /*Counts length until next space or token and subtracts number of found
 quotation marks.*/
 static int	arg_len(char *s)
 {
-	int	i;
-	int	quotations;
+	int	len;
 
-	i = 0;
-	quotations = 0;
-	while (s[i] != '\0' && ft_isspace(s[i]) == 0 && is_token(s[i]) == 0)
+	len = 0;
+	while (*s != '\0' && ft_isspace(*s) == 0 && is_token(*s) == 0)
 	{
-		if (s[i] == '\"')
+		while (*s == '$')
 		{
-			i++;
-			quotations++;
-			while (s[i] != '\0' && s[i] != '\"')
-				i++;
-			if (s[i] == '\"')
-				quotations++;
+			s++;
+			len += var_length;
+			s = skip_variable(s);
 		}
-		i++;
+		if (*s == '\"')
+		{
+			s++;
+			while (*s != '\0' && *s != '\"')
+			{
+				while (*s == '$')
+				{
+					s++;
+					len += var_length(s);
+					s = skip_variable(s);
+				}
+				if (*s != '$')
+				{
+					s++;
+					len++;
+				}
+			}
+			if (*s == '\"')
+				s++;
+		}
+		else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\0' && *s != '\'')
+			{
+				s++;
+				len++;
+			}
+			s++;
+		}
+		len++;
+		s++;
 	}
-	return (i - quotations);
+	return (len);
 }
 
-/*Returns the next word in s as newly allocated string. Handles quotations.*/
+/*Returns the next word in s as newly allocated string. Handles quotes.*/
 static char	*input_to_arg(char *s)
 {
 	int		i;
