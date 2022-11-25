@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 10:29:55 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 11:33:12 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ t_env	*export(int argc, char **argv, t_env *env)
 		if (argv[i] != NULL)
 		{
 			name = ft_first_word(argv[i], '=', 0);
-			printf(">>%s\n", name);
 			if (get_env_var(env, name) == NULL)
 			{
 				new = new_env();

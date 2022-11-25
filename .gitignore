@@ -1,5 +1,7 @@
 # Manually
 minishell
+.ms_config
+.ms_history
 
 # Prerequisites
 *.d
