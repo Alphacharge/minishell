@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 10:42:00 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/25 15:43:46 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ int		is_token(char c);
 int		ft_strcmp(char *s1, char *s2);
 int		arraycount(char **array);
 char	*get_word(char	*s);
+char	*ft_last_word(const char *str, char c, int rev);
 
 #endif
