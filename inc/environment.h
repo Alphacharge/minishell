@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:22:49 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 11:21:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:31:49 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include "structs.h"
 # include "libft.h"
 # include "utils.h"
+
+# define RED	"\x01\033[1;31m\x02"
+# define GREEN	"\x01\033[1;32m\x02"
+# define YELL	"\x01\033[1;33m\x02"
+# define BLUE	"\x01\033[1;34m\x02"
+# define WHITE	"\x01\033[0m\x02"
 
 typedef struct s_env
 {

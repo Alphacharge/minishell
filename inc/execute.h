@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 11:34:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:10:26 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@
 # include "utils.h"
 
 // void	executor(t_exec *exec, t_env *env);
-int		execute_list(t_cmd *lst, t_env **env);
+int		execute_list(t_cmd *lst, t_data *data);
 
 #endif

@@ -6,14 +6,15 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 11:49:21 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:25:25 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-// static void	execute_child(int *fds, char *exe, char **envp)
+// static void	execute_child(int *fds, t_cmd *cmd, t_env *env)
 // {
+// 	static int index_fd = 0;
 // 	if (var->index_fd == 0)
 // 		first_fd(var);
 // 	else if (var->index_fd == var->calls - 1)
@@ -31,7 +32,7 @@
 // 		close(var->fds[var->index_fd - 1][0]);
 // 		close(var->fds[var->index_fd][1]);
 // 	}
-// 	execve(exe, var->args[var->index_fd], envp);
+// 	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
 // }
 
 // void	executor(t_exec *exec, t_env *env)
@@ -50,12 +51,17 @@
 
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
-	int	pid;
-	int	ret;
+	pid_t	pid;
+	int		ret;
+	// int		fds[2];
 
+	// pipe(fds);
 	pid = fork();
 	if (pid == 0)
+		// execute_child(fds, cmd, env)
 		execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+	// close(fds[0]);
+	// close(fds[1]);
 	if (pid < 0)
 		ft_error("minishell: exec_cmd:");
 	waitpid(-1, &ret, 0);
@@ -63,10 +69,10 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 		ft_error(cmd->argv[0]);
 }
 
-int	exec_builtin(t_cmd *cmd, t_env **env)
+int	exec_builtin(t_cmd *cmd, t_data *data)
 {
 	if (cmd->argv[0][0] == 'c')
-		cd(arraycount(cmd->argv), cmd->argv, *env);
+		cd(arraycount(cmd->argv), cmd->argv, data);
 	else if (cmd->argv[0][0] == 'p')
 		pwd(arraycount(cmd->argv), cmd->argv);
 	// else if (cmd->argv[0][0] == 'u')
@@ -74,7 +80,7 @@ int	exec_builtin(t_cmd *cmd, t_env **env)
 	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
 		echo(arraycount(cmd->argv), cmd->argv);
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
-		print_env(*env, 1);
+		print_env(data->env, 1);
 	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
 		return (shell_exit(cmd->argv));
 	// else if (strcmp(cmd->argv[0], "export") == 0)
@@ -83,7 +89,7 @@ int	exec_builtin(t_cmd *cmd, t_env **env)
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
-int	execute_list(t_cmd *lst, t_env **env)
+int	execute_list(t_cmd *lst, t_data *data)
 {
 	t_cmd	*current;
 	int		ret;
@@ -96,24 +102,24 @@ int	execute_list(t_cmd *lst, t_env **env)
 		if (current->type == 0)
 		{
 			if (lst->argv[0][0] == 'c')
-				cd(arraycount(lst->argv),lst->argv, *env);
+				cd(arraycount(lst->argv),lst->argv, data);
 			else if (lst->argv[0][0] == 'p')
 				pwd(arraycount(lst->argv), lst->argv);
 			else if (lst->argv[0][0] == 'u')
-				*env = unset(arraycount(lst->argv), lst->argv, *env);
+				data->env = unset(arraycount(lst->argv), lst->argv, data->env);
 			else if (ft_strcmp(lst->argv[0], "echo") == 0)
 				echo(arraycount(lst->argv), lst->argv);
 			else if (ft_strcmp(lst->argv[0], "export") == 0)
-				*env = export(arraycount(lst->argv), lst->argv, *env);
+				data->env = export(arraycount(lst->argv), lst->argv, data->env);
 			else if (ft_strcmp(lst->argv[0], "env") == 0)
-				print_env(*env, 1);
+				print_env(data->env, 1);
 			else if (ft_strcmp(lst->argv[0], "exit") == 0)
 				return (shell_exit(lst->argv));
 			// else if (strcmp(lst->argv[0], "export") == 0)
 				// export(arraycount(lst->argv), lst->argv, env);
 		}
 		if (current->type == 1)
-			exec_cmd(current, *env);
+			exec_cmd(current, data->env);
 		current = current->pipe;
 	}
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 10:25:58 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:32:26 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,32 @@
 #include "errorhandling.h"
 
 /*change oldpwd to pwd and set new pwd*/
-static t_env	*update_pwd(char *var, t_env *env)
+static t_env	*update_pwd(char *var, t_data *data)
 {
 	char	*dir;
 
-	if (var != NULL && env != NULL)
+	if (var != NULL && data->env != NULL)
 	{
-		dir = get_env_var(env, "PWD");
+		dir = get_env_var(data->env, "PWD");
 		dir = ft_strdup(dir);
 		if (dir != NULL)
-			env = set_env_var(env, "OLDPWD", dir);
+			data->env = set_env_var(data->env, "OLDPWD", dir);
 		if (dir != NULL)
 			dir = getcwd(NULL, 0);
 		if (dir != NULL)
-			env = set_env_var(env, "PWD", dir);
+			data->env = set_env_var(data->env, "PWD", dir);
+		free(data->prompt->dir);
+		data->prompt->dir = ft_last_word(dir, '/', 0);
+		free(data->prompt->prompt);
+		data->prompt->prompt = multijoin(false, 8, GREEN, data->prompt->name, \
+		RED, data->prompt->seperator, YELL, data->prompt->dir, \
+		data->prompt->endl, WHITE);
 	}
-	return (env);
+	return (data->env);
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
-void	cd(int argc, char **argv, t_env *env)
+void	cd(int argc, char **argv, t_data *data)
 {
 	int	ret;
 
@@ -64,5 +70,5 @@ void	cd(int argc, char **argv, t_env *env)
 		write(2, "\n", 1);
 	}
 	else
-		update_pwd(argv[1], env);
+		update_pwd(argv[1], data);
 }

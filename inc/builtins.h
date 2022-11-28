@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:39:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:27:15 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:12:01 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "environment.h"
 
-void	cd(int argc, char **argv, t_env *env);
+void	cd(int argc, char **argv, t_data *data);
 void	echo(int argc, char **argv);
 void	env(int argc, char **argv, t_env *env);
 int		shell_exit(char **argv);

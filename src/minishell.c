@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 17:08:05 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:27:20 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ static void	print_cmds(t_cmd *lst)
 	printf("\n-------------------\n");
 }
 
-static t_prompt	*init_prompt(void)//t_env *env)
+static t_prompt	*init_prompt(t_env *env)
 {
 	t_prompt	*prompt;
 
 	prompt = ft_calloc(1, sizeof(t_prompt));
 	prompt->name = "minishell";
 	prompt->seperator = "@";
-	prompt->dir = "src";
+	prompt->dir = ft_last_word(get_env_var(env, "PWD"), '/', 0);
 	prompt->endl = "$:";
 	prompt->prompt = multijoin(false, 8, GREEN, prompt->name, RED, prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
 	return (prompt);
@@ -59,11 +59,12 @@ static t_data	*initialize_minishell(char **envp)
 	if (data == NULL)
 		return (NULL);
 	data->env = extract_env(envp);
-	data->prompt = init_prompt();
+	data->prompt = init_prompt(data->env);
 	data->hist = init_history();
 	set_signals();
 	return (data);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		*data;
@@ -96,7 +97,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd_head = str_to_lst(input, data->env);
 		if (VERBOSE == 1)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, &data->env);
+		ret = execute_list(cmd_head, data);
 		free_multiple(1, &input);
 		free_cmds(cmd_head);
 	}

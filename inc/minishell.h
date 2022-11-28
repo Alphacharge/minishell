@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:19:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/28 11:31:42 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,6 @@
 # define PIPE		3
 # define LIST		4
 # define BACK		5
-
-# define RED	"\x01\033[1;31m\x02"
-# define GREEN	"\x01\033[1;32m\x02"
-# define YELL	"\x01\033[1;33m\x02"
-# define BLUE	"\x01\033[1;34m\x02"
-# define WHITE	"\x01\033[0m\x02"
 
 # include <stdlib.h> // malloc, free, exit
 # include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
