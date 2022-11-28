@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/23 13:50:59 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:02:07 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,31 @@
 
 static void	print_cmds(t_cmd *lst)
 {
+	t_param	*param;
 	t_redir	*redir;
-	int		i;
 
-	i = 0;
 	printf("\n-------------------\n");
 	while (lst != NULL)
 	{
-		while (lst->argv[i] != NULL)
+		if (lst->name != NULL)
+			printf("name: %s\n", lst->name);
+		param = lst->param;
+		while (param != NULL)
 		{
-			printf("%s ", lst->argv[i]);
-			i++;
+			printf("param: %s\n", param->arg);
+			param = param->next;
 		}
 		redir = lst->redir;
 		while (redir != NULL)
 		{
-			printf("> %s ", redir->file);
+			printf("redir: %s\n", redir->file);
 			redir = redir->next;
 		}
 		if (lst->pipe != NULL)
-			printf("| ");
+			printf("pipe\n");
 		lst = lst->pipe;
 	}
-	printf("\n-------------------\n");
+	printf("-------------------\n");
 }
 
 static t_prompt	*init_prompt(void)//t_env *env)
@@ -81,10 +83,10 @@ int	main(int argc, char **argv, char **envp)
 			ret = 0;
 			break ;
 		}
-		cmd_head = str_to_lst(input, env);
+		cmd_head = parse(input, env);
 		if (VERBOSE == 1)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, env);
+		// ret = execute_list(cmd_head, env);
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   skip_characters.c                                  :+:      :+:    :+:   */
+/*   skip.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:36:51 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/18 16:26:46 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:38:44 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,26 @@ char	*skip_space(char *ptr)
 	while (*ptr != '\0' && ft_isspace(*ptr))
 		ptr++;
 	return (ptr);
+}
+
+/*Skips one argument containing any amount of quotation marks.*/
+char	*skip_argument(char *s)
+{
+	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
+	{
+		if (s[0] == '\"')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\"')
+				s++;
+		}
+		if (s[0] == '\'')
+		{
+			s++;
+			while (s[0] != '\0' && s[0] != '\'')
+				s++;
+		}
+		s = skip_word(s);
+	}
+	return (s);
 }

@@ -6,37 +6,13 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 15:45:31 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:38:24 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 //  ls -l     -a|"c"a"t" -e
 //     echo hello$HOME>test
-
-//FIX THIS FUNCTION
-
-/*Skips one argument containing any amount of quotation marks.*/
-char	*skip_argument(char *s)
-{
-	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
-	{
-		if (s[0] == '\"')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\"')
-				s++;
-		}
-		if (s[0] == '\'')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\'')
-				s++;
-		}
-		s = skip_word(s);
-	}
-	return (s);
-}
 
 static char	*skip_to_pipe(char *s)
 {
@@ -50,11 +26,6 @@ static char	*skip_variable(char *s)
 	while (*s != '\0' && *s != ' ' && *s != '|' && *s != '$' && *s != '\"' && *s != '\'')
 		s++;
 	return (s);
-}
-
-static int	var_length(s)
-{
-	
 }
 
 /*Counts length until next space or token and subtracts number of found
