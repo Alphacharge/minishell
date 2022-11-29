@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str_to_lst.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 14:48:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 15:36:11 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	arg_len(char *s)
 		while (*s == '$')
 		{
 			s++;
-			len += var_length;
+			// len += var_length;
 			s = skip_variable(s);
 		}
 		if (*s == '\"')

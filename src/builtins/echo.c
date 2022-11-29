@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/18 16:24:26 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 15:20:08 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	echo(int argc, char **argv)
 	{
 		while (i < argc)
 		{
-			write(1, &argv[i], ft_strlen(argv[i]));
+			write(1, argv[i], ft_strlen(argv[i]));
 			i++;
 		}
 	}
@@ -34,7 +34,7 @@ void	echo(int argc, char **argv)
 	{
 		while (i < argc)
 		{
-			write(1, &argv[i], ft_strlen(argv[i]));
+			write(1, argv[i], ft_strlen(argv[i]));
 			i++;
 		}
 		write(1, "\n", 1);
