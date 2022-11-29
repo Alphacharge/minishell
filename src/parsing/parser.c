@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_parsing.c                                      :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 16:08:38 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 18:29:55 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,9 +229,9 @@ char	*skip_single_quotes(char *s)
 	return (s);
 }
 
-char	*skip_to_envvar(char *s)
+char	*skip_to_var(char *s)
 {
-	while (*s != 0 && *s != '$')
+	while (*s != '\0' && *s != '$')
 	{
 		if (*s == '\'')
 			s = skip_single_quotes(s);
@@ -240,25 +240,43 @@ char	*skip_to_envvar(char *s)
 	return (s);
 }
 
+char	*skip_var(char *s)
+{
+	while (*s != '\0' && (ft_isalnum(*s) || *s == '_'))
+		s++;
+	return (s);
+}
+
+/*Returns number of all needed strings for expansion. Returns 0 if no
+variable is found.*/
 int	count_var_strings(char *s)
 {
 	int	n;
+	int	env_var;
 
 	n = 0;
+	env_var = 0;
 	while (*s != '\0')
 	{
 		n++;
-		s = skip_to_envvar(s);
-		if (*s == '$')
+		s = skip_to_var(s);
+		while (*s == '$')
+		{
+			s++;
+			env_var = 1;
 			n++;
+			s = skip_var(s);
+		}
 	}
+	if (env_var == 0)
+		return (0);
 	return (n);
 }
 
 char	*alloc_var_name(char *s)
 {
-	int	l;
-	int	i;
+	int		l;
+	int		i;
 	char	*name;
 
 	l = 0;
@@ -268,12 +286,11 @@ char	*alloc_var_name(char *s)
 	name = ft_calloc(l + 1, sizeof(char));
 	if (name == NULL)
 		return (NULL);
-	while (i <= l)
+	while (i < l)
 	{
 		name[i] = s[i];
 		i++;
 	}
-	name[i] = '\0';
 	return (name);
 }
 
@@ -283,38 +300,48 @@ char	*expand_envvars(char *s, t_env *env)
 	char	*joined;
 	int		envvars;
 	int		i;
+	char	*name;
+	// char	*free_this;
 
 	i = 0;
+	// free_this = s;
 	joined = NULL;
 	envvars = count_var_strings(s);
-printf("counted %i envvar strings\n", envvars);
+// printf("counted %i envvar strings\n", envvars);
 	if (envvars == 0)
 		return (s);
 	array = ft_calloc(envvars, sizeof (char *));
 	if (array == NULL)
 		return (NULL);
-	while (*s != 0)
+	while (*s != '\0')
 	{
 		array[i] = s;
-//need to allocate every string;
-		s = skip_to_envvar(s);
-printf("skipped to %s\n", s);
-		if (*s == '$')
+		i++;
+		s = skip_to_var(s);
+		while (*s == '$')
 		{
 			s = null_increment(s);
+			name = alloc_var_name(s);
+			array[i] = get_env_var(env, name);
 			i++;
-			array[i] = get_env_var(env, alloc_var_name(s));
+			name = ft_free(name);
+			s = skip_var(s);
 		}
-		i++;
 	}
 	joined = array[0];
 	i = 1;
 	while (i < envvars)
 	{
-printf("joining %s and %s\n", joined, array[i]);
-		joined = ft_strjoin(joined, array[i]);
+// printf("|%s| + |%s|\n", joined, array[i]);
+		name = joined;
+		joined = ft_strjoin(name, array[i]);
+		//this is causing invalid read
+		// name = ft_free(name);
 		i++;
 	}
+	//this is causing invalid free
+	// ft_free(free_this);
+	ft_free(array);
 	return (joined);
 }
 
@@ -386,10 +413,10 @@ char	**create_argv(t_cmd *cmd, t_env *env)
 	while (current != NULL)
 	{
 		argv[i] = arg_to_argv(current->arg);
-		i++;
-		// argv[i] = expand_envvars(current->arg, env);
+		argv[i] = expand_envvars(argv[i], env);
 		// argv[i] = remove_quotes(argv[i]);
 		current = current->next;
+		i++;
 	}
 	argv[i] = NULL;
 	return (argv);
