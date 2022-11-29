@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:48:22 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,6 @@ void	free_multiple(int n, ...)
 void	*ft_free(void *pointer)
 {
 	if (pointer != NULL)
-	{
 		free(pointer);
-		pointer = NULL;
-	}
 	return (NULL);
 }

@@ -6,12 +6,17 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 17:07:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:50:10 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+# define INPUT		1
+# define OUTPUT		2
+# define A_INPUT	3
+# define A_OUTPUT	4
 
 # include <unistd.h>
 # include <sys/types.h>
@@ -58,7 +63,8 @@ typedef struct s_exec
 
 typedef struct s_redir
 {
-	char	*file;
+	char			*file;
+	int				r_type;
 	// char	*efile;
 	// char	*mode;
 	// int		fd;
@@ -66,13 +72,21 @@ typedef struct s_redir
 	struct s_redir	*next;
 }				t_redir;
 
+typedef struct s_param
+{
+	char			*arg;
+	struct s_param	*next;
+}					t_param;
+
 typedef struct s_cmd
 {
 	int				type;
+	char			*name;
 	char			**argv;
 	struct s_env	*env;
 	struct s_cmd	*pipe;
 	struct s_redir	*redir;
+	struct s_param	*param;
 }					t_cmd;
 
 typedef struct s_data

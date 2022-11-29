@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:43:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:54 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	*free_ptr_array(void **array);
 void	*ft_free(void *pointer);
 char	*skip_space(char *ptr);
 char	*skip_word(char *s);
+char	*skip_argument(char *s);
 int		is_word(char c);
 int		is_token(char c);
 int		ft_strcmp(char *s1, char *s2);

@@ -6,11 +6,37 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/28 11:34:59 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:25 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "memory.h"
+
+void	free_redirs (t_redir *current)
+{
+	t_redir	*prev;
+
+	while (current != NULL)
+	{
+		// free(current->file);
+		prev = current;
+		current = current->next;
+		free (prev);
+	}
+}
+
+void	free_params(t_param *current)
+{
+	t_param	*prev;
+
+	while (current != NULL)
+	{
+		// free(current->arg);
+		prev = current;
+		current = current->next;
+		free (prev);
+	}
+}
 
 void	*free_cmds(t_cmd *current)
 {
@@ -18,7 +44,10 @@ void	*free_cmds(t_cmd *current)
 
 	while (current != NULL)
 	{
-		free_ptr_array((void *)current->argv);
+		// free_ptr_array((void *)current->argv);
+		// ft_free(current->name);
+		free_params(current->param);
+		free_redirs(current->redir);
 		prev = current;
 		current = current->pipe;
 		ft_free(prev);

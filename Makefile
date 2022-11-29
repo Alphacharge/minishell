@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/11/25 15:45:16 by rbetz            ###   ########.fr        #
+#    Updated: 2022/11/29 14:51:07 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ CONFIG	:=	.ms_config
 
 ###			###			COMPILER		###			###
 CC		:=	cc
-CFLAGS	:=	-Wall -Wextra -Werror -g
-CDFLAGS	:=	#-g -fsanitize=address
+CFLAGS	:=	-Wall -Wextra -Werror
+CDFLAGS	:=	-g #-fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
@@ -54,7 +54,7 @@ SRC_F	+=	execute.c
 SRC_F	+=	cleanup.c
 SRC_F	+=
 SRC_F	+=	parse_args.c parse_progs.c
-SRC_F	+=	str_to_lst.c is_token.c
+SRC_F	+=	new_parsing.c is_token.c
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 SRC_F	+=

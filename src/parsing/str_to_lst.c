@@ -6,36 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:20:54 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/25 10:43:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:48:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 //  ls -l     -a|"c"a"t" -e
-
-//FIX THIS FUNCTION
-
-/*Skips one argument containing any amount of quotation marks.*/
-char	*skip_argument(char *s)
-{
-	while (s[0] != '\0' && ft_isspace(s[0]) == 0 && is_token(s[0]) == 0)
-	{
-		if (s[0] == '\"')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\"')
-				s++;
-		}
-		if (s[0] == '\'')
-		{
-			s++;
-			while (s[0] != '\0' && s[0] != '\'')
-				s++;
-		}
-		s = skip_word(s);
-	}
-	return (s);
-}
+//     echo hello$HOME>test
 
 static char	*skip_to_pipe(char *s)
 {
@@ -44,32 +21,65 @@ static char	*skip_to_pipe(char *s)
 	return (s);
 }
 
+static char	*skip_variable(char *s)
+{
+	while (*s != '\0' && *s != ' ' && *s != '|' && *s != '$' && *s != '\"' && *s != '\'')
+		s++;
+	return (s);
+}
+
 /*Counts length until next space or token and subtracts number of found
 quotation marks.*/
 static int	arg_len(char *s)
 {
-	int	i;
-	int	quotations;
+	int	len;
 
-	i = 0;
-	quotations = 0;
-	while (s[i] != '\0' && ft_isspace(s[i]) == 0 && is_token(s[i]) == 0)
+	len = 0;
+	while (*s != '\0' && ft_isspace(*s) == 0 && is_token(*s) == 0)
 	{
-		if (s[i] == '\"')
+		while (*s == '$')
 		{
-			i++;
-			quotations++;
-			while (s[i] != '\0' && s[i] != '\"')
-				i++;
-			if (s[i] == '\"')
-				quotations++;
+			s++;
+			len += var_length;
+			s = skip_variable(s);
 		}
-		i++;
+		if (*s == '\"')
+		{
+			s++;
+			while (*s != '\0' && *s != '\"')
+			{
+				while (*s == '$')
+				{
+					s++;
+					len += var_length(s);
+					s = skip_variable(s);
+				}
+				if (*s != '$')
+				{
+					s++;
+					len++;
+				}
+			}
+			if (*s == '\"')
+				s++;
+		}
+		else if (*s == '\'')
+		{
+			s++;
+			while (*s != '\0' && *s != '\'')
+			{
+				s++;
+				len++;
+			}
+			s++;
+		}
+		len++;
+		s++;
 	}
-	return (i - quotations);
+	return (len);
 }
 
-/*Returns the next word in s as newly allocated string. Handles quotations.*/
+/*Returns the next word in s as newly allocated string. Handles quotes.*/
 static char	*input_to_arg(char *s)
 {
 	int		i;

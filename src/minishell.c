@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/28 11:27:20 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:15 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,31 @@
 
 static void	print_cmds(t_cmd *lst)
 {
+	t_param	*param;
 	t_redir	*redir;
-	int		i;
 
-	i = 0;
 	printf("\n-------------------\n");
 	while (lst != NULL)
 	{
-		while (lst->argv[i] != NULL)
+		if (lst->name != NULL)
+			printf("name: %s\n", lst->name);
+		param = lst->param;
+		while (param != NULL)
 		{
-			printf("%s ", lst->argv[i]);
-			i++;
+			printf("param: %s\n", param->arg);
+			param = param->next;
 		}
 		redir = lst->redir;
 		while (redir != NULL)
 		{
-			printf("> %s ", redir->file);
+			printf("redir: %s\n", redir->file);
 			redir = redir->next;
 		}
 		if (lst->pipe != NULL)
-			printf("| ");
+			printf("pipe\n");
 		lst = lst->pipe;
 	}
-	printf("\n-------------------\n");
+	printf("-------------------\n");
 }
 
 static t_prompt	*init_prompt(t_env *env)
@@ -94,11 +96,11 @@ int	main(int argc, char **argv, char **envp)
 			ret = 0;
 			break ;
 		}
-		cmd_head = str_to_lst(input, data->env);
+		cmd_head = parse(input, env);
 		if (VERBOSE == 1)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, data);
-		free_multiple(1, &input);
+		// ret = execute_list(cmd_head, env);
+		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
 	ms_cleanup(data);

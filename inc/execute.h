@@ -6,17 +6,17 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/28 11:10:26 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:50:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
-# include <stdlib.h> // malloc, free, exit
-# include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
-# include <stdio.h> // printf
-# include <sys/wait.h>
+# include <stdlib.h> 		// malloc, free, exit
+# include <unistd.h> 		// close, read, write, dup2, access, fork, pipe, execve
+# include <stdio.h> 		// printf
+# include <sys/wait.h>		// waitpid
 # include "structs.h"
 # include "errorhandling.h"
 # include "filedescriptors.h"

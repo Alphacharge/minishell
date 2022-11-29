@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 16:14:26 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:49:40 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	**create_envp_from_env(t_env *env)
 	return (envp);
 }
 
-/*returns the value of a env variable*/
+/*returns a pointer to the value of a env variable*/
 char	*get_env_var(t_env *env, char *name)
 {
 	while (env != NULL)
