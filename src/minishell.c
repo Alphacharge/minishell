@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:15 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/11/29 14:53:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 			ret = 0;
 			break ;
 		}
-		cmd_head = parse(input, env);
+		cmd_head = parse(input, data->env);
 		if (VERBOSE == 1)
 			print_cmds(cmd_head);
 		// ret = execute_list(cmd_head, env);
