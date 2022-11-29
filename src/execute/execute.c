@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 15:36:32 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:04:21 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	exec_builtin(t_cmd *cmd, t_data *data)
 	else if (ft_strcmp(cmd->name, "echo") == 0)
 		echo(arraycount(cmd->argv), cmd->argv);
 	else if (ft_strcmp(cmd->name, "env") == 0)
-		print_env(env, 1);
+		print_env(data->env, 1);
 	else if (ft_strcmp(cmd->name, "exit") == 0)
 		return (shell_exit(cmd->argv));
 	// else if (ft_strcmp(cmd->name, "export") == 0)
@@ -96,6 +96,8 @@ int	execute_list(t_cmd *lst, t_data *data)
 
 	current = lst;
 	ret = -1;
+	if (lst == NULL)
+		return (ret);
 	//commands are executed one after another; needs to be changed to pipe
 	while (current != NULL)
 	{

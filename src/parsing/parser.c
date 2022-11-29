@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 15:09:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:08:38 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -381,6 +381,8 @@ char	**create_argv(t_cmd *cmd, t_env *env)
 		argv[0] = add_path(cmd->name, env);
 	else
 		argv[0] = ft_strdup(cmd->name);
+	if (argv[0] == NULL)
+		return (free_ptr_array((void **)argv), NULL);
 	while (current != NULL)
 	{
 		argv[i] = arg_to_argv(current->arg);
@@ -409,7 +411,7 @@ static void	set_type(t_cmd *cmd)
 }
 
 /*Allocates cleaned up argv array for use in execve.*/
-void	add_argvs(t_cmd *current, t_env *env)
+int	add_argvs(t_cmd *current, t_env *env)
 {
 	//this function needs to expand all variables and to remove all quotes
 	//variables have to be expanded before quotes are removed
@@ -418,8 +420,11 @@ void	add_argvs(t_cmd *current, t_env *env)
 		//can there be a variable in name?
 		set_type(current);
 		current->argv = create_argv(current, env);
+		if (current->argv == NULL)
+			return (1);
 		current = current->pipe;
 	}
+	return (0);
 }
 
 t_cmd	*parse(char *s, t_env *env)
@@ -429,7 +434,8 @@ t_cmd	*parse(char *s, t_env *env)
 //seems to be working; check any combination of quotes
 	lst = input_to_lst(s, env);
 //cleans up and reallocates every string: double free could happen otherwise.
-	add_argvs(lst, env);
+	if (add_argvs(lst, env) == 1)
+		return (free_cmds(lst), NULL);
 	// create argv;
 	return (lst);
 }
