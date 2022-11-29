@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/28 18:02:07 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:20:20 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ static void	print_cmds(t_cmd *lst)
 			printf("redir: %s\n", redir->file);
 			redir = redir->next;
 		}
+		if (lst->argv == NULL)
+			printf("argv: NULL\n");
+		else
+			printf("argv: %s | %s\n", lst->argv[0], lst->argv[1]);
 		if (lst->pipe != NULL)
 			printf("pipe\n");
 		lst = lst->pipe;
@@ -84,9 +88,9 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		cmd_head = parse(input, env);
-		if (VERBOSE == 1)
+		if (VERBOSE == 100)
 			print_cmds(cmd_head);
-		// ret = execute_list(cmd_head, env);
+		ret = execute_list(cmd_head, env);
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}

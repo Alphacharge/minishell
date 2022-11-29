@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 14:00:56 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:09:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	*null_whitespace(char *s)
 		*s = 0;
 		s++;
 	}
-printf("n_w skipped to %s\n", s);
 	return (s);
 }
 
@@ -99,7 +98,6 @@ static void	append_redir(t_cmd *cmd, t_redir *r)
 {
 	t_redir	*current;
 
-printf("append_redir\n");
 	current = cmd->redir;
 	if (current == NULL)
 	{
@@ -115,7 +113,6 @@ static char	*add_redir(t_cmd *cmd, char *s)
 {
 	t_redir	*r;
 
-printf("add_redir\n");
 	if (cmd == NULL)
 		return (NULL);
 	r = ft_calloc(1, sizeof(t_redir));
@@ -336,6 +333,38 @@ int	count_parameters(t_cmd *cmd)
 	return (n);
 }
 
+char	*arg_to_argv(char *s)
+{
+	int		i;
+	char	*argument;
+
+//here we could already allocate enough space for env vars
+	i = 0;
+	argument = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (argument == NULL)
+		return (NULL);
+	while (s[i] != 0)
+	{
+		argument[i] = s[i];
+		i++;
+	}
+	return (argument);
+}
+
+/*Returns allocated string of executable name with path (if found).*/
+char	*add_path(char *name, t_env *env)
+{
+	char	**paths;
+	char	*new;
+
+	paths = get_path_var(env);
+	new = get_path(paths, name);
+	free_ptr_array((void **)paths);
+	if (new == NULL)
+		return (printf("minishell: %s: command not found\n", name), NULL);
+	return (new);
+}
+
 char	**create_argv(t_cmd *cmd, t_env *env)
 {
 	char	**argv;
@@ -345,20 +374,38 @@ char	**create_argv(t_cmd *cmd, t_env *env)
 	i = 1;
 	(void)env;
 	current = cmd->param;
-printf("allocating %i args\n", count_parameters(cmd) + 2);
 	argv = ft_calloc(count_parameters(cmd) + 2, sizeof(char *));
 	if (argv == NULL)
 		return (NULL);
-	//PATH not inserted yet!
-	argv[0] = cmd->name;
+	if (cmd->type == EXEC)
+		argv[0] = add_path(cmd->name, env);
+	else
+		argv[0] = ft_strdup(cmd->name);
 	while (current != NULL)
 	{
+		argv[i] = arg_to_argv(current->arg);
+		i++;
 		// argv[i] = expand_envvars(current->arg, env);
 		// argv[i] = remove_quotes(argv[i]);
 		current = current->next;
 	}
 	argv[i] = NULL;
 	return (argv);
+}
+
+//not sure if this value is actually needed
+static void	set_type(t_cmd *cmd)
+{
+	if (ft_strcmp("cd", cmd->name) == 0 || \
+		ft_strcmp("echo", cmd->name) == 0 || \
+		ft_strcmp("env", cmd->name) == 0 || \
+		ft_strcmp("exit", cmd->name) == 0 || \
+		ft_strcmp("export", cmd->name) == 0 || \
+		ft_strcmp("pwd", cmd->name) == 0 || \
+		ft_strcmp("unset", cmd->name) == 0)
+		cmd->type = BLTIN;
+	else
+		cmd->type = EXEC;
 }
 
 /*Allocates cleaned up argv array for use in execve.*/
@@ -369,6 +416,7 @@ void	add_argvs(t_cmd *current, t_env *env)
 	while (current != NULL)
 	{
 		//can there be a variable in name?
+		set_type(current);
 		current->argv = create_argv(current, env);
 		current = current->pipe;
 	}

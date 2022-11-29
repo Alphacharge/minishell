@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 16:18:03 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:20:44 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int	exec_builtin(t_cmd *cmd, t_env *env)
 		pwd(arraycount(cmd->argv), cmd->argv);
 	// else if (cmd->argv[0][0] == 'u')
 	// 	unset(arraycount(cmd->argv), cmd->argv, env);
-	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
+	else if (ft_strcmp(cmd->name, "echo") == 0)
 		echo(arraycount(cmd->argv), cmd->argv);
-	else if (ft_strcmp(cmd->argv[0], "env") == 0)
+	else if (ft_strcmp(cmd->name, "env") == 0)
 		print_env(env, 1);
-	else if (ft_strcmp(cmd->argv[0], "exit") == 0)
+	else if (ft_strcmp(cmd->name, "exit") == 0)
 		return (shell_exit(cmd->argv));
-	// else if (strcmp(cmd->argv[0], "export") == 0)
+	// else if (ft_strcmp(cmd->name, "export") == 0)
 	// 	export(arraycount(cmd->argv), cmd->argv, env);
 	return (-1);
 }
