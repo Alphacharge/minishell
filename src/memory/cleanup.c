@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/28 17:51:55 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:52:01 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	*free_cmds(t_cmd *current)
 
 	while (current != NULL)
 	{
-		free_ptr_array((void *)current->argv);
+		// free_ptr_array((void *)current->argv);
 		// ft_free(current->name);
 		free_params(current->param);
 		free_redirs(current->redir);

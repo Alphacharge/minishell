@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/28 19:10:13 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:00:56 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ char	**create_argv(t_cmd *cmd, t_env *env)
 	int		i;
 
 	i = 1;
+	(void)env;
 	current = cmd->param;
 printf("allocating %i args\n", count_parameters(cmd) + 2);
 	argv = ft_calloc(count_parameters(cmd) + 2, sizeof(char *));
@@ -352,7 +353,7 @@ printf("allocating %i args\n", count_parameters(cmd) + 2);
 	argv[0] = cmd->name;
 	while (current != NULL)
 	{
-		argv[i] = expand_envvars(current->arg, env);
+		// argv[i] = expand_envvars(current->arg, env);
 		// argv[i] = remove_quotes(argv[i]);
 		current = current->next;
 	}
