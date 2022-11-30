@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/30 15:18:30 by humbi            ###   ########.fr       */
+/*   Updated: 2022/11/30 15:29:01 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,10 +222,10 @@ static t_cmd	*input_to_lst(char *s, t_env *env)
 char	*skip_single_quotes(char *s)
 {
 	s++;
-	while (*s != 0 && *s != '\'')
+	while (*s != '\0' && *s != '\'')
 		s++;
-	if (*s == '\'')
-		s++;
+	//if (*s == '\'')
+		//s++;
 	return (s);
 }
 
@@ -233,7 +233,7 @@ char	*skip_to_var(char *s)
 {
 	while (*s != '\0' && *s != '$')
 	{
-		if (*s == '\'')
+		if (*s != '\0' && *s == '\'')
 			s = skip_single_quotes(s);
 		s++;
 	}
@@ -326,6 +326,7 @@ char	*expand_envvars(char *s, t_env *env)
 			array[i] = get_env_var(env, name);
 			i++;
 			name = ft_free(name);
+		//dont skip $ if the next char isnt valid 4 a variable
 			s = skip_var(s);
 		}
 	}
