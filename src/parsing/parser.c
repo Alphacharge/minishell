@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 18:29:55 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/11/30 15:18:30 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,18 +301,19 @@ char	*expand_envvars(char *s, t_env *env)
 	int		envvars;
 	int		i;
 	char	*name;
-	// char	*free_this;
+	char	*free_this;
 
 	i = 0;
-	// free_this = s;
+	free_this = s;
 	joined = NULL;
 	envvars = count_var_strings(s);
-// printf("counted %i envvar strings\n", envvars);
+//printf("counted %i envvar strings\n", envvars);
 	if (envvars == 0)
 		return (s);
-	array = ft_calloc(envvars, sizeof (char *));
+	array = ft_calloc(envvars + 1, sizeof (char *));
 	if (array == NULL)
 		return (NULL);
+	array[envvars] = NULL;
 	while (*s != '\0')
 	{
 		array[i] = s;
@@ -328,19 +329,16 @@ char	*expand_envvars(char *s, t_env *env)
 			s = skip_var(s);
 		}
 	}
-	joined = array[0];
+	joined = ft_strdup(array[0]);
 	i = 1;
 	while (i < envvars)
 	{
-// printf("|%s| + |%s|\n", joined, array[i]);
 		name = joined;
-		joined = ft_strjoin(name, array[i]);
-		//this is causing invalid read
-		// name = ft_free(name);
+		joined = ft_strjoin(joined, array[i]);
+		name = ft_free(name);
 		i++;
 	}
-	//this is causing invalid free
-	// ft_free(free_this);
+	ft_free(free_this);
 	ft_free(array);
 	return (joined);
 }
