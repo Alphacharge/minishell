@@ -234,3 +234,12 @@ rm -rf tmp_lol.c
 /bin/echo 1 > tmp_lol.c
 cat tmp_lol.c | cat > tmp_lol.c
 rm -rf tmp_lol.c
+<<file echo hello$HOME>test|"c"a"t" -e
+>eins >>zwei echo >drei test
+echo "test-$HOME-test"
+echo $HOME$HOME
+echo "$$HOME"
+echo '$HOME'
+echo "$HOME!"
+echo $_
+echo $NoNsEnSe

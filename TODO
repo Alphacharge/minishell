@@ -1,8 +1,4 @@
--	prompt
--	create builtins
--	environment
 -	wildcards
--	history
 -	config
 -	signals
 -	quotes --- double quotes working, single quotes missing --- $ not yet recognized
@@ -10,6 +6,7 @@
 -	heredoc
 -	returnvalues
 -	remove display of ^C and ^\, remove newline for ^\
+-	add variable expansion to redirection names
 
 
 How does Bash:
