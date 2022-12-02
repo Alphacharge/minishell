@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/01 17:05:26 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:23:33 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*add_redir(t_cmd *cmd, char *s)
 		if (*s == '<')
 		{
 			s = null_increment(s);
-			r->r_type = A_INPUT;
+			r->r_type = HERE;
 		}
 		else
 			r->r_type = INPUT;
@@ -75,6 +75,7 @@ static char	*add_redir(t_cmd *cmd, char *s)
 		else
 			r->r_type = OUTPUT;
 	}
+	s = skip_space(s);
 	r->file = s;
 	s = skip_argument(s);
 	append_redir(cmd, r);
@@ -107,6 +108,19 @@ char	*add_arg(t_cmd *cmd, char *s)
 	return (s);
 }
 
+/*inits the array of filedescriptors*/
+static void	init_fds(int *fds)
+{
+	int	i;
+
+	i = 3;
+	fds[0] = 0;
+	fds[1] = 1;
+	fds[2] = 2;
+	while (i < 10)
+		fds[i++] = -1;
+}
+
 /*Creates an empty t_cmd node.*/
 t_cmd	*create_cmd(t_env *env)
 {
@@ -116,6 +130,7 @@ t_cmd	*create_cmd(t_env *env)
 	if (cmd == NULL)
 		return (ft_error("minishell:create_cmd: malloc error"), NULL);
 	cmd->argv = NULL;
+	init_fds(cmd->fds);
 	cmd->env = env;
 	cmd->name = NULL;
 	cmd->param = NULL;
