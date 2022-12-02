@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:39:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/28 11:12:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 19:24:00 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "environment.h"
 
-void	cd(int argc, char **argv, t_data *data);
+void	cd(int argc, char **argv, t_env *env, t_prompt *prompt);
 void	echo(int argc, char **argv);
 void	env(int argc, char **argv, t_env *env);
 int		shell_exit(char **argv);

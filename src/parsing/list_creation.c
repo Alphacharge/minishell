@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/02 16:23:33 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 19:52:59 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*add_redir(t_cmd *cmd, char *s)
 		return (NULL);
 	r = ft_calloc(1, sizeof(t_redir));
 	if (r == NULL)
-		return (ft_error("minishell: add_redir: malloc error"), NULL);
+		return (ft_error(NULL), NULL);
 	r->next = NULL;
 	if (*s == '<')
 	{
@@ -75,7 +75,7 @@ static char	*add_redir(t_cmd *cmd, char *s)
 		else
 			r->r_type = OUTPUT;
 	}
-	s = skip_space(s);
+	s = null_whitespace(s);
 	r->file = s;
 	s = skip_argument(s);
 	append_redir(cmd, r);
@@ -128,7 +128,7 @@ t_cmd	*create_cmd(t_env *env)
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
-		return (ft_error("minishell:create_cmd: malloc error"), NULL);
+		return (ft_error(NULL), NULL);
 	cmd->argv = NULL;
 	init_fds(cmd->fds);
 	cmd->env = env;

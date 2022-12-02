@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 16:03:55 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:26:53 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,13 @@ int	main(int argc, char **argv, char **envp)
 	t_data		*data;
 	char		*input;
 	t_cmd		*cmd_head;
+	t_prompt	*prompt;
 	int			ret;
 
 	(void)argc;
 	(void)argv;
 	data = initialize_minishell(envp);
+	prompt = data->prompt;
 	input = NULL;
 	cmd_head = NULL;
 	ret = -1;
@@ -101,9 +103,9 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		cmd_head = parse(input, data->env);
-		if (VERBOSE == 100)
+		if (VERBOSE == 10000000000)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, data);
+		ret = execute_list(cmd_head, prompt);
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}
