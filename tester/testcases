@@ -243,3 +243,8 @@ echo '$HOME'
 echo "$HOME!"
 echo $_
 echo $NoNsEnSe
+<"TO"'DO' cat
+echo "'---$HOME---'"
+echo '"---$HOME---"'
+echo "'---$HOME---''"
+echo e'i'"'n'"s

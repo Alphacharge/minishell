@@ -1,10 +1,7 @@
 -	wildcards
 -	config
--	signals
--	quotes --- double quotes working, single quotes missing --- $ not yet recognized
 -	redirections
 -	heredoc
--	returnvalues
 -	remove display of ^C and ^\, remove newline for ^\
 -	add variable expansion to redirection names
 

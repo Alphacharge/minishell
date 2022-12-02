@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 19:53:26 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 23:11:49 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	// int		fds[2];
 
 	// pipe(fds);
+	ret = 0;
 	pid = fork();
 	if (pid == 0)
 	{

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
+#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/02 11:36:28 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/02 22:46:10 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,8 +55,8 @@ SRC_F	+=	cleanup.c
 SRC_F	+=
 SRC_F	+=
 SRC_F	+=	parser.c
-SRC_F	+=	var_expansion.c argv_allocation.c parsing_utils.c list_creation.c
-SRC_F	+=	is_token.c
+SRC_F	+=	parsing_utils.c var_expansion.c var_utils.c input_list.c
+SRC_F	+=	
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 SRC_F	+=	redir.c

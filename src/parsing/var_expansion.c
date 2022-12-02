@@ -6,14 +6,14 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/01 17:13:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:44:40 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
 /*Returns pointer to first character after closing single quote or null byte.*/
-char	*skip_single_quotes(char *s)
+static char	*skip_single_quotes(char *s)
 {
 	if (*s == '\'')
 		s++;
@@ -24,22 +24,19 @@ char	*skip_single_quotes(char *s)
 	return (s);
 }
 
-/*Returns 1 if sequence at start of s is a valid shell variable.*/
-int	is_var(char *s)
-{
-	if (*s == '$' && (ft_isalpha(*(s + 1)) == 1 || *(s + 1) == '_'))
-		return (1);
-	return (0);
-}
-
 /*Returns pointer to the first occurrence of a valid variable.*/
-char	*skip_to_var(char *s)
+static char	*skip_to_var(char *s)
 {
+	int	double_quotes;
+
+	double_quotes = -1;
 	while (*s != '\0')
 	{
 		if (is_var(s) == 1)
 			return (s);
-		if (*s == '\'')
+		if (*s == '\"')
+			double_quotes *= -1;
+		else if (double_quotes == -1 && *s == '\'')
 			s = skip_single_quotes(s);
 		if (*s == '\0')
 			break ;
@@ -48,45 +45,9 @@ char	*skip_to_var(char *s)
 	return (s);
 }
 
-char	*skip_var(char *s)
-{
-	while (*s != '\0' && (ft_isalnum(*s) || *s == '_'))
-		s++;
-	return (s);
-}
-
-/*Allocates the name of s until the first invalid character for searching
-in environment data.*/
-char	*alloc_var_name(char *s)
-{
-	int		l;
-	int		i;
-	char	*name;
-
-	l = 0;
-	i = 0;
-	while (s[l] != '\0' && (ft_isalnum(s[l]) == 1 || s[l] == '_'))
-		l++;
-	name = ft_calloc(l + 1, sizeof(char));
-	if (name == NULL)
-		return (NULL);
-	while (i < l)
-	{
-		name[i] = s[i];
-		i++;
-	}
-	return (name);
-}
-
-/*Returns pointer to the first nullbyte character in s.*/
-char	*get_terminator(char *s)
-{
-	while (*s != '\0')
-		s++;
-	return (s);
-}
-
-char	**var_array(char *s, int n, t_env *env)
+/*Creates an array of pointers to variable values and input strings that can
+be joined to a single string.*/
+static char	**var_array(char *s, int n, t_env *env)
 {
 	int		i;
 	char	*var_name;
@@ -117,7 +78,7 @@ char	**var_array(char *s, int n, t_env *env)
 
 /*Returns number of all needed strings for expansion. Returns 0 if no
 variable is found.*/
-int	count_var_strings(char *s)
+static int	count_var_strings(char *s)
 {
 	int	n;
 	int	env_var;
@@ -141,32 +102,29 @@ int	count_var_strings(char *s)
 	return (n);
 }
 
+/*Receives a pointer to input and returns a newly allocated copy with
+expanded variables.*/
 char	*expand_envvars(char *s, t_env *env)
 {
 	char	**array;
 	int		number_strings;
 	int		i;
-	char	*temp;
-	char	*not_expanded;
+	char	*joined;
 
 	i = 0;
-	not_expanded = s;
 	number_strings = count_var_strings(s);
 	if (number_strings == 0)
-		return (s);
+		return (ft_strdup(s));
 	array = var_array(s, number_strings, env);
 	array[0] = ft_strdup(array[0]);
 	i = 1;
-//we could implement a pointer array multijoin for this
 	while (i < number_strings)
 	{
-		temp = array[0];
-		array[0] = ft_strjoin(array[0], array[i]);
-		temp = ft_free(temp);
-		i++;
+		joined = array[0];
+		array[0] = ft_strjoin(array[0], array[i++]);
+		joined = ft_free(joined);
 	}
-	temp = array[0];
-	ft_free(not_expanded);
+	joined = array[0];
 	ft_free(array);
-	return (temp);
+	return (joined);
 }

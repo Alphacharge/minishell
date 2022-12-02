@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 19:25:50 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:37:59 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define INPUT		1
 # define OUTPUT		2
 # define HERE		3
-# define A_OUTPUT	4
+# define APPEND		4
 
 # define BLTIN		0
 # define EXEC		1

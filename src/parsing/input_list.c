@@ -1,30 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_creation.c                                    :+:      :+:    :+:   */
+/*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/02 19:52:59 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 22:51:08 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-/*Skips all consecutive whitespace characters and sets them to \0.
-Returns pointer to next non-whitespace character.*/
-char	*null_whitespace(char *s)
-{
-	if (s == NULL || *s == 0)
-		return (s);
-	while (ft_isspace(*s) == 1)
-	{
-		*s = 0;
-		s++;
-	}
-	return (s);
-}
 
 /*Appends a new t_redir node at the last t_redir node of cmd.*/
 static void	append_redir(t_cmd *cmd, t_redir *r)
@@ -43,47 +29,33 @@ static void	append_redir(t_cmd *cmd, t_redir *r)
 }
 
 /*Adds the first redirection found in s as new t_redir node to cmd.*/
-static char	*add_redir(t_cmd *cmd, char *s)
+static char	*new_redir(t_cmd *cmd, char *s)
 {
 	t_redir	*r;
 
-	if (cmd == NULL)
-		return (NULL);
 	r = ft_calloc(1, sizeof(t_redir));
 	if (r == NULL)
 		return (ft_error(NULL), NULL);
 	r->next = NULL;
-	if (*s == '<')
-	{
+	if (*s == '<' && *(s + 1) == '<')
+		r->r_type = HERE;
+	else if (*s == '>' && *(s + 1) == '>')
+		r->r_type = APPEND;
+	else if (*s == '<')
+		r->r_type = INPUT;
+	else
+		r->r_type = OUTPUT;
+	if ((*s == '<' && *(s + 1) == '<') || (*s == '>' && *(s + 1) == '>'))
 		s = null_increment(s);
-		if (*s == '<')
-		{
-			s = null_increment(s);
-			r->r_type = HERE;
-		}
-		else
-			r->r_type = INPUT;
-	}
-	else if (*s == '>')
-	{
-		s = null_increment(s);
-		if (*s == '>')
-		{
-			s = null_increment(s);
-			r->r_type = A_OUTPUT;
-		}
-		else
-			r->r_type = OUTPUT;
-	}
+	s = null_increment(s);
 	s = null_whitespace(s);
 	r->file = s;
-	s = skip_argument(s);
 	append_redir(cmd, r);
-	return (s);
+	return (skip_argument(s));
 }
 
 /*Adds string as next parameter or as command name if no command is set yet.*/
-char	*add_arg(t_cmd *cmd, char *s)
+static char	*add_arg(t_cmd *cmd, char *s)
 {
 	t_param	*current;
 	t_param	*param;
@@ -108,35 +80,28 @@ char	*add_arg(t_cmd *cmd, char *s)
 	return (s);
 }
 
-/*inits the array of filedescriptors*/
-static void	init_fds(int *fds)
-{
-	int	i;
-
-	i = 3;
-	fds[0] = 0;
-	fds[1] = 1;
-	fds[2] = 2;
-	while (i < 10)
-		fds[i++] = -1;
-}
-
 /*Creates an empty t_cmd node.*/
-t_cmd	*create_cmd(t_env *env)
+static t_cmd	*create_cmd(t_env *env)
 {
 	t_cmd	*cmd;
+	int		i;
 
+	i = 3;
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (ft_error(NULL), NULL);
 	cmd->argv = NULL;
-	init_fds(cmd->fds);
 	cmd->env = env;
 	cmd->name = NULL;
 	cmd->param = NULL;
 	cmd->pipe = NULL;
 	cmd->redir = NULL;
 	cmd->type = EXEC;
+	cmd->fds[0] = 0;
+	cmd->fds[1] = 1;
+	cmd->fds[2] = 2;
+	while (i < 10)
+		cmd->fds[i++] = -1;
 	return (cmd);
 }
 
@@ -156,7 +121,7 @@ t_cmd	*input_to_lst(char *s, t_env *env)
 		if (*s == 0)
 			break ;
 		if (*s == '>' || *s == '<')
-			s = add_redir(current, s);
+			s = new_redir(current, s);
 		else if (*s == '|')
 		{
 			current->pipe = create_cmd(env);
