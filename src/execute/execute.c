@@ -6,34 +6,36 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 11:27:13 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 16:21:23 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-// static void	execute_child(int *fds, t_cmd *cmd, t_env *env)
-// {
-// 	static int index_fd = 0;
-// 	if (var->index_fd == 0)
-// 		first_fd(var);
-// 	else if (var->index_fd == var->calls - 1)
-// 	{
-// 		if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
-// 		|| dup2(var->fd_out, 1) < 0)
-// 			ft_error(var);
-// 		close(var->fd_out);
-// 	}
-// 	else
-// 	{
-// 		if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
-// 		|| dup2(var->fds[var->index_fd][1], 1) < 0)
-// 			ft_error(var);
-// 		close(var->fds[var->index_fd - 1][0]);
-// 		close(var->fds[var->index_fd][1]);
-// 	}
-// 	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
-// }
+static void	execute_child(t_cmd *cmd, t_env *env)
+{
+	// if (cmd->fds[3] > 0)
+	// 	first_fd(var);
+	// else if (var->index_fd == var->calls - 1)
+	// {
+	// 	if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
+	// 	|| dup2(var->fd_out, 1) < 0)
+	// 		ft_error(var);
+	// 	close(var->fd_out);
+	// }
+	// else
+	// {
+	// 	if (dup2(var->fds[var->index_fd - 1][0], 0) < 0
+	// 	|| dup2(var->fds[var->index_fd][1], 1) < 0)
+	// 		ft_error(var);
+	// 	close(var->fds[var->index_fd - 1][0]);
+	// 	close(var->fds[var->index_fd][1]);
+	// }
+	if (dup2(cmd->fds[3], 0) < 0)
+		ft_error("Bad Filedescriptor");
+	close(cmd->fds[3]);
+	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+}
 
 // void	executor(t_exec *exec, t_env *env)
 // {
@@ -58,8 +60,10 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	// pipe(fds);
 	pid = fork();
 	if (pid == 0)
-		// execute_child(fds, cmd, env)
-		execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+	{
+		execute_child(cmd, env);
+		// execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+	}
 	// close(fds[0]);
 	// close(fds[1]);
 	if (pid < 0)
@@ -123,7 +127,7 @@ int	execute_list(t_cmd *lst, t_data *data)
 		}
 		if (current->type == 1)
 			exec_cmd(current, data->env);
-		// close_redir(lst);
+		close_redir(lst);
 		current = current->pipe;
 	}
 	return (ret);

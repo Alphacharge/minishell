@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 10:18:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 12:13:47 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define INPUT		1
 # define OUTPUT		2
-# define A_INPUT	3
+# define HERE		3
 # define A_OUTPUT	4
 
 # include <unistd.h>
