@@ -6,13 +6,15 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:36:01 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/14 12:30:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 11:47:53 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDIRECTS_H
 # define REDIRECTS_H
 
-// # include "minishell.h"
+# include "structs.h"
+
+void	open_redir(t_cmd *cmd, t_env *env);
 
 #endif

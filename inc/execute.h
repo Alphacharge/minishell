@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 14:50:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/02 11:29:32 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "execute.h"
 # include "builtins.h"
 # include "utils.h"
+# include "redirects.h"
 
 // void	executor(t_exec *exec, t_env *env);
 int		execute_list(t_cmd *lst, t_data *data);

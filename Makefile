@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/02 10:12:43 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/02 11:36:28 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ endif
 ###			###			SOURCES			###			###
 VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 			src/filedescriptors/ src/history/ src/memory \
-			src/parsing/ src/pipes/ src/redirects/ src/signals/ src/utils/
+			src/parsing/ src/pipes/ src/redir/ src/signals/ src/utils/
 
 SRC_F	:=	minishell.c
 SRC_F	+=
@@ -59,11 +59,11 @@ SRC_F	+=	var_expansion.c argv_allocation.c parsing_utils.c list_creation.c
 SRC_F	+=	is_token.c
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
-SRC_F	+=
+SRC_F	+=	redir.c
 SRC_F	+=	signals.c
 SRC_F	+=	history.c
 SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c get_word.c
-SRC_F	+=	ft_last_word.c
+SRC_F	+=	ft_last_word.c combine_pathprog.c
 SRC_F	+=
 
 ###			###			OBJECTS			###			###

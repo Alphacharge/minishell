@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 16:04:21 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/02 11:27:13 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	execute_list(t_cmd *lst, t_data *data)
 	//commands are executed one after another; needs to be changed to pipe
 	while (current != NULL)
 	{
+		open_redir(lst, data->env);
 		if (current->type == 0)
 		{
 			if (lst->argv[0][0] == 'c')
@@ -122,6 +123,7 @@ int	execute_list(t_cmd *lst, t_data *data)
 		}
 		if (current->type == 1)
 			exec_cmd(current, data->env);
+		// close_redir(lst);
 		current = current->pipe;
 	}
 	return (ret);
