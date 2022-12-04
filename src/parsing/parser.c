@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/02 23:57:03 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/04 15:47:43 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,26 @@ static char	**create_argv(t_cmd *cmd, t_env *env)
 t_cmd	*parse(char *s, t_env *env)
 {
 	t_cmd	*lst;
-	t_cmd	*current;
+	t_cmd	*current_cmd;
+	t_redir	*current_redir;
 
 	lst = input_to_lst(s, env);
-	current = lst;
-	while (current != NULL)
+	current_cmd = lst;
+	while (current_cmd != NULL)
 	{
-		set_type(current);
-		current->argv = create_argv(current, env);
-		if (current->argv == NULL)
+		set_type(current_cmd);
+		current_cmd->argv = create_argv(current_cmd, env);
+		if (current_cmd->argv == NULL)
 			return (free_cmds(lst), NULL);
 	//clean up redirs too, not only argv
-		current = current->pipe;
+		current_redir = current_cmd->redir;
+		while (current_redir != NULL)
+		{
+			current_redir->file = expand_envvars(current_redir->file, env);
+			current_redir->file = remove_quotes(current_redir->file);
+			current_redir = current_redir->next;
+		}
+		current_cmd = current_cmd->pipe;
 	}
 	return (lst);
 }
