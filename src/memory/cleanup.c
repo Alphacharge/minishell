@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 15:48:46 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/06 12:39:33 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*free_cmds(t_cmd *current)
 		free_params(current->param);
 		free_redirs(current->redir);
 		prev = current;
-		current = current->pipe;
+		current = current->next;
 		ft_free(prev);
 	}
 	return (NULL);

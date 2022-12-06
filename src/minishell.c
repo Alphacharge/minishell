@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 19:26:53 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/06 19:47:16 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static void	print_cmds(t_cmd *lst)
 			printf("argv: NULL\n");
 		else
 			printf("argv: %s | %s\n", lst->argv[0], lst->argv[1]);
-		if (lst->pipe != NULL)
+		if (lst->next != NULL)
 			printf("pipe\n");
-		lst = lst->pipe;
+		lst = lst->next;
 	}
 	printf("-------------------\n");
 }
@@ -65,6 +65,7 @@ static t_data	*initialize_minishell(char **envp)
 	if (data == NULL)
 		return (NULL);
 	data->env = extract_env(envp);
+	data->std_out = dup(1);
 	data->prompt = init_prompt(data->env);
 	data->hist = init_history();
 	set_signals();
@@ -105,7 +106,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd_head = parse(input, data->env);
 		if (VERBOSE == 10000000000)
 			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, prompt);
+		ret = execute_list(cmd_head, prompt, data->std_out);
 		input = ft_free(input);
 		free_cmds(cmd_head);
 	}

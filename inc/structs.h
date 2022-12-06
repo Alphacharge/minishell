@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 22:37:59 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/06 19:45:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,10 @@ typedef struct s_cmd
 	int				type;
 	char			*name;
 	char			**argv;
-	int				fds[10];
+	int				fds[2];
 	struct s_env	*env;
-	struct s_cmd	*pipe;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
 	struct s_redir	*redir;
 	struct s_param	*param;
 }					t_cmd;
@@ -100,6 +101,7 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	char			*input;
+	int				std_out;
 	struct s_prompt	*prompt;
 	struct s_hist	hist;
 	struct s_env	*env;

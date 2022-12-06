@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/04 15:47:43 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:52:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,14 +111,14 @@ t_cmd	*parse(char *s, t_env *env)
 		if (current_cmd->argv == NULL)
 			return (free_cmds(lst), NULL);
 	//clean up redirs too, not only argv
-		current_redir = current_cmd->redir;
+		current_redir = NULL;//current_cmd->redir;
 		while (current_redir != NULL)
 		{
 			current_redir->file = expand_envvars(current_redir->file, env);
 			current_redir->file = remove_quotes(current_redir->file);
 			current_redir = current_redir->next;
 		}
-		current_cmd = current_cmd->pipe;
+		current_cmd = current_cmd->next;
 	}
 	return (lst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/02 22:51:08 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:46:49 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,9 @@ static char	*add_arg(t_cmd *cmd, char *s)
 static t_cmd	*create_cmd(t_env *env)
 {
 	t_cmd	*cmd;
-	int		i;
+	// int		i;
 
-	i = 3;
+	// i = 3;
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (ft_error(NULL), NULL);
@@ -94,14 +94,15 @@ static t_cmd	*create_cmd(t_env *env)
 	cmd->env = env;
 	cmd->name = NULL;
 	cmd->param = NULL;
-	cmd->pipe = NULL;
+	cmd->next = NULL;
+	cmd->prev = NULL;
 	cmd->redir = NULL;
 	cmd->type = EXEC;
-	cmd->fds[0] = 0;
-	cmd->fds[1] = 1;
-	cmd->fds[2] = 2;
-	while (i < 10)
-		cmd->fds[i++] = -1;
+	cmd->fds[0] = INT32_MIN;
+	cmd->fds[1] = INT32_MIN;
+	// cmd->fds[2] = 2;
+	// while (i < 10)
+	// 	cmd->fds[i++] = -1;
 	return (cmd);
 }
 
@@ -124,8 +125,9 @@ t_cmd	*input_to_lst(char *s, t_env *env)
 			s = new_redir(current, s);
 		else if (*s == '|')
 		{
-			current->pipe = create_cmd(env);
-			current = current->pipe;
+			current->next = create_cmd(env);
+			current->next->prev = current;
+			current = current->next;
 			s = null_increment(s);
 		}
 		else
