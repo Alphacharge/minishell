@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 11:47:08 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 12:53:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void *free_array(char **array)
 
 /*tofr, frees the input if true, array needs a Nullpointer at the end,*/
 /*if a substring is null, the joining ends there*/
-char *multijoin(bool tofr, char **array)
+char *multijoin_array(bool tofr, char **array)
 {
 	size_t	len;
 	char	*str;
