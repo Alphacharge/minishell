@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 11:50:21 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ int		ft_strcmp(char *s1, char *s2);
 int		arraycount(char **array);
 char	*get_word(char	*s);
 char	*ft_last_word(const char *str, char c, int rev);
+char	*multijoin(bool tofr, char **array);
 
 #endif

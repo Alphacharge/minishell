@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/08 09:51:33 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/08 11:49:46 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,7 @@ SRC_F	+=	redir.c
 SRC_F	+=	signals.c
 SRC_F	+=	history.c
 SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c get_word.c
-SRC_F	+=	ft_last_word.c combine_pathprog.c
+SRC_F	+=	ft_last_word.c combine_pathprog.c multijoin_array.c
 SRC_F	+=
 
 ###			###			OBJECTS			###			###
