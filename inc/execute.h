@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 10:12:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 13:52:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,5 @@
 
 // void	executor(t_exec *exec, t_env *env);
 int		execute_list(t_cmd *lst, t_prompt *prompt);
-
+void	close_and_neg(int *fd);
 #endif

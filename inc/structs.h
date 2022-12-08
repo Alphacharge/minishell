@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 10:05:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 16:19:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct s_cmd
 	char			*name;
 	char			**argv;
 	int				fds[2];
+	int				rats[2];
 	struct s_env	*env;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
