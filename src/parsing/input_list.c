@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/06 14:46:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 09:57:55 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,7 @@ static char	*add_arg(t_cmd *cmd, char *s)
 static t_cmd	*create_cmd(t_env *env)
 {
 	t_cmd	*cmd;
-	// int		i;
 
-	// i = 3;
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
 		return (ft_error(NULL), NULL);
@@ -100,9 +98,6 @@ static t_cmd	*create_cmd(t_env *env)
 	cmd->type = EXEC;
 	cmd->fds[0] = INT32_MIN;
 	cmd->fds[1] = INT32_MIN;
-	// cmd->fds[2] = 2;
-	// while (i < 10)
-	// 	cmd->fds[i++] = -1;
 	return (cmd);
 }
 

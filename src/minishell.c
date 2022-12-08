@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/06 19:47:16 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 10:09:35 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	print_cmds(t_cmd *lst)
 		{
 			printf("param: %s\n", param->arg);
 			param = param->next;
-		}
 		redir = lst->redir;
+		}
 		while (redir != NULL)
 		{
 			printf("redir: %s\n", redir->file);
@@ -54,9 +54,11 @@ static t_prompt	*init_prompt(t_env *env)
 	prompt->seperator = "@";
 	prompt->dir = ft_last_word(get_env_var(env, "PWD"), '/', 0);
 	prompt->endl = "$:";
-	prompt->prompt = multijoin(false, 8, GREEN, prompt->name, RED, prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
+	prompt->prompt = multijoin(false, 8, GREEN, prompt->name, RED, \
+			prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
 	return (prompt);
 }
+
 static t_data	*initialize_minishell(char **envp)
 {
 	t_data	*data;
@@ -65,9 +67,10 @@ static t_data	*initialize_minishell(char **envp)
 	if (data == NULL)
 		return (NULL);
 	data->env = extract_env(envp);
-	data->std_out = dup(1);
 	data->prompt = init_prompt(data->env);
 	data->hist = init_history();
+	data->cmd_head = NULL;
+	data->input = NULL;
 	set_signals();
 	return (data);
 }
@@ -75,40 +78,33 @@ static t_data	*initialize_minishell(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		*data;
-	char		*input;
-	t_cmd		*cmd_head;
-	t_prompt	*prompt;
 	int			ret;
 
 	(void)argc;
 	(void)argv;
 	data = initialize_minishell(envp);
-	prompt = data->prompt;
-	input = NULL;
-	cmd_head = NULL;
 	ret = -1;
 	while (ret < 0)
 	{
-		input = readline(data->prompt->prompt);
-		// printf(">%s<\n", envp[1]);
-		if (input != NULL && input[0] != '\0' && input[0] != '\n')
+		data->input = readline(data->prompt->prompt);
+		if (data->input != NULL && data->input[0] != '\0' && data->input[0] != '\n')
 		{
-			add_history(input);
-			ft_putendl_fd(input, data->hist.fd);
+			add_history(data->input);
+			ft_putendl_fd(data->input, data->hist.fd);
 		}
-		if (input == NULL)
+		if (data->input == NULL)
 		{
 			//exit still after linebreak
-			write(1, "exit\n", 5);
+			write(2, "exit\n", 5);
 			ret = 0;
 			break ;
 		}
-		cmd_head = parse(input, data->env);
+		data->cmd_head = parse(data->input, data->env);
 		if (VERBOSE == 10000000000)
-			print_cmds(cmd_head);
-		ret = execute_list(cmd_head, prompt, data->std_out);
-		input = ft_free(input);
-		free_cmds(cmd_head);
+			print_cmds(data->cmd_head);
+		ret = execute_list(data->cmd_head, data->prompt);
+		data->input = ft_free(data->input);
+		free_cmds(data->cmd_head);
 	}
 	ms_cleanup(data);
 	// system("leaks minishell");

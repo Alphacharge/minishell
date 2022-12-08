@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 09:44:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,15 @@ t_env	*new_env(void)
 	else
 		return (env);
 }
-#include <stdio.h>
+
 /*frees the env link list*/
 void	delete_env(t_env *env)
 {
 	t_env	*tmp;
 
 	tmp = env;
-	// print_env(env, 2);
 	while (tmp != NULL)
 	{
-		// printf("Line\t%s\n", tmp->name);
-		//error here with double freeing pwd
 		free_multiple(1, &tmp->name);
 		tmp->name = NULL;
 		free_multiple(1, &tmp->value);
@@ -48,26 +45,6 @@ void	delete_env(t_env *env)
 		env = tmp;
 	}
 }
-// t_env	*tmp;
-	//
-	// tmp = env;
-	// while (tmp != NULL)
-	// {
-		// if (tmp->name != NULL)
-			// free(tmp->name);
-		// if (tmp->value != NULL)
-			// free(tmp->value);
-		// tmp->name = NULL;
-		// tmp->value = NULL;
-		// tmp = tmp->next;
-	// }
-	// while (env != NULL)
-	// {
-		// if (env->next != NULL)
-			// tmp = env->next;
-		// free(env);
-		// env = tmp;
-	// }
 
 /*is printing env linklist to fd your choice*/
 void	print_env(t_env *env, int fd)
@@ -115,38 +92,6 @@ char	**create_envp_from_env(t_env *env)
 		env = env->next;
 	}
 	return (envp);
-}
-
-/*returns a pointer to the value of a env variable*/
-char	*get_env_var(t_env *env, char *name)
-{
-	while (env != NULL)
-	{
-		if (ft_strcmp(name, env->name) == 0)
-			return (env->value);
-		env = env->next;
-	}
-	return (NULL);
-}
-
-/*sets a variable to a new value, if the var not exist it returns NULL*/
-t_env	*set_env_var(t_env *env, char *name, char *value)
-{
-	t_env	*head;
-
-	head = env;
-	if (env == NULL || name == NULL || value == NULL)
-		return (head);
-	while (env != NULL && ft_strcmp(env->name, name) != 0)
-		env = env->next;
-	if (env != NULL)
-	{
-		// printf("%s\n", env->value);
-		free_multiple(1, &env->value);
-		env->value = value;
-	// printf("%s\n", env->value);
-	}
-	return (head);
 }
 
 /*creates a linked list from the **envp*/

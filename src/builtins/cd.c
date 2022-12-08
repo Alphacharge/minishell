@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 19:23:21 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/08 09:42:05 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,15 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 	return (env);
 }
 
+static void	message(char *custom, char *argv)
+{
+	if (custom != NULL)
+		write(2, custom, ft_strlen(custom));
+	if (argv != NULL)
+		write(2, argv, ft_strlen(argv));
+	write(2, "\n", 1);
+}
+
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
 void	cd(int argc, char **argv, t_env *env, t_prompt *prompt)
 {
@@ -55,19 +64,9 @@ void	cd(int argc, char **argv, t_env *env, t_prompt *prompt)
 			ret = chdir(argv[1]);
 	}
 	else
-	{
-		write(2, "cd: string not in pwd: ", 23);
-		if (argv[1] != NULL)
-			write(2, argv[1], ft_strlen(argv[1]));
-		write(2, "\n", 1);
-	}
+		message("cd: string not in pwd: ", argv[1]);
 	if (ret == -1)
-	{
-		write(2, "cd: no such file or directory: ", 30);
-		if (argv[1] != NULL)
-			write(2, argv[1], ft_strlen(argv[1]));
-		write(2, "\n", 1);
-	}
+		message("cd: no such file or directory: ", argv[1]);
 	else
 		update_pwd(argv[1], env, prompt);
 }

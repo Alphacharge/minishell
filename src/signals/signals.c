@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/21 20:28:53 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/08 09:58:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	signal_handler(int signum)
 	}
 }
 
-//ctrl + c: SIGINT
-//ctrl + d: end of transmission (4)
+/*ctrl + c: SIGINT*/
+/*ctrl + d: end of transmission (4)*/
 void	set_signals(void)
 {
 	struct sigaction	sig_actions;

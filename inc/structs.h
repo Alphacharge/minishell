@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/06 19:45:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 10:05:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,6 @@ typedef struct s_redir
 {
 	char			*file;
 	int				r_type;
-	// char	*efile;
-	// char	*mode;
-	// int		fd;
-	// char	*cmd;
 	struct s_redir	*next;
 }				t_redir;
 
@@ -101,9 +97,9 @@ typedef struct s_cmd
 typedef struct s_data
 {
 	char			*input;
-	int				std_out;
 	struct s_prompt	*prompt;
 	struct s_hist	hist;
 	struct s_env	*env;
+	struct s_cmd	*cmd_head;
 }					t_data;
 #endif

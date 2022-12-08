@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/06 20:08:43 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/08 09:51:33 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,12 +43,12 @@ endif
 
 ###			###			SOURCES			###			###
 VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
-			src/filedescriptors/ src/history/ src/memory \
+			src/history/ src/memory \
 			src/parsing/ src/pipes/ src/redir/ src/signals/ src/utils/
 
 SRC_F	:=	minishell.c
 SRC_F	+=
-SRC_F	+=	environment.c path.c
+SRC_F	+=	environment.c path.c get_set_env.c
 SRC_F	+=	errorhandling.c
 SRC_F	+=	execute.c
 SRC_F	+=	cleanup.c

@@ -1,3 +1,9 @@
+echo "test part" | cut -d' ' -f1
+
+
+
+
+
 echo < >
 echo
 echo ''
