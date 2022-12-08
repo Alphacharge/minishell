@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 16:20:00 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 16:52:34 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,11 @@ static t_cmd *handle_heredocs(t_cmd *cmd)
 	t_redir *tred;
 
 	tmp = cmd;
-	// ft_putendl_fd("-->2", 2);
 	while (tmp != NULL)
 	{
 		tred = tmp->redir;
-	// ft_putendl_fd("-->3", 2);
 		while (tred != NULL)
 		{
-	// ft_putendl_fd("-->4", 2);
 			if (tred->r_type == HERE)
 			{
 				if (tmp->rats[0] != INT32_MIN)
@@ -153,9 +150,43 @@ static t_cmd *handle_heredocs(t_cmd *cmd)
 	}
 	return (cmd);
 }
+static void	check_infiles(t_cmd *cmd, t_redir *redir)
+{
+	if (cmd->rats[0] == INT32_MIN)
+	{
+		if (access(redir->file, F_OK) == 0 && access(redir->file, R_OK) == 0)
+		{
+			cmd->rats[0]= open(redir->file, O_RDONLY);
+			if (cmd->rats[0] == -1)
+				ft_error("Permission denied");
+		}
+		else
+			ft_error("No such file or directory");
+	}
+}
+t_cmd *handle_infiles(t_cmd *cmd)
+{
+	t_cmd *tmp;
+	t_redir *tred;
+
+	tmp = cmd;
+	while (tmp != NULL)
+	{
+		tred = tmp->redir;
+		while (tred != NULL)
+		{
+			if (tred->r_type == INPUT)
+				check_infiles(tmp, tred);
+			tred = tred->next;
+		}
+		tmp = tmp->next;
+	}
+	return (cmd);
+}
 t_cmd *create_redirs(t_cmd *cmd)
 {
-	// ft_putendl_fd("-->1", 2);
 	cmd = handle_heredocs(cmd);
+	cmd = handle_infiles(cmd);
+	
 	return (cmd);
 }

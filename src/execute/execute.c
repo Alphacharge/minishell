@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 16:33:21 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/08 17:08:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ int	execute_list(t_cmd *lst, t_prompt *prompt)
 		cmd = cmd->next;
 	}
 	while ((waitpid(-1, &ret, WNOHANG)) != -1)
-		;
+	{
+		if (WIFEXITED(ret) == true)
+		ret = WEXITSTATUS(ret);
+	}
 	return (-1);
 }
