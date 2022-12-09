@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/08 16:23:00 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:45:07 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ static t_cmd	*create_cmd(t_env *env)
 	cmd->fds[1] = INT32_MIN;
 	cmd->rats[0] = INT32_MIN;
 	cmd->rats[1] = INT32_MIN;
+	cmd->here = false;
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:36:01 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 15:26:51 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:14:08 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,8 @@
 
 // int	open_redir(t_cmd *cmd, t_env *env);
 // int	close_redir(t_cmd *cmd);
-t_cmd *create_redirs(t_cmd *cmd);
+t_cmd	*create_redirs(t_cmd *cmd);
+void	close_both_fds(t_cmd *cmd);
+t_cmd	*handle_heredocs(t_cmd *cmd);
+t_cmd	*handle_infiles(t_cmd *cmd);
 #endif

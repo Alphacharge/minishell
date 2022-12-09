@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 16:19:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 11:55:14 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define BACK		5
 
 # include <unistd.h>
+# include <stdbool.h>
 # include <sys/types.h>
 # include "environment.h"
 # include "history.h"
@@ -88,6 +89,8 @@ typedef struct s_cmd
 	char			**argv;
 	int				fds[2];
 	int				rats[2];
+	bool			here;
+	bool			error;
 	struct s_env	*env;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;

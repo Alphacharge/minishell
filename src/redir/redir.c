@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 16:52:34 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 10:19:09 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@
 // 			return (ft_error(NULL), 1);
 // 	return (0);
 // }
-static void close_both_fds(t_cmd *cmd)
+void	close_both_fds(t_cmd *cmd)
 {
 	if (cmd->fds[0] != INT32_MIN)
 		close_and_neg(&cmd->fds[0]);
@@ -99,94 +99,28 @@ static void close_both_fds(t_cmd *cmd)
 		close_and_neg(&cmd->fds[1]);
 }
 
-static void	get_here(t_cmd *cmd, char *lim)
-{
-	char	*limiter;
-	char	*tmp;
-	char	*new;
-	int		len;
-
-	limiter = ft_strjoin(lim, "\n");
-	pipe(cmd->rats);
-	while (1)
-	{
-		write(2, ">", 1);
-		tmp = get_next_line(0);
-		new = expand_envvars(tmp, cmd->env);
-		free(tmp);
-		len = ft_strlen(new);
-		write(cmd->rats[1], new, len);
-		if (ft_strcmp(new, limiter) == 0)
-		{
-			free(new);
-			break ;
-		}
-		free(new);
-	}
-	free(limiter);
-	close(cmd->rats[1]);
-}
-
-static t_cmd *handle_heredocs(t_cmd *cmd)
-{
-	t_cmd *tmp;
-	t_redir *tred;
-
-	tmp = cmd;
-	while (tmp != NULL)
-	{
-		tred = tmp->redir;
-		while (tred != NULL)
-		{
-			if (tred->r_type == HERE)
-			{
-				if (tmp->rats[0] != INT32_MIN)
-					close_both_fds(tmp);
-				get_here(tmp, tred->file);
-			}
-			tred = tred->next;
-		}
-		tmp = tmp->next;
-	}
-	return (cmd);
-}
-static void	check_infiles(t_cmd *cmd, t_redir *redir)
-{
-	if (cmd->rats[0] == INT32_MIN)
-	{
-		if (access(redir->file, F_OK) == 0 && access(redir->file, R_OK) == 0)
-		{
-			cmd->rats[0]= open(redir->file, O_RDONLY);
-			if (cmd->rats[0] == -1)
-				ft_error("Permission denied");
-		}
-		else
-			ft_error("No such file or directory");
-	}
-}
-t_cmd *handle_infiles(t_cmd *cmd)
-{
-	t_cmd *tmp;
-	t_redir *tred;
-
-	tmp = cmd;
-	while (tmp != NULL)
-	{
-		tred = tmp->redir;
-		while (tred != NULL)
-		{
-			if (tred->r_type == INPUT)
-				check_infiles(tmp, tred);
-			tred = tred->next;
-		}
-		tmp = tmp->next;
-	}
-	return (cmd);
-}
-t_cmd *create_redirs(t_cmd *cmd)
+t_cmd	*create_redirs(t_cmd *cmd)
 {
 	cmd = handle_heredocs(cmd);
 	cmd = handle_infiles(cmd);
-	
+	// cmd = handle_outfiles(cmd);
 	return (cmd);
 }
+
+//------------------------
+// void	check_outfile(t_var *var, int argc, char **argv)
+// {
+// 	char	*file;
+
+// 	if (ft_strchr(argv[argc - 1], '/') == 0)
+// 		file = combine_pathprog(var->pwd, argv[argc - 1]);
+// 	else
+// 		file = ft_strdup(argv[argc - 1]);
+// 	if (!var->here)
+// 		var->fd_out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	else
+// 		var->fd_out = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+// 	free(file);
+// 	if (var->fd_out < 0)
+// 		ft_error(var, 4);
+// }

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 17:08:06 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 11:54:59 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,38 @@ static void	execute_child(t_cmd *cmd, t_env *env)
 {
 	if (cmd->fds[1] != INT32_MIN && cmd->prev == NULL && cmd->next != NULL)
 	{
+ft_putendl_fd("-->1", 2);
 		if (dup2(cmd->fds[1], 1) < 0)
 			ft_error("Error dup first cmd");
 		close_and_neg(&cmd->fds[1]);
 	}
 	else if (cmd->next == NULL && cmd->prev != NULL)
 	{
+ft_putendl_fd("-->2", 2);
 		if (dup2(cmd->prev->fds[0], 0) < 0)
 			ft_error("Error dup last cmd");
 		close_and_neg(&cmd->prev->fds[0]);
 	}
 	else if (cmd->next != NULL && cmd->prev != NULL)
 	{
+ft_putendl_fd("-->3", 2);
 		if (dup2(cmd->fds[1], 1) < 0 || dup2(cmd->prev->fds[0], 0) < 0)
 			ft_error("Error dup mid cmd");
 		close_and_neg(&cmd->prev->fds[0]);
 		close_and_neg(&cmd->fds[1]);
 	}
-	if (cmd->rats[0] != INT32_MIN)
+	if (cmd->here == true && cmd->rats[0] != INT32_MIN)
 	{
+ft_putendl_fd("-->4", 2);
 		if (dup2(cmd->rats[0], 0) < 0)
 			ft_error("Error dup here cmd");
+		close_and_neg(&cmd->rats[0]);
+	}
+	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
+	{
+ft_putendl_fd("-->5", 2);
+		if (dup2(cmd->rats[0], 0) < 0)
+			ft_error("Error dup inf cmd");
 		close_and_neg(&cmd->rats[0]);
 	}
 	close_filedescriptors(cmd);
@@ -66,11 +77,8 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	pid_t		pid;
 	static int	index_fd = 0;
 
-	// ft_putnbr_fd(cmd->fds[0], 2);
 	if (cmd->next != NULL)
 		pipe(cmd->fds);
-	// ft_putnbr_fd(cmd->fds[0], 2);
-	// ft_putnbr_fd(cmd->fds[1], 2);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -89,6 +97,8 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 		close_and_neg(&cmd->fds[1]);
 	}
 	if (cmd->rats[0] != INT32_MIN)
+		close_and_neg(&cmd->rats[0]);
+	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
 		close_and_neg(&cmd->rats[0]);
 	index_fd++;
 }
@@ -123,7 +133,7 @@ int	execute_list(t_cmd *lst, t_prompt *prompt)
 			else if (ft_strcmp(cmd->argv[0], "exit") == 0)
 				return (shell_exit(cmd->argv));
 		}
-		if (cmd->type == EXEC)
+		if (cmd->type == EXEC && cmd->error == false)
 			exec_cmd(cmd, cmd->env);
 		cmd = cmd->next;
 	}
