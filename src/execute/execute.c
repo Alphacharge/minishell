@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/09 11:54:59 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 17:34:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ ft_putendl_fd("-->1", 2);
 			ft_error("Error dup first cmd");
 		close_and_neg(&cmd->fds[1]);
 	}
-	else if (cmd->next == NULL && cmd->prev != NULL)
+	else if (cmd->rats[0] != INT32_MIN && cmd->next == NULL && cmd->prev != NULL)
 	{
 ft_putendl_fd("-->2", 2);
 		if (dup2(cmd->prev->fds[0], 0) < 0)
@@ -54,24 +54,46 @@ ft_putendl_fd("-->3", 2);
 		close_and_neg(&cmd->prev->fds[0]);
 		close_and_neg(&cmd->fds[1]);
 	}
-	if (cmd->here == true && cmd->rats[0] != INT32_MIN)
-	{
-ft_putendl_fd("-->4", 2);
-		if (dup2(cmd->rats[0], 0) < 0)
-			ft_error("Error dup here cmd");
-		close_and_neg(&cmd->rats[0]);
-	}
-	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
-	{
-ft_putendl_fd("-->5", 2);
-		if (dup2(cmd->rats[0], 0) < 0)
-			ft_error("Error dup inf cmd");
-		close_and_neg(&cmd->rats[0]);
-	}
+// 	if (cmd->here == true && cmd->rats[0] != INT32_MIN)
+// 	{
+// ft_putendl_fd("-->4", 2);
+// 		if (dup2(cmd->rats[0], 0) < 0)
+// 			ft_error("Error dup here cmd");
+// 		close_and_neg(&cmd->rats[0]);
+// 	}
+// 	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
+// 	{
+// ft_putendl_fd("-->5", 2);
+// 		if (dup2(cmd->rats[0], 0) < 0)
+// 			ft_error("Error dup inf cmd");
+// 		close_and_neg(&cmd->rats[0]);
+// 	}
+// 	else if (cmd->here == false && cmd->prev != NULL && cmd->prev->rats[0] != INT32_MIN)
+// 	{
+// 	// ft_putnbr_fd(cmd->prev->rats[0], 2);
+// ft_putendl_fd("-->6", 2);
+// 		if (dup2(cmd->prev->rats[0], 0) < 0)
+// 			ft_error("Error dup inf inv cmd");
+// 		close_and_neg(&cmd->prev->rats[0]);
+// 	}
 	close_filedescriptors(cmd);
 	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
 }
-
+static void	close_pipe_fds(t_cmd *cmd)
+{
+	//first command, close only writeend of pipe
+	if (cmd->prev == NULL && cmd->next != NULL)
+		close_and_neg(&cmd->fds[1]);
+	//last command, close only readend of prev pipe
+	else if (cmd->next == NULL && cmd->prev != NULL)
+		close_and_neg(&cmd->prev->fds[0]);
+	//middle command, close readend of prev pipe and writeend of pipe
+	else if (cmd->next != NULL && cmd->prev != NULL)
+	{
+		close_and_neg(&cmd->prev->fds[0]);
+		close_and_neg(&cmd->fds[1]);
+	}
+}
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	pid_t		pid;
@@ -87,19 +109,17 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	}
 	if (pid < 0)
 		ft_error(NULL);
-	if (cmd->prev == NULL && cmd->next != NULL)
-		close_and_neg(&cmd->fds[1]);
-	else if (cmd->next == NULL && cmd->prev != NULL)
-		close_and_neg(&cmd->prev->fds[0]);
-	else if (cmd->next != NULL && cmd->prev != NULL)
-	{
-		close_and_neg(&cmd->prev->fds[0]);
-		close_and_neg(&cmd->fds[1]);
-	}
-	if (cmd->rats[0] != INT32_MIN)
-		close_and_neg(&cmd->rats[0]);
-	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
-		close_and_neg(&cmd->rats[0]);
+	close_pipe_fds(cmd);
+	//heredoc or infile 4 current command
+	// if (cmd->rats[0] != INT32_MIN)
+	// 	close_and_neg(&cmd->rats[0]);
+	//
+	// else 
+	// if (cmd->here == false && cmd->prev != NULL && cmd->prev->rats[0] != INT32_MIN)
+	// 	close_and_neg(&cmd->prev->rats[0]);
+	// else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
+	// 	close_and_neg(&cmd->rats[0]);
+	// // ft_putnbr_fd(cmd->prev->rats[0], 2);
 	index_fd++;
 }
 

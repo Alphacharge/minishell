@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/09 11:57:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/09 17:27:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 		ft_error("Permission denied");
 	}
 	if (success == 0)
+	{
 		cmd->error = true;
+		cmd->rats[0] = dup(STDIN_FILENO);
+	}
 	if (cmd->here == false && success == 1)
 	{
 		if (cmd->rats[0] == INT32_MIN)
@@ -48,7 +51,6 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 			check_infiles(cmd, redir);
 		}
 	}
-	// ft_putendl_fd("end checkinfile", 2);
 }
 
 /*goes through the cmd list and check 4 infiles*/
@@ -64,8 +66,6 @@ t_cmd *handle_infiles(t_cmd *cmd)
 		tred = tmp->redir;
 		while (tred != NULL)
 		{
-			// if (tmp->rats[0] != INT32_MIN)
-			// 	break ;
 			if (tred->r_type == INPUT)
 				check_infiles(tmp, tred);
 			tred = tred->next;
