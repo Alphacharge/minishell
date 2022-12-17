@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/09 17:27:30 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/15 11:34:40 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 	if (success == 0)
 	{
 		cmd->error = true;
-		cmd->rats[0] = dup(STDIN_FILENO);
+		cmd->rats[READ] = dup(STDIN);
 	}
 	if (cmd->here == false && success == 1)
 	{
-		if (cmd->rats[0] == INT32_MIN)
+		if (cmd->rats[READ] == FD_UNUSED)
 		{
-			cmd->rats[0] = open(redir->file, O_RDONLY);
-			if (cmd->rats[0] == -1)
+			cmd->rats[READ] = open(redir->file, O_RDONLY);
+			if (cmd->rats[READ] == -1)
 			{
 				ft_error("Error opening file");
 				cmd->error = true;
@@ -47,7 +47,7 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 		}
 		else
 		{
-			close_and_neg(&cmd->rats[0]);
+			close_and_neg(&cmd->rats[READ]);
 			check_infiles(cmd, redir);
 		}
 	}

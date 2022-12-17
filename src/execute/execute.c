@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/09 17:34:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/17 12:33:48 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,83 +15,55 @@
 void	close_and_neg(int *fd)
 {
 	close(*fd);
-	*fd = INT32_MIN;
-}
-
-static void	close_filedescriptors(t_cmd *cmd)
-{
-	while (cmd != NULL)
-	{
-		if (cmd->fds[0] != INT32_MIN)
-			close_and_neg(&cmd->fds[0]);
-		if (cmd->fds[1] != INT32_MIN)
-			close_and_neg(&cmd->fds[1]);
-		cmd = cmd->prev;
-	}
+	*fd = FD_UNUSED;
 }
 
 static void	execute_child(t_cmd *cmd, t_env *env)
 {
-	if (cmd->fds[1] != INT32_MIN && cmd->prev == NULL && cmd->next != NULL)
+	if (cmd->prev == NULL && cmd->next != NULL)
 	{
-ft_putendl_fd("-->1", 2);
-		if (dup2(cmd->fds[1], 1) < 0)
+// ft_putendl_fd("-->1", 2);
+		if (dup2(cmd->fds[WRITE], STDOUT) < 0)
 			ft_error("Error dup first cmd");
-		close_and_neg(&cmd->fds[1]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
-	else if (cmd->rats[0] != INT32_MIN && cmd->next == NULL && cmd->prev != NULL)
+	else if (cmd->rats[READ] == FD_UNUSED && cmd->next == NULL && cmd->prev != NULL)
 	{
-ft_putendl_fd("-->2", 2);
-		if (dup2(cmd->prev->fds[0], 0) < 0)
+// ft_putendl_fd("-->2", 2);
+		if (dup2(cmd->prev->fds[READ], STDIN) < 0)
 			ft_error("Error dup last cmd");
-		close_and_neg(&cmd->prev->fds[0]);
+		close_and_neg(&cmd->prev->fds[READ]);
 	}
-	else if (cmd->next != NULL && cmd->prev != NULL)
+	else if (cmd->rats[READ] == FD_UNUSED && cmd->next != NULL && cmd->prev != NULL)
 	{
-ft_putendl_fd("-->3", 2);
-		if (dup2(cmd->fds[1], 1) < 0 || dup2(cmd->prev->fds[0], 0) < 0)
+// ft_putendl_fd("-->3", 2);
+		if (dup2(cmd->fds[WRITE], STDOUT) < 0 || dup2(cmd->prev->fds[READ], STDIN) < 0)
 			ft_error("Error dup mid cmd");
-		close_and_neg(&cmd->prev->fds[0]);
-		close_and_neg(&cmd->fds[1]);
+		close_and_neg(&cmd->prev->fds[READ]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
-// 	if (cmd->here == true && cmd->rats[0] != INT32_MIN)
-// 	{
+	if (cmd->rats[READ] != FD_UNUSED)
+	{
 // ft_putendl_fd("-->4", 2);
-// 		if (dup2(cmd->rats[0], 0) < 0)
-// 			ft_error("Error dup here cmd");
-// 		close_and_neg(&cmd->rats[0]);
-// 	}
-// 	else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
-// 	{
-// ft_putendl_fd("-->5", 2);
-// 		if (dup2(cmd->rats[0], 0) < 0)
-// 			ft_error("Error dup inf cmd");
-// 		close_and_neg(&cmd->rats[0]);
-// 	}
-// 	else if (cmd->here == false && cmd->prev != NULL && cmd->prev->rats[0] != INT32_MIN)
-// 	{
-// 	// ft_putnbr_fd(cmd->prev->rats[0], 2);
-// ft_putendl_fd("-->6", 2);
-// 		if (dup2(cmd->prev->rats[0], 0) < 0)
-// 			ft_error("Error dup inf inv cmd");
-// 		close_and_neg(&cmd->prev->rats[0]);
-// 	}
-	close_filedescriptors(cmd);
+		if (dup2(cmd->rats[READ], STDIN) < 0)
+			ft_error("Error dup here cmd");
+		close_and_neg(&cmd->rats[READ]);
+	}
 	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
 }
 static void	close_pipe_fds(t_cmd *cmd)
 {
 	//first command, close only writeend of pipe
 	if (cmd->prev == NULL && cmd->next != NULL)
-		close_and_neg(&cmd->fds[1]);
+		close_and_neg(&cmd->fds[WRITE]);
 	//last command, close only readend of prev pipe
 	else if (cmd->next == NULL && cmd->prev != NULL)
-		close_and_neg(&cmd->prev->fds[0]);
+		close_and_neg(&cmd->prev->fds[READ]);
 	//middle command, close readend of prev pipe and writeend of pipe
 	else if (cmd->next != NULL && cmd->prev != NULL)
 	{
-		close_and_neg(&cmd->prev->fds[0]);
-		close_and_neg(&cmd->fds[1]);
+		close_and_neg(&cmd->prev->fds[READ]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
 }
 static void	exec_cmd(t_cmd *cmd, t_env *env)
@@ -110,16 +82,9 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	if (pid < 0)
 		ft_error(NULL);
 	close_pipe_fds(cmd);
-	//heredoc or infile 4 current command
-	// if (cmd->rats[0] != INT32_MIN)
-	// 	close_and_neg(&cmd->rats[0]);
-	//
-	// else 
-	// if (cmd->here == false && cmd->prev != NULL && cmd->prev->rats[0] != INT32_MIN)
-	// 	close_and_neg(&cmd->prev->rats[0]);
-	// else if (cmd->here == false && cmd->rats[0] != INT32_MIN)
-	// 	close_and_neg(&cmd->rats[0]);
-	// // ft_putnbr_fd(cmd->prev->rats[0], 2);
+	// heredoc or infile 4 current command
+	if (cmd->rats[READ] != FD_UNUSED)
+		close_and_neg(&cmd->rats[READ]);
 	index_fd++;
 }
 

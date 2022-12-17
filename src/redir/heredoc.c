@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/09 10:45:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/17 12:32:06 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redirects.h"
 #include "execute.h"
 
+/*reading heredoc in a pipe*/
 static void	get_here(t_cmd *cmd, char *lim)
 {
 	char	*limiter;
@@ -29,7 +30,7 @@ static void	get_here(t_cmd *cmd, char *lim)
 		new = expand_envvars(tmp, cmd->env);
 		free(tmp);
 		len = ft_strlen(new);
-		write(cmd->rats[1], new, len);
+		write(cmd->rats[WRITE], new, len);
 		if (ft_strcmp(new, limiter) == 0)
 		{
 			free(new);
@@ -38,9 +39,10 @@ static void	get_here(t_cmd *cmd, char *lim)
 		free(new);
 	}
 	free(limiter);
-	close(cmd->rats[1]);
+	close(cmd->rats[WRITE]);
 }
 
+/*Check redirs for heredocs, ask 4 all but store only the last*/
 t_cmd	*handle_heredocs(t_cmd *cmd)
 {
 	t_cmd	*tmp;
@@ -54,8 +56,8 @@ t_cmd	*handle_heredocs(t_cmd *cmd)
 		{
 			if (tred->r_type == HERE)
 			{
-				if (tmp->rats[0] != INT32_MIN)
-					close_both_fds(tmp);
+				if (tmp->rats[READ] != FD_UNUSED)
+					close_both_rats(tmp);
 				get_here(tmp, tred->file);
 				tmp->here = true;
 			}
