@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 12:32:06 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/17 14:40:01 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ static void	get_here(t_cmd *cmd, char *lim)
 		new = expand_envvars(tmp, cmd->env);
 		free(tmp);
 		len = ft_strlen(new);
-		write(cmd->rats[WRITE], new, len);
 		if (ft_strcmp(new, limiter) == 0)
 		{
 			free(new);
 			break ;
 		}
+		else
+			write(cmd->rats[WRITE], new, len);
 		free(new);
 	}
 	free(limiter);
