@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   combine_pathprog.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 17:26:06 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/02 10:49:42 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/17 13:39:23 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "structs.h"
 #include "utils.h"
 #include "libft.h"
 
+/*Allocates a new string with path + / + programm*/
 char	*combine_pathprog(char *path, char *prog)
 {
 	int		pale;

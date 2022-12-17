@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
+#    By: humbi <humbi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/09 10:14:57 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/17 14:31:44 by humbi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ SRC_F	+=	parsing_utils.c var_expansion.c var_utils.c input_list.c
 SRC_F	+=	
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
-SRC_F	+=	redir.c heredoc.c infile.c
+SRC_F	+=	redir.c heredoc.c infile.c outfile.c
 SRC_F	+=	signals.c
 SRC_F	+=	history.c
 SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c get_word.c

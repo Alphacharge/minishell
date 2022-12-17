@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 12:33:48 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/17 14:31:16 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	close_and_neg(int *fd)
 
 static void	execute_child(t_cmd *cmd, t_env *env)
 {
-	if (cmd->prev == NULL && cmd->next != NULL)
+	if (cmd->rats[WRITE] == FD_UNUSED && cmd->prev == NULL && cmd->next != NULL)
 	{
 // ft_putendl_fd("-->1", 2);
 		if (dup2(cmd->fds[WRITE], STDOUT) < 0)
@@ -34,7 +34,7 @@ static void	execute_child(t_cmd *cmd, t_env *env)
 			ft_error("Error dup last cmd");
 		close_and_neg(&cmd->prev->fds[READ]);
 	}
-	else if (cmd->rats[READ] == FD_UNUSED && cmd->next != NULL && cmd->prev != NULL)
+	else if (cmd->rats[WRITE] == FD_UNUSED && cmd->rats[READ] == FD_UNUSED && cmd->next != NULL && cmd->prev != NULL)
 	{
 // ft_putendl_fd("-->3", 2);
 		if (dup2(cmd->fds[WRITE], STDOUT) < 0 || dup2(cmd->prev->fds[READ], STDIN) < 0)
@@ -46,8 +46,15 @@ static void	execute_child(t_cmd *cmd, t_env *env)
 	{
 // ft_putendl_fd("-->4", 2);
 		if (dup2(cmd->rats[READ], STDIN) < 0)
-			ft_error("Error dup here cmd");
+			ft_error("Error dup file in cmd");
 		close_and_neg(&cmd->rats[READ]);
+	}
+	if (cmd->rats[WRITE] != FD_UNUSED)
+	{
+// ft_putendl_fd("-->5", 2);
+		if (dup2(cmd->rats[WRITE], STDOUT) < 0)
+			ft_error("Error dup file out cmd");
+		close_and_neg(&cmd->rats[WRITE]);
 	}
 	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
 }
@@ -85,6 +92,8 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 	// heredoc or infile 4 current command
 	if (cmd->rats[READ] != FD_UNUSED)
 		close_and_neg(&cmd->rats[READ]);
+	if (cmd->rats[WRITE] != FD_UNUSED)
+		close_and_neg(&cmd->rats[WRITE]);
 	index_fd++;
 }
 
