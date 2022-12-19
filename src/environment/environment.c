@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 09:44:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:09:28 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	delete_env(t_env *env)
 	tmp = env;
 	while (tmp != NULL)
 	{
-		free_multiple(1, &tmp->name);
-		tmp->name = NULL;
-		free_multiple(1, &tmp->value);
-		tmp->value = NULL;
+		tmp->name = ft_free(tmp->name);
+		tmp->value = ft_free(tmp->value);
 		tmp = tmp->next;
 	}
 	while (env != NULL)

@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/15 11:34:40 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:28:41 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 	if (access(redir->file, F_OK) != 0)
 	{
 		success = 0;
-		ft_error("No such file or directory");
+		ft_error(NULL, NULL, "No such file or directory");
 	}
 	if (success == 1 && access(redir->file, R_OK) != 0)
 	{
 		success = 0;
-		ft_error("Permission denied");
+		ft_error(NULL, NULL, "Permission denied");
 	}
 	if (success == 0)
 	{
@@ -41,7 +41,7 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 			cmd->rats[READ] = open(redir->file, O_RDONLY);
 			if (cmd->rats[READ] == -1)
 			{
-				ft_error("Error opening file");
+				ft_error(NULL, NULL, "Error opening file");
 				cmd->error = true;
 			}
 		}
@@ -66,7 +66,7 @@ t_cmd *handle_infiles(t_cmd *cmd)
 		tred = tmp->redir;
 		while (tred != NULL)
 		{
-			if (tred->r_type == INPUT)
+			if (tred->type == INPUT)
 				check_infiles(tmp, tred);
 			tred = tred->next;
 		}

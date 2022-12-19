@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 14:40:01 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:12:10 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_cmd	*handle_heredocs(t_cmd *cmd)
 		tred = tmp->redir;
 		while (tred != NULL)
 		{
-			if (tred->r_type == HERE)
+			if (tred->type == HERE)
 			{
 				if (tmp->rats[READ] != FD_UNUSED)
 					close_both_rats(tmp);

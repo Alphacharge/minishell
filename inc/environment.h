@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:22:49 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/28 11:31:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:15:40 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_env(t_env *env, int fd);
 void	delete_env(t_env *env);
 char	**create_envp_from_env(t_env *env);
 char	**get_path_var(t_env *env);
-char	*get_path(char **paths, char *executable);
+char	*get_path(char *executable, t_env *env);
 char	*get_env_var(t_env *env, char *name);
 t_env	*set_env_var(t_env *env, char *name, char *value);
 t_env	*new_env(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/24 11:12:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:07:06 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,16 @@ char	**get_path_var(t_env *env)
 }
 
 /*searchs the path for a programm*/
-char	*get_path(char **paths, char *executable)
+char	*get_path(char *executable, t_env *env)
 {
 	int		i;
 	int		success;
 	char	*test;
+	char	**paths;
 
 	i = 0;
 	success = -1;
+	paths = get_path_var(env);
 	while (paths != NULL && paths[i] != NULL && success != 0)
 	{
 		test = multijoin(false, 3, paths[i], "/", executable);
@@ -50,6 +52,7 @@ char	*get_path(char **paths, char *executable)
 			ft_free(test);
 		i++;
 	}
+	free_ptr_array((void **)paths);
 	if (success != 0)
 		return (NULL);
 	else

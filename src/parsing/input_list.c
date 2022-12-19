@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/09 10:45:07 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/19 13:43:56 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ static char	*new_redir(t_cmd *cmd, char *s)
 
 	r = ft_calloc(1, sizeof(t_redir));
 	if (r == NULL)
-		return (ft_error(NULL), NULL);
+		return (ft_error("malloc", NULL, NULL), NULL);
 	r->next = NULL;
 	if (*s == '<' && *(s + 1) == '<')
-		r->r_type = HERE;
+		r->type = HERE;
 	else if (*s == '>' && *(s + 1) == '>')
-		r->r_type = APPEND;
+		r->type = APPEND;
 	else if (*s == '<')
-		r->r_type = INPUT;
+		r->type = INPUT;
 	else
-		r->r_type = OUTPUT;
+		r->type = OUTPUT;
 	if ((*s == '<' && *(s + 1) == '<') || (*s == '>' && *(s + 1) == '>'))
 		s = null_increment(s);
 	s = null_increment(s);
@@ -87,7 +87,7 @@ static t_cmd	*create_cmd(t_env *env)
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
-		return (ft_error(NULL), NULL);
+		return (ft_error("malloc", NULL, NULL), NULL);
 	cmd->argv = NULL;
 	cmd->env = env;
 	cmd->name = NULL;
@@ -100,7 +100,6 @@ static t_cmd	*create_cmd(t_env *env)
 	cmd->fds[1] = INT32_MIN;
 	cmd->rats[0] = INT32_MIN;
 	cmd->rats[1] = INT32_MIN;
-	cmd->here = false;
 	return (cmd);
 }
 
@@ -123,6 +122,9 @@ t_cmd	*input_to_lst(char *s, t_env *env)
 			s = new_redir(current, s);
 		else if (*s == '|')
 		{
+			if (current->name == NULL)
+				return (write(1, "minishell: syntax error", 23), \
+					free_cmds(head));
 			current->next = create_cmd(env);
 			current->next->prev = current;
 			current = current->next;

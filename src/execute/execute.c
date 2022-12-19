@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 14:31:16 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/19 14:35:27 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,33 @@
 
 void	close_and_neg(int *fd)
 {
+	// if (VERBOSE == 1)
+	// 	printf("closing file descriptor %i\n", *fd);
 	close(*fd);
 	*fd = FD_UNUSED;
 }
 
-static void	execute_child(t_cmd *cmd, t_env *env)
+static int	execute_child(t_cmd *cmd, t_env *env)
 {
 	if (cmd->rats[WRITE] == FD_UNUSED && cmd->prev == NULL && cmd->next != NULL)
 	{
 // ft_putendl_fd("-->1", 2);
 		if (dup2(cmd->fds[WRITE], STDOUT) < 0)
-			ft_error("Error dup first cmd");
+			ft_error(NULL, NULL, "Error dup first cmd");
 		close_and_neg(&cmd->fds[WRITE]);
 	}
 	else if (cmd->rats[READ] == FD_UNUSED && cmd->next == NULL && cmd->prev != NULL)
 	{
 // ft_putendl_fd("-->2", 2);
 		if (dup2(cmd->prev->fds[READ], STDIN) < 0)
-			ft_error("Error dup last cmd");
+			ft_error(NULL, NULL, "Error dup last cmd");
 		close_and_neg(&cmd->prev->fds[READ]);
 	}
 	else if (cmd->rats[WRITE] == FD_UNUSED && cmd->rats[READ] == FD_UNUSED && cmd->next != NULL && cmd->prev != NULL)
 	{
 // ft_putendl_fd("-->3", 2);
 		if (dup2(cmd->fds[WRITE], STDOUT) < 0 || dup2(cmd->prev->fds[READ], STDIN) < 0)
-			ft_error("Error dup mid cmd");
+			ft_error(NULL, NULL, "Error dup mid cmd");
 		close_and_neg(&cmd->prev->fds[READ]);
 		close_and_neg(&cmd->fds[WRITE]);
 	}
@@ -46,18 +48,21 @@ static void	execute_child(t_cmd *cmd, t_env *env)
 	{
 // ft_putendl_fd("-->4", 2);
 		if (dup2(cmd->rats[READ], STDIN) < 0)
-			ft_error("Error dup file in cmd");
+			ft_error(NULL, NULL, "Error dup file in cmd");
 		close_and_neg(&cmd->rats[READ]);
 	}
 	if (cmd->rats[WRITE] != FD_UNUSED)
 	{
 // ft_putendl_fd("-->5", 2);
 		if (dup2(cmd->rats[WRITE], STDOUT) < 0)
-			ft_error("Error dup file out cmd");
+			ft_error(NULL, NULL, "Error dup file out cmd");
 		close_and_neg(&cmd->rats[WRITE]);
 	}
-	execve(cmd->argv[0], cmd->argv, create_envp_from_env(env));
+	if (execve(cmd->argv[0], cmd->argv, create_envp_from_env(env)) != 0)
+		exit(EXIT_FAILURE);
+	return (0);
 }
+
 static void	close_pipe_fds(t_cmd *cmd)
 {
 	//first command, close only writeend of pipe
@@ -76,7 +81,6 @@ static void	close_pipe_fds(t_cmd *cmd)
 static void	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	pid_t		pid;
-	static int	index_fd = 0;
 
 	if (cmd->next != NULL)
 		pipe(cmd->fds);
@@ -87,14 +91,13 @@ static void	exec_cmd(t_cmd *cmd, t_env *env)
 		exit(0);
 	}
 	if (pid < 0)
-		ft_error(NULL);
+		ft_error(NULL, NULL, "Error at fork");
 	close_pipe_fds(cmd);
 	// heredoc or infile 4 current command
 	if (cmd->rats[READ] != FD_UNUSED)
 		close_and_neg(&cmd->rats[READ]);
 	if (cmd->rats[WRITE] != FD_UNUSED)
 		close_and_neg(&cmd->rats[WRITE]);
-	index_fd++;
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
@@ -131,10 +134,14 @@ int	execute_list(t_cmd *lst, t_prompt *prompt)
 			exec_cmd(cmd, cmd->env);
 		cmd = cmd->next;
 	}
+	if (VERBOSE == 1)
+		printf("waiting for children to terminate...\n");
 	while ((waitpid(-1, &ret, WNOHANG)) != -1)
 	{
 		if (WIFEXITED(ret) == true)
 		ret = WEXITSTATUS(ret);
 	}
+	if (VERBOSE == 1)
+		printf("all children returned.\n");
 	return (-1);
 }

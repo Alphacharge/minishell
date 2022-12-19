@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 11:14:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/19 12:17:30 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ static void	print_cmds(t_cmd *lst)
 {
 	t_param	*param;
 	t_redir	*redir;
+	int		i;
 
+	i = 0;
 	printf("\n-------------------\n");
 	while (lst != NULL)
 	{
+		param = lst->param;
+		redir = lst->redir;
 		if (lst->name != NULL)
 			printf("name: %s\n", lst->name);
-		param = lst->param;
 		while (param != NULL)
 		{
 			printf("param: %s\n", param->arg);
@@ -34,12 +37,13 @@ static void	print_cmds(t_cmd *lst)
 			printf("redir: %s\n", redir->file);
 			redir = redir->next;
 		}
-		if (lst->argv == NULL)
-			printf("argv: NULL\n");
-		else
-			printf("argv: %s | %s\n", lst->argv[0], lst->argv[1]);
+		printf("argv: ");
+		while (lst->argv != NULL && lst->argv[i] != NULL)
+			printf("|%s| ", lst->argv[i++]);
+		printf("\n");
 		if (lst->next != NULL)
-			printf("pipe\n");
+			printf("---pipe-->\n");
+		i = 0;
 		lst = lst->next;
 	}
 	printf("-------------------\n");
@@ -71,7 +75,8 @@ static t_data	*initialize_minishell(char **envp)
 	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
-	set_signals();
+	set_env_var(data->env, "SHLVL", \
+		ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
 	return (data);
 }
 
@@ -84,23 +89,21 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = initialize_minishell(envp);
 	ret = -1;
+printf("BUILTINS do not work with pipes!\n");
 	while (ret < 0)
 	{
+		set_rl_signals();
 		data->input = readline(data->prompt->prompt);
+		set_exec_signals();
 		if (data->input != NULL && data->input[0] != '\0' && data->input[0] != '\n')
 		{
 			add_history(data->input);
 			ft_putendl_fd(data->input, data->hist.fd);
 		}
 		if (data->input == NULL)
-		{
-			//exit still after linebreak
-			write(2, "exit\n", 5);
-			ret = 0;
-			break ;
-		}
+			data->input = ft_strdup("exit");
 		data->cmd_head = parse(data->input, data->env);
-		if (VERBOSE == 10000000000)
+		if (VERBOSE == 1)
 			print_cmds(data->cmd_head);
 		ret = execute_list(data->cmd_head, data->prompt);
 		data->input = ft_free(data->input);
