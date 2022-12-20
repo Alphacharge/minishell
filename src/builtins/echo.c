@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/29 15:20:08 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:07:17 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	echo(int argc, char **argv)
 		{
 			write(1, argv[i], ft_strlen(argv[i]));
 			i++;
+			if (i < argc)
+				write(1, " ", 1);
 		}
 	}
 	else
@@ -36,6 +38,8 @@ void	echo(int argc, char **argv)
 		{
 			write(1, argv[i], ft_strlen(argv[i]));
 			i++;
+			if (i < argc)
+				write(1, " ", 1);
 		}
 		write(1, "\n", 1);
 	}
