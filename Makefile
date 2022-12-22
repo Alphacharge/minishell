@@ -6,7 +6,7 @@
 #    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/22 11:12:49 by rbetz            ###   ########.fr        #
+#    Updated: 2022/12/22 17:54:59 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,9 +57,9 @@ SRC_F	+=
 SRC_F	+=	parser.c
 SRC_F	+=	parsing_utils.c var_expansion.c var_utils.c input_list.c
 SRC_F	+=	
-SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c
 SRC_F	+=	redir.c heredoc.c infile.c outfile.c filedescriptors.c
+SRC_F	+=	dup_fds.c
 SRC_F	+=	signals.c
 SRC_F	+=	history.c
 SRC_F	+=	multijoin.c free.c skip.c ft_strcmp.c arraycount.c get_word.c

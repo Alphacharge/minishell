@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 14:34:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 17:54:29 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,45 +32,9 @@ static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 {
 	unset_signals();
-	printf("C__fds[0]:%d,fds[1]:%d,reds[0]:%d,reds[1]:%d\n", cmd->fds[READ],cmd->fds[WRITE], cmd->rats[READ],cmd->rats[WRITE]);
-	if (cmd->rats[WRITE] == FD_UNUSED && cmd->prev == NULL && cmd->next != NULL)
-	{
-		// ft_putendl_fd("-->1", 2);
-		if (dup2(cmd->fds[WRITE], STDOUT) < 0)
-			ft_error(NULL, NULL, "Error dup first cmd");
-		close_and_neg(&cmd->fds[WRITE]);
-	}
-	else if (cmd->rats[READ] == FD_UNUSED && cmd->next == NULL && cmd->prev != NULL)
-	{
-		// ft_putendl_fd("-->2", 2);
-		if (dup2(cmd->prev->fds[READ], STDIN) < 0)
-			ft_error(NULL, NULL, "Error dup last cmd");
-		close_and_neg(&cmd->prev->fds[READ]);
-	}
-	else if (cmd->rats[WRITE] == FD_UNUSED && cmd->rats[READ] == FD_UNUSED && cmd->next != NULL && cmd->prev != NULL)
-	{
-		// ft_putendl_fd("-->3", 2);
-		if (dup2(cmd->fds[WRITE], STDOUT) < 0 || dup2(cmd->prev->fds[READ], STDIN) < 0)
-			ft_error(NULL, NULL, "Error dup mid cmd");
-		close_and_neg(&cmd->prev->fds[READ]);
-		close_and_neg(&cmd->fds[WRITE]);
-	}
-	if (cmd->rats[READ] != FD_UNUSED)
-	{
-		// ft_putendl_fd("-->4", 2);
-		if (dup2(cmd->rats[READ], STDIN) < 0)
-			ft_error(NULL, NULL, "Error dup file in cmd");
-		close_and_neg(&cmd->rats[READ]);
-	}
-	if (cmd->rats[WRITE] != FD_UNUSED)
-	{
-		// ft_putendl_fd("-->5", 2);
-		if (dup2(cmd->rats[WRITE], STDOUT) < 0)
-			ft_error(NULL, NULL, "Error dup file out cmd");
-		close_and_neg(&cmd->rats[WRITE]);
-	}
-	printf("D__fds[0]:%d,fds[1]:%d\n", cmd->fds[READ], cmd->fds[WRITE]);
-	// dprintf(2,"D__fds[0]:%d,fds[1]:%d,fds[0]:%d,fds[1]:%d,fds[0]:%d,fds[1]:%d,\n", cmd->prev->prev->fds[READ],cmd->prev->prev->fds[WRITE], cmd->prev->fds[READ],cmd->prev->fds[WRITE], cmd->fds[READ], cmd->fds[WRITE]);
+	dup_pipe_fds(cmd);
+	dup_reds_fds(cmd);
+	close_pipe_fds(cmd);
 	if (cmd->type == BLTIN)
 		exit(exec_bltin(cmd, prompt));
 	else if (execve(cmd->argv[0], cmd->argv, create_envp_from_env(cmd->env)) != 0)
@@ -93,10 +57,8 @@ static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 		if (pid == 0)
 			exec_child(cmd, prompt);
 	}
-	// printf("A__fds[0]:%d,fds[1]:%d,reds[0]:%d,reds[1]:%d\n", cmd->fds[READ],cmd->fds[WRITE], cmd->rats[READ],cmd->rats[WRITE]);
 	close_piping(cmd);
 	close_reds_fds(cmd);
-	// printf("B__fds[0]:%d,fds[1]:%d,reds[0]:%d,reds[1]:%d\n", cmd->fds[READ],cmd->fds[WRITE], cmd->rats[READ],cmd->rats[WRITE]);
 	if (pid < 0)
 		ft_error(NULL, "fork", NULL);
 }

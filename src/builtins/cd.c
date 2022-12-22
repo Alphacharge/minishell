@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 11:50:16 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 17:26:01 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,22 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
 void	cd(char **argv, t_env *env, t_prompt *prompt)
 {
-	int	ret;
+	int		ret;
+	char	*dir;
 
 	ret = 0;
-	if (argv[1] == NULL)
-		ret = chdir("~");
+	dir = argv[1];
+	if (dir == NULL || ft_strcmp(dir, "~") == 0)
+	{
+		dir = get_env_var(env, "HOME");
+		ret = chdir(dir);
+	}
 	else if (argv[2] != NULL)
 		ft_error(NULL, "cd", "too many arguments");
-	else if (ft_strlen(argv[1]) > 0)
-		ret = chdir(argv[1]);
+	else if (ft_strlen(dir) > 0)
+		ret = chdir(dir);
 	if (ret == -1)
-		ft_error("minishell: cd", argv[1], NULL);
+		ft_error("minishell: cd", dir, NULL);
 	else
-		update_pwd(argv[1], env, prompt);
+		update_pwd(dir, env, prompt);
 }
