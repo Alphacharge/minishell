@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 12:17:30 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:57:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	data = initialize_minishell(envp);
 	ret = -1;
-printf("BUILTINS do not work with pipes!\n");
+	printf("BUILTINS do not work with pipes!\n");
 	while (ret < 0)
 	{
 		set_rl_signals();

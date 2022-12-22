@@ -6,13 +6,13 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 09:58:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:57:17 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
 
-void close_and_neg(int *fd)
+void	close_and_neg(int *fd)
 {
 	if (VERBOSE == 1)
 		printf("closing file descriptor %i\n", *fd);
@@ -20,7 +20,7 @@ void close_and_neg(int *fd)
 	*fd = FD_UNUSED;
 }
 
-static int exec_bltin(t_cmd *cmd, t_prompt *prompt)
+static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
 	if (cmd->argv[0][0] == 'c')
 		cd(cmd->argv, cmd->env, prompt);
@@ -37,7 +37,7 @@ static int exec_bltin(t_cmd *cmd, t_prompt *prompt)
 	return (EXIT_SUCCESS);
 }
 
-static int exec_child(t_cmd *cmd, t_prompt *prompt)
+static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 {
 	unset_signals();
 	if (cmd->rats[WRITE] == FD_UNUSED && cmd->prev == NULL && cmd->next != NULL)
@@ -85,7 +85,7 @@ static int exec_child(t_cmd *cmd, t_prompt *prompt)
 	return (0);
 }
 
-static void close_pipe_fds(t_cmd *cmd)
+static void	close_pipe_fds(t_cmd *cmd)
 {
 	// first command, close only writeend of pipe
 	if (cmd->prev == NULL && cmd->next != NULL)
@@ -100,7 +100,8 @@ static void close_pipe_fds(t_cmd *cmd)
 		close_and_neg(&cmd->fds[WRITE]);
 	}
 }
-static void close_reds_fds(t_cmd *cmd)
+
+static void	close_reds_fds(t_cmd *cmd)
 {
 	if (cmd->rats[READ] != FD_UNUSED)
 		close_and_neg(&cmd->rats[READ]);
@@ -108,16 +109,16 @@ static void close_reds_fds(t_cmd *cmd)
 		close_and_neg(&cmd->rats[WRITE]);
 }
 
-static void exec_cmd(t_cmd *cmd, t_prompt *prompt)
+static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
-	pid_t pid;
+	pid_t	pid;
 
 	if (cmd->next != NULL)
 		pipe(cmd->fds);
 	pid = fork();
 	if (pid == 0)
 	{
-			exec_child(cmd, prompt);
+		exec_child(cmd, prompt);
 	}
 	close_pipe_fds(cmd);
 	close_reds_fds(cmd);
@@ -125,12 +126,10 @@ static void exec_cmd(t_cmd *cmd, t_prompt *prompt)
 		ft_error(NULL, "fork", NULL);
 }
 
-
-
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
-int execute_list(t_cmd *lst, t_prompt *prompt)
+int	execute_list(t_cmd *lst, t_prompt *prompt)
 {
-	t_cmd 		*cmd;
+	t_cmd		*cmd;
 	static int	ret = 0;
 
 	cmd = lst;

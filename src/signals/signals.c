@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/21 15:22:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:51:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ void	set_exec_signals(void)
 	action.sa_flags = 0;
 	// sigaddset(&action.sa_mask, SIGINT);
 	// sigaddset(&action.sa_mask, SIGQUIT);
-	if (sigaction(SIGINT, &action, NULL) < 0 || sigaction(SIGQUIT, &action, NULL) < 0)
+	if (sigaction(SIGINT, &action, NULL) < 0
+		|| sigaction(SIGQUIT, &action, NULL) < 0)
 		ft_error(NULL, "set_exec_signals", NULL);
 }
 
@@ -79,6 +80,7 @@ void	set_rl_signals(void)
 	action.sa_flags = 0;
 	// sigaddset(&action.sa_mask, SIGINT);
 	// sigaddset(&action.sa_mask, SIGQUIT);
-	if (sigaction(SIGINT, &action, NULL) < 0 || sigaction(SIGQUIT, &action, NULL) < 0)
+	if (sigaction(SIGINT, &action, NULL) < 0
+		|| sigaction(SIGQUIT, &action, NULL) < 0)
 		ft_error(NULL, "set_rl_signals", NULL);
 }

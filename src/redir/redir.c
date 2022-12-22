@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 13:37:18 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:51:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	close_both_fds(t_cmd *cmd)
 	if (cmd->fds[WRITE] != FD_UNUSED)
 		close_and_neg(&cmd->fds[WRITE]);
 }
+
 void	close_both_rats(t_cmd *cmd)
 {
 	if (cmd->rats[READ] != FD_UNUSED)
@@ -35,4 +36,3 @@ t_cmd	*create_redirs(t_cmd *cmd)
 	cmd = handle_outfiles(cmd);
 	return (cmd);
 }
-

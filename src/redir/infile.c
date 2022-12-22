@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:28:41 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:54:54 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 /*check for an other fd, these one should be from a infile, and close it*/
 /*then call itsself and create a new one*/
-static void check_infiles(t_cmd *cmd, t_redir *redir)
+static void	check_infiles(t_cmd *cmd, t_redir *redir)
 {
-	int success;
+	int	success;
 
 	success = 1;
 	if (access(redir->file, F_OK) != 0)
@@ -55,10 +55,10 @@ static void check_infiles(t_cmd *cmd, t_redir *redir)
 
 /*goes through the cmd list and check 4 infiles*/
 /*if there is already a fd we have a heredoc and leave instantly*/
-t_cmd *handle_infiles(t_cmd *cmd)
+t_cmd	*handle_infiles(t_cmd *cmd)
 {
-	t_cmd *tmp;
-	t_redir *tred;
+	t_cmd	*tmp;
+	t_redir	*tred;
 
 	tmp = cmd;
 	while (tmp != NULL)

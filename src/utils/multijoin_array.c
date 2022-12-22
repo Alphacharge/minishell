@@ -6,14 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 12:53:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:50:52 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "libft.h"
 
-static char *copy_input(char **array, size_t len)
+static char	*copy_input(char **array, size_t len)
 {
 	char	*str;
 	size_t	i;
@@ -44,7 +44,7 @@ static size_t	read_input(char **array)
 	return (i);
 }
 
-static void *free_array(char **array)
+static void	*free_array(char **array)
 {
 	size_t	i;
 
@@ -59,7 +59,7 @@ static void *free_array(char **array)
 
 /*tofr, frees the input if true, array needs a Nullpointer at the end,*/
 /*if a substring is null, the joining ends there*/
-char *multijoin_array(bool tofr, char **array)
+char	*multijoin_array(bool tofr, char **array)
 {
 	size_t	len;
 	char	*str;

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 15:13:07 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 10:53:09 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redirects.h"
 
-
 /*if its a path just strdup it, if not*/
-static void check_outfiles(t_cmd *cmd, t_redir *redir)
+static void	check_outfiles(t_cmd *cmd, t_redir *redir)
 {
 	if (cmd->rats[WRITE] == FD_UNUSED && redir->type == OUTPUT)
-		cmd->rats[WRITE] = open(redir->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		cmd->rats[WRITE] = open(redir->file, \
+							O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (cmd->rats[WRITE] == FD_UNUSED && redir->type == APPEND)
-		cmd->rats[WRITE] = open(redir->file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		cmd->rats[WRITE] = open(redir->file, \
+							O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
 	{
 		close_and_neg(&cmd->rats[WRITE]);
@@ -30,10 +31,10 @@ static void check_outfiles(t_cmd *cmd, t_redir *redir)
 }
 
 /*goes through the cmd list and check 4 outfiles*/
-t_cmd *handle_outfiles(t_cmd *cmd)
+t_cmd	*handle_outfiles(t_cmd *cmd)
 {
-	t_cmd *tmp;
-	t_redir *tred;
+	t_cmd	*tmp;
+	t_redir	*tred;
 
 	tmp = cmd;
 	while (tmp != NULL)
