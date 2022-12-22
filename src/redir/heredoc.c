@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:12:10 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 11:13:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	get_here(t_cmd *cmd, char *lim)
 		free(new);
 	}
 	free(limiter);
-	close(cmd->rats[WRITE]);
+	close_and_neg(&cmd->rats[WRITE]);
 }
 
 /*Check redirs for heredocs, ask 4 all but store only the last*/
@@ -58,7 +58,7 @@ t_cmd	*handle_heredocs(t_cmd *cmd)
 			if (tred->type == HERE)
 			{
 				if (tmp->rats[READ] != FD_UNUSED)
-					close_both_rats(tmp);
+					close_reds_fds(tmp);
 				get_here(tmp, tred->file);
 				tmp->here = true;
 			}

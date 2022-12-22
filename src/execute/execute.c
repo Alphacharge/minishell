@@ -6,19 +6,11 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 10:57:17 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 11:10:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execute.h"
-
-void	close_and_neg(int *fd)
-{
-	if (VERBOSE == 1)
-		printf("closing file descriptor %i\n", *fd);
-	close(*fd);
-	*fd = FD_UNUSED;
-}
 
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
@@ -85,30 +77,6 @@ static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 	return (0);
 }
 
-static void	close_pipe_fds(t_cmd *cmd)
-{
-	// first command, close only writeend of pipe
-	if (cmd->prev == NULL && cmd->next != NULL)
-		close_and_neg(&cmd->fds[WRITE]);
-	// last command, close only readend of prev pipe
-	else if (cmd->next == NULL && cmd->prev != NULL)
-		close_and_neg(&cmd->prev->fds[READ]);
-	// middle command, close readend of prev pipe and writeend of pipe
-	else if (cmd->next != NULL && cmd->prev != NULL)
-	{
-		close_and_neg(&cmd->prev->fds[READ]);
-		close_and_neg(&cmd->fds[WRITE]);
-	}
-}
-
-static void	close_reds_fds(t_cmd *cmd)
-{
-	if (cmd->rats[READ] != FD_UNUSED)
-		close_and_neg(&cmd->rats[READ]);
-	if (cmd->rats[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->rats[WRITE]);
-}
-
 static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
@@ -120,7 +88,7 @@ static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 	{
 		exec_child(cmd, prompt);
 	}
-	close_pipe_fds(cmd);
+	close_piping(cmd);
 	close_reds_fds(cmd);
 	if (pid < 0)
 		ft_error(NULL, "fork", NULL);

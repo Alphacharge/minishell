@@ -6,28 +6,12 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 10:51:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 11:10:14 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "redirects.h"
 #include "execute.h"
-
-void	close_both_fds(t_cmd *cmd)
-{
-	if (cmd->fds[READ] != FD_UNUSED)
-		close_and_neg(&cmd->fds[READ]);
-	if (cmd->fds[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->fds[WRITE]);
-}
-
-void	close_both_rats(t_cmd *cmd)
-{
-	if (cmd->rats[READ] != FD_UNUSED)
-		close_and_neg(&cmd->rats[READ]);
-	if (cmd->rats[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->rats[WRITE]);
-}
 
 t_cmd	*create_redirs(t_cmd *cmd)
 {

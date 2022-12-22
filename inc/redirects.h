@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:36:01 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 14:21:41 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 11:14:38 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # define WRITE 1
 
 t_cmd	*create_redirs(t_cmd *cmd);
-void	close_both_fds(t_cmd *cmd);
-void	close_both_rats(t_cmd *cmd);
 t_cmd	*handle_heredocs(t_cmd *cmd);
 t_cmd	*handle_infiles(t_cmd *cmd);
 t_cmd	*handle_outfiles(t_cmd *cmd);
