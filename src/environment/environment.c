@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   environment.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:09:28 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/21 10:33:51 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	delete_env(t_env *env)
 void	print_env(t_env *env, int fd)
 {
 	if (env == NULL)
-		ft_putstr_fd("Error, empty Environment", fd);
+		ft_error(NULL, "empty environment", NULL);
 	else
 	{
 		while (env != NULL)

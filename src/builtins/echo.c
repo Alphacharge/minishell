@@ -3,45 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/20 14:07:17 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/21 11:50:29 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "libft.h"
-#include <stdio.h>
 
-/*is printing all args, -n needs to be in first arg*/
-void	echo(int argc, char **argv)
+/*Will ignore option -n if it is not the first parameter. Prints every argument
+to standard output, separated by a space.*/
+void	echo(char **argv)
 {
 	int	i;
 
 	i = 1;
-	if (argc == 1)
-		write(1, "\n", 1);
-	else if (argc > 1 && ft_strcmp(argv[i], "-n") == 0)
+	while (argv[i] != NULL && ft_strcmp(argv[i], "-n") == 0)
+		i++;
+	while (argv[i] != NULL)
 	{
-		while (i < argc)
-		{
-			write(1, argv[i], ft_strlen(argv[i]));
-			i++;
-			if (i < argc)
-				write(1, " ", 1);
-		}
+		ft_putstr_fd(argv[i], 1);
+		i++;
+		if (argv[i] != NULL)
+			write(1, " ", 1);
 	}
-	else
-	{
-		while (i < argc)
-		{
-			write(1, argv[i], ft_strlen(argv[i]));
-			i++;
-			if (i < argc)
-				write(1, " ", 1);
-		}
+	if (ft_strcmp(argv[1], "-n") != 0)
 		write(1, "\n", 1);
-	}
 }
-//i think it will not work properly with -n, it will print -n

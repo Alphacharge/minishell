@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/09 10:37:55 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/21 10:30:22 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	free_params(t_param *current)
 
 void	close_fds(t_cmd	*cmd)
 {
-	if (cmd->fds[0] != INT32_MIN)
-		close_and_neg(&cmd->fds[0]);
-	if (cmd->fds[1] != INT32_MIN)
-		close_and_neg(&cmd->fds[1]);
-	if (cmd->rats[0] != INT32_MIN)
-		close_and_neg(&cmd->rats[0]);
-	if (cmd->rats[1] != INT32_MIN)
-		close_and_neg(&cmd->rats[1]);
+	if (cmd->fds[READ] != FD_UNUSED)
+		close_and_neg(&cmd->fds[READ]);
+	if (cmd->fds[WRITE] != FD_UNUSED)
+		close_and_neg(&cmd->fds[WRITE]);
+	if (cmd->rats[READ] != FD_UNUSED)
+		close_and_neg(&cmd->rats[READ]);
+	if (cmd->rats[WRITE] != FD_UNUSED)
+		close_and_neg(&cmd->rats[WRITE]);
 }
 
 void	*free_cmds(t_cmd *current)
@@ -55,6 +55,7 @@ void	*free_cmds(t_cmd *current)
 
 	while (current != NULL)
 	{
+		ft_free(current->name);
 		free_ptr_array((void *)current->argv);
 		free_params(current->param);
 		free_redirs(current->redir);

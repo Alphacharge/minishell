@@ -6,17 +6,15 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/23 14:56:58 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/21 11:51:14 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
-#include "libft.h"
-#include "utils.h"
+#include "builtins.h"
 
 /*deletes all given vars from env if they exist,*/
 /*returns NULL if env is empty or env*/
-t_env	*unset(int argc, char **argv, t_env *env)
+t_env	*unset(char **argv, t_env *env)
 {
 	t_env	*head;
 	t_env	*prev;
@@ -25,11 +23,11 @@ t_env	*unset(int argc, char **argv, t_env *env)
 	head = env;
 	prev = head;
 	i = 1;
-	if (argc < 2)
-		return (ft_putstr_fd("unset: not enough arguments", 2), head);
+	if (argv[1] == NULL)
+		return (ft_error(NULL, "unset", "not enough arguments"), head);
 	if (env == NULL)
 		return (NULL);
-	while (i < argc)
+	while (argv[i] != NULL)
 	{
 		env = head;
 		while (env != NULL && env->name != NULL && argv[i] != NULL)

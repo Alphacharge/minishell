@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/19 13:43:56 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/21 10:25:31 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ static t_cmd	*create_cmd(t_env *env)
 	cmd->prev = NULL;
 	cmd->redir = NULL;
 	cmd->type = EXEC;
-	cmd->fds[0] = INT32_MIN;
-	cmd->fds[1] = INT32_MIN;
-	cmd->rats[0] = INT32_MIN;
-	cmd->rats[1] = INT32_MIN;
+	cmd->fds[0] = FD_UNUSED;
+	cmd->fds[1] = FD_UNUSED;
+	cmd->rats[0] = FD_UNUSED;
+	cmd->rats[1] = FD_UNUSED;
 	return (cmd);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 09:52:46 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/21 10:41:58 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	shell_exit(char **argv)
 	int	status;
 
 	if (argv && argv[1] != NULL && argv[2] != NULL)
-		return (write(2, "minishell: exit: too many arguments\n", 37), -1);
+		return (ft_error(NULL, "exit", "too many arguments"), EXIT_FAILURE);
 	write(1, "exit\n", 5);
 	if (argv == NULL || argv[1] == NULL)
 		return (EXIT_SUCCESS);
