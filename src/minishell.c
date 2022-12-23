@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 19:29:16 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/23 17:15:00 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,21 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data		*data;
 	int			ret;
+	bool		c;
 
-	(void)argc;
-	(void)argv;
+	c = false;
 	data = initialize_minishell(envp);
+	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0 && argv[2] != NULL)
+	{
+		data->input = ft_strdup(argv[2]);
+		c = true;
+	}
 	ret = -1;
 	while (ret < 0)
 	{
 		set_rl_signals();
-		data->input = readline(data->prompt->prompt);
+		if (data->input == NULL)
+			data->input = readline(data->prompt->prompt);
 		set_exec_signals();
 		if (data->input != NULL && data->input[0] != '\0' && data->input[0] != '\n')
 		{
@@ -109,6 +115,8 @@ int	main(int argc, char **argv, char **envp)
 		ret = execute_list(data->cmd_head, data);
 		data->input = ft_free(data->input);
 		free_cmds(data->cmd_head);
+		if (c)
+			break ;
 	}
 	ms_cleanup(data);
 	// system("leaks minishell");

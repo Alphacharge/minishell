@@ -28,7 +28,7 @@ while read cmd ;do
 	fi
 	i=$((i + 1))
 done < ./testcases;
-./minishell -c "./src/redirects.sh"
+#./minishell -c "./src/redirects.sh"
 
 echo "$i Codelines executed."
 if [[ -f "$out" ]]; then
