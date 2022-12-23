@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/21 10:25:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 18:36:46 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	*new_redir(t_cmd *cmd, char *s)
 		s = null_increment(s);
 	s = null_increment(s);
 	s = null_whitespace(s);
+	if (is_token(*s) == true || *s == 0)
+		return (ft_free(r));
 	r->file = s;
 	append_redir(cmd, r);
 	return (skip_argument(s));
@@ -119,12 +121,15 @@ t_cmd	*input_to_lst(char *s, t_env *env)
 		if (*s == 0)
 			break ;
 		if (*s == '>' || *s == '<')
+		{
 			s = new_redir(current, s);
+			if (s == NULL)
+				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
+		}
 		else if (*s == '|')
 		{
 			if (current->name == NULL)
-				return (write(1, "minishell: syntax error", 23), \
-					free_cmds(head));
+				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
 			current->next = create_cmd(env);
 			current->next->prev = current;
 			current = current->next;

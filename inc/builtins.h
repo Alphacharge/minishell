@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:39:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 11:51:42 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:15:51 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include "environment.h"
 # include "errorhandling.h"
 
-void	cd(char **argv, t_env *env, t_prompt *prompt);
-void	echo(char **argv);
+int		cd(char **argv, t_env *env, t_prompt *prompt);
+int		echo(char **argv);
 void	env(char **argv, t_env *env);
 int		shell_exit(char **argv);
 t_env	*export(int argc, char **argv, t_env *env);

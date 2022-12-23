@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:19:48 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:14:13 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:17:14 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "structs.h"
 # include "libft.h"
 
-t_cmd	*parse(char *s, t_env *env);
-char	*expand_envvars(char *s, t_env *env);
+t_cmd	*parse(char *s, t_data *data);
+char	*expand_envvars(char *s, t_data *data);
 t_cmd	*input_to_lst(char *s, t_env *env);
 
 //	PARSING UTILS

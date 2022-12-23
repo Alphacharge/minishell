@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 11:13:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:27:05 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "execute.h"
 
 /*reading heredoc in a pipe*/
-static void	get_here(t_cmd *cmd, char *lim)
+static void	get_here(t_cmd *cmd, char *lim, t_data *data)
 {
 	char	*limiter;
 	char	*tmp;
@@ -27,7 +27,7 @@ static void	get_here(t_cmd *cmd, char *lim)
 	{
 		write(2, ">", 1);
 		tmp = get_next_line(0);
-		new = expand_envvars(tmp, cmd->env);
+		new = expand_envvars(tmp, data);
 		free(tmp);
 		len = ft_strlen(new);
 		if (ft_strcmp(new, limiter) == 0)
@@ -44,7 +44,7 @@ static void	get_here(t_cmd *cmd, char *lim)
 }
 
 /*Check redirs for heredocs, ask 4 all but store only the last*/
-t_cmd	*handle_heredocs(t_cmd *cmd)
+t_cmd	*handle_heredocs(t_cmd *cmd, t_data *data)
 {
 	t_cmd	*tmp;
 	t_redir	*tred;
@@ -59,7 +59,7 @@ t_cmd	*handle_heredocs(t_cmd *cmd)
 			{
 				if (tmp->rats[READ] != FD_UNUSED)
 					close_reds_fds(tmp);
-				get_here(tmp, tred->file);
+				get_here(tmp, tred->file, data);
 				tmp->here = true;
 			}
 			tred = tred->next;

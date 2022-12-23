@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/19 13:42:05 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:18:42 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*skip_to_var(char *s)
 
 /*Creates an array of pointers to variable values and input strings that can
 be joined to a single string.*/
-static char	**var_array(char *s, int n, t_env *env)
+static char	**var_array(char *s, int n, t_data *data)
 {
 	int		i;
 	char	*var_name;
@@ -66,7 +66,10 @@ static char	**var_array(char *s, int n, t_env *env)
 		{
 			s = null_increment(s);
 			var_name = alloc_var_name(s);
-			array[i++] = get_env_var(env, var_name);
+			if (var_name[0] == '?')
+				array[i++] = ft_itoa(data->exit_status);
+			else
+				array[i++] = get_env_var(data->env, var_name);
 			if (array[i - 1] == NULL)
 				array[i - 1] = get_terminator(s);
 			var_name = ft_free(var_name);
@@ -104,7 +107,7 @@ static int	count_var_strings(char *s)
 
 /*Receives a pointer to input and returns a newly allocated copy with
 expanded variables.*/
-char	*expand_envvars(char *s, t_env *env)
+char	*expand_envvars(char *s, t_data *data)
 {
 	char	**array;
 	int		number_strings;
@@ -115,7 +118,7 @@ char	*expand_envvars(char *s, t_env *env)
 	number_strings = count_var_strings(s);
 	if (number_strings == 0)
 		return (ft_strdup(s));
-	array = var_array(s, number_strings, env);
+	array = var_array(s, number_strings, data);
 	array[0] = ft_strdup(array[0]);
 	i = 1;
 	while (i < number_strings)

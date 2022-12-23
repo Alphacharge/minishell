@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/19 13:42:36 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:18:10 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ static char	*remove_quotes(char *s)
 
 /*Cleans up command name. If it is neither an absolute nor a relative path,
 searches for executable in PATH directories.*/
-int	parse_name(t_cmd *cmd)
+int	parse_name(t_cmd *cmd, t_data *data)
 {
-	cmd->name = remove_quotes(expand_envvars(cmd->name, cmd->env));
+	cmd->name = remove_quotes(expand_envvars(cmd->name, data));
 	cmd->argv[0] = ft_strdup(cmd->name);
 	set_type(cmd);
 	if (cmd->type == BLTIN)
@@ -75,7 +75,7 @@ int	parse_name(t_cmd *cmd)
 
 /*Creates a newly allocated argv array with cleaned up strings for use in
 execve.*/
-static char	**create_argv(t_cmd *cmd, t_env *env)
+static char	**create_argv(t_cmd *cmd, t_data *data)
 {
 	t_param	*current;
 	int		i;
@@ -85,11 +85,11 @@ static char	**create_argv(t_cmd *cmd, t_env *env)
 	cmd->argv = ft_calloc(count_parameters(cmd) + 2, sizeof(char *));
 	if (cmd->argv == NULL)
 		return (NULL);
-	if (parse_name(cmd) < 0)
+	if (parse_name(cmd, data) < 0)
 		return (ft_free(cmd->argv));
 	while (current != NULL)
 	{
-		cmd->argv[i] = remove_quotes(expand_envvars(current->arg, env));
+		cmd->argv[i] = remove_quotes(expand_envvars(current->arg, data));
 		if (cmd->argv[i++] == NULL)
 			break ;
 		current = current->next;
@@ -98,23 +98,23 @@ static char	**create_argv(t_cmd *cmd, t_env *env)
 	return (cmd->argv);
 }
 
-t_cmd	*parse(char *s, t_env *env)
+t_cmd	*parse(char *s, t_data *data)
 {
 	t_cmd	*lst;
 	t_cmd	*current_cmd;
 	t_redir	*current_redir;
 
-	lst = input_to_lst(s, env);
+	lst = input_to_lst(s, data->env);
 	current_cmd = lst;
 	while (current_cmd != NULL)
 	{
-		current_cmd->argv = create_argv(current_cmd, env);
+		current_cmd->argv = create_argv(current_cmd, data);
 		if (current_cmd->argv == NULL)
 			return (free_cmds(lst), NULL);
 		current_redir = current_cmd->redir;
 		while (current_redir != NULL)
 		{
-			current_redir->file = expand_envvars(current_redir->file, env);
+			current_redir->file = expand_envvars(current_redir->file, data);
 			current_redir->file = remove_quotes(current_redir->file);
 			current_redir = current_redir->next;
 		}
