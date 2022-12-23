@@ -1,9 +1,5 @@
 -	wildcards
--	config
--	redirections
--	heredoc
--	remove display of ^C and ^\, remove newline for ^\
--	add variable expansion to redirection names
+-	check name of variable in export builtin
 
 
 How does Bash:
