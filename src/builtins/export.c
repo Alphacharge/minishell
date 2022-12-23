@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 15:27:52 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/23 11:22:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,10 @@ t_env	*export(int argc, char **argv, t_env *env)
 					return (free_multiple(1, &name), head);
 				new->name = name;
 				new->value = ft_first_word(argv[i], '=', 1);
-				new->next = env;
-				head = new;
+				new->next = NULL;
+				while (env != NULL && env->next != NULL)
+					env = env->next;
+				env->next = new;
 			}
 			else
 				free_multiple(1, &name);

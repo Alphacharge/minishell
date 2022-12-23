@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 10:33:51 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 11:37:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ void	delete_env(t_env *env)
 		tmp = env->next;
 		free_multiple(1, &env);
 		env = tmp;
+	}
+}
+
+/*updates the env pointer of following cmds*/
+void	update_env(t_cmd *cmd)
+{
+	t_env *env;
+
+	env = cmd->env;
+	cmd = cmd->next;
+	while (cmd != NULL)
+	{
+		cmd->env = env;
+		cmd = cmd->next;
 	}
 }
 
