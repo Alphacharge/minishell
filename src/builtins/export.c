@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 14:33:35 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 15:05:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,18 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	i = 1;
 	while (i < argc)
 	{
-		if (argv[i] != NULL)
+		if (argv[i] != NULL )
 		{
-			name = ft_first_word(argv[i], '=', 0);
-			value = ft_first_word(argv[i], '=', 1);
+			if (ft_posinset('=', argv[i]) < 0)
+			{
+				name = ft_strdup(argv[i]);
+				value = ft_strdup("");
+			}
+			else
+			{
+				name = ft_first_word(argv[i], '=', 0);
+				value = ft_first_word(argv[i], '=', 1);
+			}
 			ret = set_env_var(env, name, value);
 			if (ret == NULL)
 				free_multiple(1, &value);
@@ -61,6 +69,7 @@ int	export(int argc, char **argv, t_data *data)
 	t_env	*tmp;
 	t_env	*new;
 	char	*name;
+	char	*value;
 	int		i;
 
 	tmp = data->env;
@@ -73,14 +82,23 @@ int	export(int argc, char **argv, t_data *data)
 		data->env = tmp;
 		if (argv[i] != NULL)
 		{
-			name = ft_first_word(argv[i], '=', 0);
+			if (ft_posinset('=', argv[i]) < 0)
+			{
+				name = ft_strdup(argv[i]);
+				value = ft_strdup("");
+			}
+			else
+			{
+				name = ft_first_word(argv[i], '=', 0);
+				value = ft_first_word(argv[i], '=', 1);
+			}
 			if (get_env_var(tmp, name) == NULL)
 			{
 				new = new_env();
 				if (new == NULL)
 					return (free_multiple(1, &name), EXIT_FAILURE);
 				new->name = name;
-				new->value = ft_first_word(argv[i], '=', 1);
+				new->value = value;
 				new->next = NULL;
 				while (tmp != NULL && tmp->next != NULL)
 					tmp = tmp->next;
