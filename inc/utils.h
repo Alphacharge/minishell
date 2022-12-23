@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/08 12:53:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 17:48:40 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int		arraycount(char **array);
 char	*get_word(char	*s);
 char	*ft_last_word(const char *str, char c, int rev);
 char	*multijoin_array(bool tofr, char **array);
+int		is_valid_var(char *var);
 
 #endif

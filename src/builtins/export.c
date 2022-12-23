@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 15:05:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 17:51:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	export(int argc, char **argv, t_data *data)
 	while (i < argc)
 	{
 		data->env = tmp;
-		if (argv[i] != NULL)
+		if (argv[i] != NULL && is_valid_var(argv[i]))
 		{
 			if (ft_posinset('=', argv[i]) < 0)
 			{
@@ -107,6 +107,8 @@ int	export(int argc, char **argv, t_data *data)
 			else
 				free_multiple(1, &name);
 		}
+		else
+			return (ft_error("export", argv[i], "not a valid identifier"), EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);
