@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:19:48 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 19:17:14 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:10:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 t_cmd	*parse(char *s, t_data *data);
 char	*expand_envvars(char *s, t_data *data);
-t_cmd	*input_to_lst(char *s, t_env *env);
+t_cmd	*input_to_lst(char *s, t_data *data);
 
 //	PARSING UTILS
 int		is_token(char c);

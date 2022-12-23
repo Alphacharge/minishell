@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 19:32:14 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:08:21 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_cmd
 	int				rats[2];
 	bool			here;
 	bool			error;
-	struct s_env	*env;
+	struct s_data	*data;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	struct s_redir	*redir;

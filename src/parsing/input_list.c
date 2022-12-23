@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/23 13:55:05 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 14:10:24 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ static t_cmd	*create_cmd(t_data *data)
 	if (cmd == NULL)
 		return (ft_error("malloc", NULL, NULL), NULL);
 	cmd->argv = NULL;
-	cmd->env = data->env;
+	cmd->data = data;
 	cmd->name = NULL;
 	cmd->param = NULL;
 	cmd->next = NULL;
@@ -130,7 +130,7 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 		{
 			if (current->name == NULL)
 				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
-			current->next = create_cmd(env);
+			current->next = create_cmd(data);
 			current->next->prev = current;
 			current = current->next;
 			s = null_increment(s);

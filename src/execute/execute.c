@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 13:15:31 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/23 14:37:38 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
 	if (cmd->argv[0][0] == 'c')
-		return (cd(cmd->argv, cmd->env, prompt));
+		return (cd(cmd->argv, cmd->data->env, prompt));
 	else if (cmd->argv[0][0] == 'p')
 		return (pwd(cmd->argv));
 	else if (cmd->argv[0][0] == 'u')
-		return (unset(cmd->argv, cmd->env));
+		return (unset(cmd->argv, cmd->data));
 	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
 		return (echo(cmd->argv));
 	else if (ft_strcmp(cmd->argv[0], "export") == 0)
-		return (export(arraycount(cmd->argv), cmd->argv, cmd->env));
+		return (export(arraycount(cmd->argv), cmd->argv, cmd->data));
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
-		return (env(cmd->argv, cmd->env));
+		return (env(cmd->argv, cmd->data->env));
 	return (1);
 }
 
@@ -37,7 +37,7 @@ static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 	close_pipe_fds(cmd);
 	if (cmd->type == BLTIN)
 		exit(exec_bltin(cmd, prompt));
-	else if (execve(cmd->argv[0], cmd->argv, create_envp_from_env(cmd->env)) != 0)
+	else if (execve(cmd->argv[0], cmd->argv, create_envp_from_env(cmd->data->env)) != 0)
 		exit(EXIT_FAILURE);
 	return (0);
 }

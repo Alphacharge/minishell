@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 11:51:14 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 14:41:49 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,44 @@
 
 /*deletes all given vars from env if they exist,*/
 /*returns NULL if env is empty or env*/
-t_env	*unset(char **argv, t_env *env)
+int	unset(char **argv, t_data *data)
 {
-	t_env	*head;
+	t_env	*tmp;
 	t_env	*prev;
 	int		i;
 
-	head = env;
-	prev = head;
+	tmp = data->env;
+	prev = tmp;
 	i = 1;
 	if (argv[1] == NULL)
-		return (ft_error(NULL, "unset", "not enough arguments"), head);
-	if (env == NULL)
-		return (NULL);
+		return (ft_error(NULL, "unset", "not enough arguments"), EXIT_FAILURE);
+	if (tmp == NULL)
+		return (EXIT_FAILURE);
 	while (argv[i] != NULL)
 	{
-		env = head;
-		while (env != NULL && env->name != NULL && argv[i] != NULL)
+		tmp = data->env;
+		while (tmp != NULL && tmp->name != NULL && argv[i] != NULL)
 		{
-			if (ft_strcmp(argv[i], env->name))
+			if (ft_strcmp(argv[i], tmp->name))
 			{
-				prev = env;
-				env = env->next;
+				prev = tmp;
+				tmp = tmp->next;
 			}
 			else
 			{
-				if (env == head)
+				if (tmp == data->env)
 				{
-					head = env->next;
-					prev = head;
+					data->env = tmp->next;
+					prev = data->env;
 				}
 				else
-					prev->next = env->next;
-				env->next = NULL;
-				delete_env(env);
+					prev->next = tmp->next;
+				tmp->next = NULL;
+				delete_env(tmp);
 				i++;
-				env = NULL;
+				tmp = NULL;
 			}
 		}
 	}
-	return (head);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 13:52:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 14:33:35 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,40 +56,40 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	return (env);
 }
 
-t_env	*export(int argc, char **argv, t_env **env)
+int	export(int argc, char **argv, t_data *data)
 {
-	t_env	*head;
+	t_env	*tmp;
 	t_env	*new;
 	char	*name;
 	int		i;
 
-	head = *env;
+	tmp = data->env;
 	i = 1;
 	if (argc == 1)
-		export_print(env);
-	head = update_values(argc, argv, env);
+		export_print(tmp);
+	tmp = update_values(argc, argv, tmp);
 	while (i < argc)
 	{
-		env = head;
+		data->env = tmp;
 		if (argv[i] != NULL)
 		{
 			name = ft_first_word(argv[i], '=', 0);
-			if (get_env_var(env, name) == NULL)
+			if (get_env_var(tmp, name) == NULL)
 			{
 				new = new_env();
 				if (new == NULL)
-					return (free_multiple(1, &name), head);
+					return (free_multiple(1, &name), EXIT_FAILURE);
 				new->name = name;
 				new->value = ft_first_word(argv[i], '=', 1);
 				new->next = NULL;
-				while (env != NULL && env->next != NULL)
-					env = env->next;
-				env->next = new;
+				while (tmp != NULL && tmp->next != NULL)
+					tmp = tmp->next;
+				tmp->next = new;
 			}
 			else
 				free_multiple(1, &name);
 		}
 		i++;
 	}
-	return (head);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 11:37:19 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 14:09:08 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ void	update_env(t_cmd *cmd)
 {
 	t_env *env;
 
-	env = cmd->env;
+	env = cmd->data->env;
 	cmd = cmd->next;
 	while (cmd != NULL)
 	{
-		cmd->env = env;
+		cmd->data->env = env;
 		cmd = cmd->next;
 	}
 }

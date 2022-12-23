@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/23 13:54:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 14:12:09 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	parse_name(t_cmd *cmd, t_data *data)
 		return (0);
 	}
 	cmd->argv[0] = ft_free(cmd->argv[0]);
-	cmd->argv[0] = get_path(cmd->name, cmd->env);
+	cmd->argv[0] = get_path(cmd->name, cmd->data->env);
 	if (cmd->argv[0] == NULL)
 		return (ft_error(NULL, cmd->name, "command not found"), -1);
 	return (0);
