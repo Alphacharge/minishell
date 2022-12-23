@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 11:50:29 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:16:27 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Will ignore option -n if it is not the first parameter. Prints every argument
 to standard output, separated by a space.*/
-void	echo(char **argv)
+int	echo(char **argv)
 {
 	int	i;
 
@@ -30,4 +30,5 @@ void	echo(char **argv)
 	}
 	if (ft_strcmp(argv[1], "-n") != 0)
 		write(1, "\n", 1);
+	return (0);
 }

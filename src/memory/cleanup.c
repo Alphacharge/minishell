@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/21 10:30:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 18:31:56 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,24 @@ void	close_fds(t_cmd	*cmd)
 		close_and_neg(&cmd->rats[WRITE]);
 }
 
+/*Frees every node of the linked list, but assumes nothing is allocated
+within.*/
+void	*free_cmds_error(t_cmd *cmd)
+{
+	t_cmd	*prev;
+
+	while (cmd != NULL)
+	{
+		free_params(cmd->param);
+		free_redirs(cmd->redir);
+		prev = cmd;
+		cmd = cmd->next;
+		ft_free(prev);
+	}
+	return (NULL);
+}
+
+/*Frees every node of the linked list, including allocated strings.*/
 void	*free_cmds(t_cmd *current)
 {
 	t_cmd	*prev;

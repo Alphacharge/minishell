@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/21 10:25:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:55:05 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	*new_redir(t_cmd *cmd, char *s)
 		s = null_increment(s);
 	s = null_increment(s);
 	s = null_whitespace(s);
+	if (is_token(*s) == true || *s == 0)
+		return (ft_free(r));
 	r->file = s;
 	append_redir(cmd, r);
 	return (skip_argument(s));
@@ -81,7 +83,7 @@ static char	*add_arg(t_cmd *cmd, char *s)
 }
 
 /*Creates an empty t_cmd node.*/
-static t_cmd	*create_cmd(t_env *env)
+static t_cmd	*create_cmd(t_data *data)
 {
 	t_cmd	*cmd;
 
@@ -89,7 +91,7 @@ static t_cmd	*create_cmd(t_env *env)
 	if (cmd == NULL)
 		return (ft_error("malloc", NULL, NULL), NULL);
 	cmd->argv = NULL;
-	cmd->env = env;
+	cmd->env = data->env;
 	cmd->name = NULL;
 	cmd->param = NULL;
 	cmd->next = NULL;
@@ -104,14 +106,14 @@ static t_cmd	*create_cmd(t_env *env)
 }
 
 /*Converts the input string s to a linked list and returns head node.*/
-t_cmd	*input_to_lst(char *s, t_env *env)
+t_cmd	*input_to_lst(char *s, t_data *data)
 {
 	t_cmd	*head;
 	t_cmd	*current;
 
 	if (s == NULL || *s == 0)
 		return (NULL);
-	head = create_cmd(env);
+	head = create_cmd(data);
 	current = head;
 	while (*s != 0)
 	{
@@ -119,12 +121,15 @@ t_cmd	*input_to_lst(char *s, t_env *env)
 		if (*s == 0)
 			break ;
 		if (*s == '>' || *s == '<')
+		{
 			s = new_redir(current, s);
+			if (s == NULL)
+				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
+		}
 		else if (*s == '|')
 		{
 			if (current->name == NULL)
-				return (write(1, "minishell: syntax error", 23), \
-					free_cmds(head));
+				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
 			current->next = create_cmd(env);
 			current->next->prev = current;
 			current = current->next;

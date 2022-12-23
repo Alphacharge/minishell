@@ -3,24 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 10:41:58 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:17:49 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-//The exit utility shall cause the shell to exit from its current
-//execution environment with the exit status specified by the
-//unsigned decimal integer n.  If the current execution environment
-//is a subshell environment, the shell shall exit from the subshell
-//environment with the specified exit status and continue in the
-//environment from which that subshell environment was invoked;
-//otherwise, the shell utility shall terminate with the specified
-//exit status. If n is specified, but its value is not between 0
-//and 255 inclusively, the exit status is undefined.
+/*Prints exit and returns exit status of given argument.*/
 int	shell_exit(char **argv)
 {
 	int	status;

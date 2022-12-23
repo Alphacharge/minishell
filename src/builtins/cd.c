@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 17:26:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:12:40 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 }
 
 /*accepts 1 arg or no arg 4 home, needs env to change pwd*/
-void	cd(char **argv, t_env *env, t_prompt *prompt)
+int	cd(char **argv, t_env *env, t_prompt *prompt)
 {
 	int		ret;
 	char	*dir;
@@ -50,11 +50,12 @@ void	cd(char **argv, t_env *env, t_prompt *prompt)
 		ret = chdir(dir);
 	}
 	else if (argv[2] != NULL)
-		ft_error(NULL, "cd", "too many arguments");
+		return (ft_error(NULL, "cd", "too many arguments"));
 	else if (ft_strlen(dir) > 0)
 		ret = chdir(dir);
 	if (ret == -1)
-		ft_error("minishell: cd", dir, NULL);
+		return (ft_error("minishell: cd", dir, NULL));
 	else
 		update_pwd(dir, env, prompt);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 11:22:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:52:48 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	return (env);
 }
 
-t_env	*export(int argc, char **argv, t_env *env)
+t_env	*export(int argc, char **argv, t_env **env)
 {
 	t_env	*head;
 	t_env	*new;
 	char	*name;
 	int		i;
 
-	head = env;
+	head = *env;
 	i = 1;
 	if (argc == 1)
 		export_print(env);

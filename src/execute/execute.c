@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 17:54:29 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 13:15:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
 	if (cmd->argv[0][0] == 'c')
-		cd(cmd->argv, cmd->env, prompt);
+		return (cd(cmd->argv, cmd->env, prompt));
 	else if (cmd->argv[0][0] == 'p')
-		pwd(cmd->argv);
+		return (pwd(cmd->argv));
 	else if (cmd->argv[0][0] == 'u')
-		cmd->env = unset(cmd->argv, cmd->env);
+		return (unset(cmd->argv, cmd->env));
 	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
-		echo(cmd->argv);
+		return (echo(cmd->argv));
 	else if (ft_strcmp(cmd->argv[0], "export") == 0)
-		cmd->env = export(arraycount(cmd->argv), cmd->argv, cmd->env);
+		return (export(arraycount(cmd->argv), cmd->argv, cmd->env));
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
-		env(cmd->argv, cmd->env);
-	return (EXIT_SUCCESS);
+		return (env(cmd->argv, cmd->env));
+	return (1);
 }
 
 static int	exec_child(t_cmd *cmd, t_prompt *prompt)
@@ -42,13 +42,13 @@ static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 	return (0);
 }
 
-static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
+static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = INT32_MAX;
 	if (cmd->next == NULL && cmd->type == BLTIN)
-		exec_bltin(cmd, prompt);
+		return (exec_bltin(cmd, prompt));
 	else
 	{
 		if (cmd->next != NULL)
@@ -61,29 +61,29 @@ static void	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 	close_reds_fds(cmd);
 	if (pid < 0)
 		ft_error(NULL, "fork", NULL);
+	return (0);
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
-int	execute_list(t_cmd *lst, t_prompt *prompt)
+int	execute_list(t_cmd *lst, t_data *data)
 {
 	t_cmd		*cmd;
-	static int	ret = 0;
 
 	cmd = lst;
 	if (cmd == NULL)
-		return (-1);
-	cmd = create_redirs(cmd);
+		return (data->exit_status = 1, -1);
+	cmd = create_redirs(cmd, data);
 	while (cmd != NULL)
 	{
 		if (ft_strcmp(cmd->argv[0], "exit") == 0)
 			return (shell_exit(cmd->argv));
-		exec_cmd(cmd, prompt);
+		data->exit_status = exec_cmd(cmd, data->prompt);
 		cmd = cmd->next;
 	}
-	while ((waitpid(-1, &ret, WNOHANG)) != -1)
+	while ((waitpid(-1, &data->exit_status, WNOHANG)) != -1)
 	{
-		if (WIFEXITED(ret) == true)
-			ret = WEXITSTATUS(ret);
+		if (WIFEXITED(data->exit_status) == true)
+			data->exit_status = WEXITSTATUS(data->exit_status);
 	}
 	return (-1);
 }

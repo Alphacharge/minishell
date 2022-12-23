@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 13:35:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:29:16 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static t_data	*initialize_minishell(char **envp)
 	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
+	//this is not read from history yet
+	data->exit_status = 0;
 	set_env_var(data->env, "SHLVL", \
 		ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
 	return (data);
@@ -101,10 +103,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (data->input == NULL)
 			data->input = ft_strdup("exit");
-		data->cmd_head = parse(data->input, data->env);
+		data->cmd_head = parse(data->input, data);
 		if (VERBOSE == 1)
 			print_cmds(data->cmd_head);
-		ret = execute_list(data->cmd_head, data->prompt);
+		ret = execute_list(data->cmd_head, data);
 		data->input = ft_free(data->input);
 		free_cmds(data->cmd_head);
 	}

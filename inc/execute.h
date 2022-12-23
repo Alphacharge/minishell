@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:46 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 17:54:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/22 19:28:52 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include "redirects.h"
 
 // void	executor(t_exec *exec, t_env *env);
-int		execute_list(t_cmd *lst, t_prompt *prompt);
+int		execute_list(t_cmd *lst, t_data *data);
 void	dup_pipe_fds(t_cmd *cmd);
 void	dup_reds_fds(t_cmd *cmd);
 void	close_pipe_fds(t_cmd *cmd);
