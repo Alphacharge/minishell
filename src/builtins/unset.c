@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 14:41:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/23 17:03:01 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	unset(char **argv, t_data *data)
 		tmp = data->env;
 		while (tmp != NULL && tmp->name != NULL && argv[i] != NULL)
 		{
-			if (ft_strcmp(argv[i], tmp->name))
+			if (ft_strcmp(argv[i], tmp->name) != 0)
 			{
 				prev = tmp;
 				tmp = tmp->next;
@@ -48,10 +48,10 @@ int	unset(char **argv, t_data *data)
 					prev->next = tmp->next;
 				tmp->next = NULL;
 				delete_env(tmp);
-				i++;
 				tmp = NULL;
 			}
 		}
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }
