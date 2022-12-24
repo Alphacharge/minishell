@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:03:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 14:10:09 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 11:00:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,10 @@ void	close_reds_fds(t_cmd *cmd)
 
 void	close_piping(t_cmd *cmd)
 {
-	// first command, close only writeend of pipe
 	if (cmd->prev == NULL && cmd->next != NULL)
 		close_and_neg(&cmd->fds[WRITE]);
-	// last command, close only readend of prev pipe
 	else if (cmd->next == NULL && cmd->prev != NULL)
 		close_and_neg(&cmd->prev->fds[READ]);
-	// middle command, close readend of prev pipe and writeend of pipe
 	else if (cmd->next != NULL && cmd->prev != NULL)
 	{
 		close_and_neg(&cmd->prev->fds[READ]);

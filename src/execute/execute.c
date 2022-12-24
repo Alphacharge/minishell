@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 14:37:38 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 11:00:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ static int	exec_child(t_cmd *cmd, t_prompt *prompt)
 	close_pipe_fds(cmd);
 	if (cmd->type == BLTIN)
 		exit(exec_bltin(cmd, prompt));
-	else if (execve(cmd->argv[0], cmd->argv, create_envp_from_env(cmd->data->env)) != 0)
+	else if (execve(cmd->argv[0], cmd->argv, \
+			create_envp_from_env(cmd->data->env)) != 0)
 		exit(EXIT_FAILURE);
 	return (0);
 }
