@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 11:17:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 12:05:20 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_cmd
 	int				fds[2];
 	int				rats[2];
 	bool			error;
+	bool			here;
 	struct s_data	*data;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;

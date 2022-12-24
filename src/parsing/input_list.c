@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/23 14:10:24 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 12:05:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ static t_cmd	*create_cmd(t_data *data)
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	cmd->redir = NULL;
+	cmd->here = false;
 	cmd->type = EXEC;
 	cmd->fds[0] = FD_UNUSED;
 	cmd->fds[1] = FD_UNUSED;

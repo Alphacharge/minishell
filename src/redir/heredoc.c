@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 11:16:43 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 12:05:08 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_cmd	*handle_heredocs(t_cmd *cmd, t_data *data)
 				if (tmp->rats[READ] != FD_UNUSED)
 					close_reds_fds(tmp);
 				get_here(tmp, tred->file, data);
+				tmp->here = true;
 			}
 			tred = tred->next;
 		}
