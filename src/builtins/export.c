@@ -6,27 +6,41 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 17:51:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 10:49:18 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "environment.h"
+#include "builtins.h"
 #include "libft.h"
 
-static void	export_print(t_env *env)
+static void	set_name_value(char **name, char **value, char *argv, int flag)
 {
-	while (env != NULL)
+	if (flag == 0)
 	{
-		write(1, "declare -x ", 11);
-		write(1, env->name, ft_strlen(env->name));
-		if (env->value != NULL)
-		{
-			write(1, "=\"", 2);
-			write(1, env->value, ft_strlen(env->value));
-		}
-		write(1, "\"\n", 2);
-		env = env->next;
+		(*name) = ft_strdup(argv);
+		(*value) = ft_strdup("");
 	}
+	else
+	{
+		(*name) = ft_first_word(argv, '=', 0);
+		(*value) = ft_first_word(argv, '=', 1);
+	}
+}
+
+static t_env	*add_new_env(char **name, char **value, t_env **tmp)
+{
+	t_env	*new;
+
+	new = new_env();
+	if (new == NULL)
+		return (free_multiple(1, (*name)), NULL);
+	new->name = (*name);
+	new->value = (*value);
+	new->next = NULL;
+	while ((*tmp) != NULL && (*tmp)->next != NULL)
+		(*tmp) = (*tmp)->next;
+	return (new);
 }
 
 static t_env	*update_values(int argc, char **argv, t_env *env)
@@ -39,18 +53,12 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	i = 1;
 	while (i < argc)
 	{
-		if (argv[i] != NULL )
+		if (argv[i] != NULL)
 		{
 			if (ft_posinset('=', argv[i]) < 0)
-			{
-				name = ft_strdup(argv[i]);
-				value = ft_strdup("");
-			}
+				set_name_value(&name, &value, argv[i], 0);
 			else
-			{
-				name = ft_first_word(argv[i], '=', 0);
-				value = ft_first_word(argv[i], '=', 1);
-			}
+				set_name_value(&name, &value, argv[i], 1);
 			ret = set_env_var(env, name, value);
 			if (ret == NULL)
 				free_multiple(1, &value);
@@ -64,10 +72,21 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	return (env);
 }
 
+static void	control_structur(char **name, char **value, char *argv, t_env **tmp)
+{
+	if (ft_posinset('=', argv) < 0)
+		set_name_value(name, value, argv, 0);
+	else
+		set_name_value(name, value, argv, 1);
+	if (get_env_var((*tmp), (*name)) == NULL)
+		(*tmp)->next = add_new_env(name, value, tmp);
+	else
+		free_multiple(1, name);
+}
+
 int	export(int argc, char **argv, t_data *data)
 {
 	t_env	*tmp;
-	t_env	*new;
 	char	*name;
 	char	*value;
 	int		i;
@@ -81,34 +100,10 @@ int	export(int argc, char **argv, t_data *data)
 	{
 		data->env = tmp;
 		if (argv[i] != NULL && is_valid_var(argv[i]))
-		{
-			if (ft_posinset('=', argv[i]) < 0)
-			{
-				name = ft_strdup(argv[i]);
-				value = ft_strdup("");
-			}
-			else
-			{
-				name = ft_first_word(argv[i], '=', 0);
-				value = ft_first_word(argv[i], '=', 1);
-			}
-			if (get_env_var(tmp, name) == NULL)
-			{
-				new = new_env();
-				if (new == NULL)
-					return (free_multiple(1, &name), EXIT_FAILURE);
-				new->name = name;
-				new->value = value;
-				new->next = NULL;
-				while (tmp != NULL && tmp->next != NULL)
-					tmp = tmp->next;
-				tmp->next = new;
-			}
-			else
-				free_multiple(1, &name);
-		}
+			control_structur(&name, &value, argv[i], &tmp);
 		else
-			return (ft_error("export", argv[i], "not a valid identifier"), EXIT_FAILURE);
+			return (ft_error("export", argv[i], "not a valid identifier"), \
+					EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);

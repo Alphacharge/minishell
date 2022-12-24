@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 17:48:12 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:12:45 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	shell_exit(char **argv)
 	if (argv == NULL || argv[1] == NULL)
 		return (EXIT_SUCCESS);
 	if (is_num(argv[1]) != 1)
-		return (ft_error("minishell: exit", argv[1], "numeric argument required"));
+		return (ft_error("minishell: exit", argv[1], \
+						"numeric argument required"));
 	status = ft_atoi(argv[1]);
 	if (status > 255 || status < 0)
 		return (EXIT_FAILURE);

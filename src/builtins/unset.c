@@ -6,11 +6,33 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 17:03:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 10:22:18 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+static void	skip_or_unset(t_env **prev, t_env **tmp, char *argv, t_data **data)
+{
+	if (ft_strcmp(argv, (*tmp)->name) != 0)
+	{
+		(*prev) = (*tmp);
+		(*tmp) = (*tmp)->next;
+	}
+	else
+	{
+		if ((*tmp) == (*data)->env)
+		{
+			(*data)->env = (*tmp)->next;
+			(*prev) = (*data)->env;
+		}
+		else
+			(*prev)->next = (*tmp)->next;
+		(*tmp)->next = NULL;
+		delete_env((*tmp));
+		(*tmp) = NULL;
+	}
+}
 
 /*deletes all given vars from env if they exist,*/
 /*returns NULL if env is empty or env*/
@@ -31,26 +53,7 @@ int	unset(char **argv, t_data *data)
 	{
 		tmp = data->env;
 		while (tmp != NULL && tmp->name != NULL && argv[i] != NULL)
-		{
-			if (ft_strcmp(argv[i], tmp->name) != 0)
-			{
-				prev = tmp;
-				tmp = tmp->next;
-			}
-			else
-			{
-				if (tmp == data->env)
-				{
-					data->env = tmp->next;
-					prev = data->env;
-				}
-				else
-					prev->next = tmp->next;
-				tmp->next = NULL;
-				delete_env(tmp);
-				tmp = NULL;
-			}
-		}
+			skip_or_unset(&prev, &tmp, argv[i], &data);
 		i++;
 	}
 	return (EXIT_SUCCESS);

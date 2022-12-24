@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_valid_var.c                                     :+:      :+:    :+:   */
+/*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/23 17:31:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:54:48 by rbetz            ###   ########.fr       */
+/*   Created: 2022/12/24 10:44:40 by rbetz             #+#    #+#             */
+/*   Updated: 2022/12/24 10:48:57 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "environment.h"
+#include "builtins.h"
+#include "libft.h"
 
-int	is_valid_var(char *var)
+void	export_print(t_env *env)
 {
-	int	i;
-
-	i = 0;
-	if (var == NULL)
-		return (0);
-	if (var[i] == '\0' || (var[i] != '_' && !ft_isalpha(var[i])))
-		return (0);
-	i++;
-	while ((var[i] != '\0' || var[i] != '=') 
-			&& (ft_isalnum(var[i]) || var[i] == '_'))
-		i++;
-	if (var[i] == '\0' || var[i] == '=')
-		return (1);
-	return (0);
+	while (env != NULL)
+	{
+		write(1, "declare -x ", 11);
+		write(1, env->name, ft_strlen(env->name));
+		if (env->value != NULL)
+		{
+			write(1, "=\"", 2);
+			write(1, env->value, ft_strlen(env->value));
+		}
+		write(1, "\"\n", 2);
+		env = env->next;
+	}
 }
