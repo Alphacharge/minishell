@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/22 18:31:56 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/24 11:05:50 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@ void	free_params(t_param *current)
 	}
 }
 
-void	close_fds(t_cmd	*cmd)
-{
-	if (cmd->fds[READ] != FD_UNUSED)
-		close_and_neg(&cmd->fds[READ]);
-	if (cmd->fds[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->fds[WRITE]);
-	if (cmd->rats[READ] != FD_UNUSED)
-		close_and_neg(&cmd->rats[READ]);
-	if (cmd->rats[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->rats[WRITE]);
-}
-
 /*Frees every node of the linked list, but assumes nothing is allocated
 within.*/
 void	*free_cmds_error(t_cmd *cmd)
@@ -77,7 +65,8 @@ void	*free_cmds(t_cmd *current)
 		free_ptr_array((void *)current->argv);
 		free_params(current->param);
 		free_redirs(current->redir);
-		close_fds(current);
+		close_pipe_fds(current);
+		close_reds_fds(current);
 		prev = current;
 		current = current->next;
 		ft_free(prev);
