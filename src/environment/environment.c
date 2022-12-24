@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:47:16 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 14:09:08 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 10:57:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	delete_env(t_env *env)
 /*updates the env pointer of following cmds*/
 void	update_env(t_cmd *cmd)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = cmd->data->env;
 	cmd = cmd->next;
@@ -55,26 +55,6 @@ void	update_env(t_cmd *cmd)
 	{
 		cmd->data->env = env;
 		cmd = cmd->next;
-	}
-}
-
-/*is printing env linklist to fd your choice*/
-void	print_env(t_env *env, int fd)
-{
-	if (env == NULL)
-		ft_error(NULL, "empty environment", NULL);
-	else
-	{
-		while (env != NULL)
-		{
-			if (env->name != NULL)
-				ft_putstr_fd(env->name, fd);
-			ft_putstr_fd("=", fd);
-			if (env->value != NULL)
-				ft_putstr_fd(env->value, fd);
-			ft_putstr_fd("\n", fd);
-			env = env->next;
-		}
 	}
 }
 
