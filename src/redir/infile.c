@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 10:54:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/24 11:16:13 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 		cmd->error = true;
 		cmd->rats[READ] = dup(STDIN);
 	}
-	if (cmd->here == false && success == 1)
+	if (success == 1)
 	{
 		if (cmd->rats[READ] == FD_UNUSED)
 		{

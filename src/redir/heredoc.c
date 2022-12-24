@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 19:27:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/24 11:16:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_cmd	*handle_heredocs(t_cmd *cmd, t_data *data)
 				if (tmp->rats[READ] != FD_UNUSED)
 					close_reds_fds(tmp);
 				get_here(tmp, tred->file, data);
-				tmp->here = true;
 			}
 			tred = tred->next;
 		}
