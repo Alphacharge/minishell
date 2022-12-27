@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multijoin_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 10:50:52 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/25 18:24:27 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
-#include "libft.h"
 
 static char	*copy_input(char **array, size_t len)
 {
@@ -32,43 +31,30 @@ static char	*copy_input(char **array, size_t len)
 	return (str);
 }
 
-static size_t	read_input(char **array)
+static size_t	get_length(char **array)
 {
-	size_t	i;
-	size_t	pos;
-
-	i = 0;
-	pos = 0;
-	while (array[pos] != NULL)
-		i += ft_strlen(array[pos]);
-	return (i);
-}
-
-static void	*free_array(char **array)
-{
+	size_t	len;
 	size_t	i;
 
+	len = 0;
 	i = 0;
 	while (array[i] != NULL)
-	{
-		array[i] = ft_free(array[i]);
-		i++;
-	}
-	return (NULL);
+		len += ft_strlen(array[i++]);
+	return (len);
 }
 
-/*tofr, frees the input if true, array needs a Nullpointer at the end,*/
-/*if a substring is null, the joining ends there*/
-char	*multijoin_array(bool tofr, char **array)
+/*Combines every string inside array into a single string. Array needs to be
+terminated with NULL pointer.
+Will not free any string inside the array, but frees the array.*/
+char	*multijoin_array(char **array)
 {
 	size_t	len;
 	char	*str;
 
 	if (array == NULL)
 		return (NULL);
-	len = read_input(array);
+	len = get_length(array);
 	str = copy_input(array, len);
-	if (tofr == true)
-		array = free_array(array);
+	ft_free(array);
 	return (str);
 }

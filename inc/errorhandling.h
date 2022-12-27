@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:26 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:15:06 by humbi            ###   ########.fr       */
+/*   Updated: 2022/12/27 14:32:25 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include "libft.h"
 
-int		ft_error(char *function, char *filename, char *message);
+int		g_exit_status;
+int		ft_error(char *function, char *filename, int error);
 
 #endif

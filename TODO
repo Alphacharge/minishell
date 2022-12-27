@@ -1,5 +1,11 @@
--	wildcards
--	check name of variable in export builtin
+failing tests:
+
+cd '/////' 2>/dev/null
+
+echo ~/123
+echo " " " """ '''
+echo $USER$12USER$USER=4$USER12
+
 
 
 How does Bash:

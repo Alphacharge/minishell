@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 10:57:38 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:57:50 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:20:04 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	print_env(t_env *env, int fd)
 {
 	if (env == NULL)
-		ft_error(NULL, "empty environment", NULL);
+		ft_error(NULL, NULL, 8);
 	else
 	{
 		while (env != NULL)

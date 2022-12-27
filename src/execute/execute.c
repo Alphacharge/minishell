@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 11:00:28 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 17:35:14 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,20 @@ static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 	return (1);
 }
 
-static int	exec_child(t_cmd *cmd, t_prompt *prompt)
+static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 {
+	char	**envp;
+
 	unset_signals();
 	dup_pipe_fds(cmd);
 	dup_reds_fds(cmd);
 	close_pipe_fds(cmd);
 	if (cmd->type == BLTIN)
 		exit(exec_bltin(cmd, prompt));
-	else if (execve(cmd->argv[0], cmd->argv, \
-			create_envp_from_env(cmd->data->env)) != 0)
-		exit(EXIT_FAILURE);
-	return (0);
+	envp = create_envp_from_env(cmd->data->env);
+	execve(cmd->argv[0], cmd->argv, envp);
+	free_ptr_array((void **) envp);
+	exit(EXIT_FAILURE);
 }
 
 static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
@@ -61,30 +63,30 @@ static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 	close_piping(cmd);
 	close_reds_fds(cmd);
 	if (pid < 0)
-		ft_error(NULL, "fork", NULL);
+		return (ft_error("fork", NULL, 1));
 	return (0);
 }
 
 /*If exit is found, exit status is returned. Otherwise return value is -1.*/
 int	execute_list(t_cmd *lst, t_data *data)
 {
-	t_cmd		*cmd;
+	t_cmd	*cmd;
 
 	cmd = lst;
 	if (cmd == NULL)
-		return (data->exit_status = 1, -1);
+		return (-1);
 	cmd = create_redirs(cmd, data);
 	while (cmd != NULL)
 	{
 		if (ft_strcmp(cmd->argv[0], "exit") == 0)
 			return (shell_exit(cmd->argv));
-		data->exit_status = exec_cmd(cmd, data->prompt);
+		g_exit_status = exec_cmd(cmd, data->prompt);
 		cmd = cmd->next;
 	}
-	while ((waitpid(-1, &data->exit_status, WNOHANG)) != -1)
+	while ((waitpid(-1, &g_exit_status, WNOHANG)) != -1)
 	{
-		if (WIFEXITED(data->exit_status) == true)
-			data->exit_status = WEXITSTATUS(data->exit_status);
+		if (WIFEXITED(g_exit_status) == true)
+			g_exit_status = WEXITSTATUS(g_exit_status);
 	}
 	return (-1);
 }

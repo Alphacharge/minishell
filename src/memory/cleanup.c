@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/24 11:05:50 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:46:43 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	*free_cmds(t_cmd *current)
 
 	while (current != NULL)
 	{
-		ft_free(current->name);
 		free_ptr_array((void *)current->argv);
 		free_params(current->param);
 		free_redirs(current->redir);
@@ -82,5 +81,6 @@ void	ms_cleanup(t_data *data)
 	free(data->prompt->prompt);
 	free(data->prompt->dir);
 	free(data->prompt);
+	ft_free(data->exitstatus);
 	free(data);
 }

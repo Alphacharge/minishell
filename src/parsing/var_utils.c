@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 22:14:56 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/23 13:02:01 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/25 17:22:26 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 /*Returns 1 if sequence at start of s is a valid shell variable.*/
 int	is_var(char *s)
 {
-	if (*s == '$' && (ft_isalpha(*(s + 1)) == 1 || *(s + 1) == '_' || *(s + 1) == '?'))
+	if (*s == '$' \
+		&& (ft_isalpha(*(s + 1)) == 1 || *(s + 1) == '_' || *(s + 1) == '?'))
 		return (1);
 	return (0);
 }
@@ -23,6 +24,8 @@ int	is_var(char *s)
 /*Skips to first character that is not part of variable name.*/
 char	*skip_var(char *s)
 {
+	if (*s == '$')
+		s++;
 	if (*s == '?')
 		return (++s);
 	while (*s != '\0' && (ft_isalnum(*s) || *s == '_' || *s == '?'))
@@ -48,8 +51,8 @@ char	*alloc_var_name(char *s)
 
 	l = 0;
 	i = 0;
-	if (s[0] == '?')
-		return (ft_strdup("?"));
+	if (*s == '$')
+		s++;
 	while (s[l] != '\0' && (ft_isalnum(s[l]) == 1 || s[l] == '_'))
 		l++;
 	name = ft_calloc(l + 1, sizeof(char));

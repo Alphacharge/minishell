@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/22 10:51:19 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:22:50 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	unset_signals(void)
 	dfl.sa_handler = SIG_DFL;
 	dfl.sa_flags = 0;
 	if (sigaction(SIGINT, &dfl, NULL) < 0)
-		ft_error(NULL, "unset_signals", NULL);
+		ft_error("minishell: default signals", NULL, 1);
 }
 
 void	set_exec_signals(void)
@@ -65,7 +65,7 @@ void	set_exec_signals(void)
 	// sigaddset(&action.sa_mask, SIGQUIT);
 	if (sigaction(SIGINT, &action, NULL) < 0
 		|| sigaction(SIGQUIT, &action, NULL) < 0)
-		ft_error(NULL, "set_exec_signals", NULL);
+		ft_error("minishell: executor signals", NULL, 1);
 }
 
 /*ctrl + c: SIGINT*/
@@ -82,5 +82,5 @@ void	set_rl_signals(void)
 	// sigaddset(&action.sa_mask, SIGQUIT);
 	if (sigaction(SIGINT, &action, NULL) < 0
 		|| sigaction(SIGQUIT, &action, NULL) < 0)
-		ft_error(NULL, "set_rl_signals", NULL);
+		ft_error("minishell: readline signals", NULL, 1);
 }

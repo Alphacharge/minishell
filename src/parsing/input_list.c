@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/24 12:05:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:02:45 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*new_redir(t_cmd *cmd, char *s)
 
 	r = ft_calloc(1, sizeof(t_redir));
 	if (r == NULL)
-		return (ft_error("malloc", NULL, NULL), NULL);
+		return (ft_error("malloc", NULL, 1), NULL);
 	r->next = NULL;
 	if (*s == '<' && *(s + 1) == '<')
 		r->type = HERE;
@@ -89,7 +89,7 @@ static t_cmd	*create_cmd(t_data *data)
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
-		return (ft_error("malloc", NULL, NULL), NULL);
+		return (ft_error("malloc", NULL, 1), NULL);
 	cmd->argv = NULL;
 	cmd->data = data;
 	cmd->name = NULL;
@@ -125,12 +125,12 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 		{
 			s = new_redir(current, s);
 			if (s == NULL)
-				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
+				return (ft_error(NULL, NULL, 10), free_cmds_error(head));
 		}
 		else if (*s == '|')
 		{
 			if (current->name == NULL)
-				return (ft_error(NULL, NULL, "syntax error"), free_cmds_error(head));
+				return (ft_error(NULL, NULL, 10), free_cmds_error(head));
 			current->next = create_cmd(data);
 			current->next->prev = current;
 			current = current->next;

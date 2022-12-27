@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 17:48:40 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/25 17:52:54 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define UTILS_H
 
 # include <stdbool.h>
+# include <stdio.h>
 # include "libft.h"
 
 char	*combine_pathprog(char *path, char *prog);
@@ -30,7 +31,7 @@ int		ft_strcmp(char *s1, char *s2);
 int		arraycount(char **array);
 char	*get_word(char	*s);
 char	*ft_last_word(const char *str, char c, int rev);
-char	*multijoin_array(bool tofr, char **array);
+char	*multijoin_array(char **array);
 int		is_valid_var(char *var);
 
 #endif

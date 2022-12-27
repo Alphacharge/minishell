@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:19:48 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 14:10:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 16:54:44 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+# include <sys/stat.h>
 # include "minishell.h"
 # include "structs.h"
 # include "libft.h"

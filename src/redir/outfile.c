@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 10:53:09 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:07:36 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	check_outfiles(t_cmd *cmd, t_redir *redir)
 		check_outfiles(cmd, redir);
 	}
 	if (cmd->rats[WRITE] < 0)
-		ft_error(NULL, NULL, "Error opening file");
+		ft_error(NULL, redir->file, 1);
 }
 
 /*goes through the cmd list and check 4 outfiles*/

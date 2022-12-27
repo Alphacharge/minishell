@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 09:54:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:21:58 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	cd(char **argv, t_env *env, t_prompt *prompt)
 		ret = chdir(dir);
 	}
 	else if (argv[2] != NULL)
-		return (ft_error(NULL, "cd", "too many arguments"));
+		return (ft_error("minishell: cd", NULL, 3));
 	else if (ft_strlen(dir) > 0)
 		ret = chdir(dir);
 	if (ret == -1)
-		return (ft_error("minishell: cd", dir, NULL));
+		return (ft_error("minishell: cd", dir, 1));
 	else
 		update_pwd(dir, env, prompt);
 	return (0);

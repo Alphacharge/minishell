@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 12:05:20 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 14:30:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ typedef struct s_data
 	char			*input;
 	struct s_prompt	*prompt;
 	struct s_hist	hist;
-	int				exit_status;
+	char			*exitstatus;
 	struct s_env	*env;
 	struct s_cmd	*cmd_head;
 }					t_data;

@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/22 19:18:42 by fkernbac         ###   ########.fr       */
+/*   Updated: 2022/12/27 14:28:19 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static char	*skip_single_quotes(char *s)
 {
 	if (*s == '\'')
 		s++;
+	else
+		return (s);
 	while (*s != '\0' && *s != '\'')
 		s++;
 	if (*s == '\'')
@@ -24,22 +26,13 @@ static char	*skip_single_quotes(char *s)
 	return (s);
 }
 
-/*Returns pointer to the first occurrence of a valid variable.*/
-static char	*skip_to_var(char *s)
+/*Returns pointer to next variable or quote character.*/
+static char	*skip_to_var_token(char *s)
 {
-	int	double_quotes;
-
-	double_quotes = -1;
 	while (*s != '\0')
 	{
-		if (is_var(s) == 1)
+		if (is_var(s) == 1 || *s == '\'' || *s == '\"')
 			return (s);
-		if (*s == '\"')
-			double_quotes *= -1;
-		else if (double_quotes == -1 && *s == '\'')
-			s = skip_single_quotes(s);
-		if (*s == '\0')
-			break ;
 		s++;
 	}
 	return (s);
@@ -52,56 +45,87 @@ static char	**var_array(char *s, int n, t_data *data)
 	int		i;
 	char	*var_name;
 	char	**array;
+	int		quotes;
 
 	i = 0;
-	array = ft_calloc(n, sizeof (char *));
+	quotes = -1;
+	data->exitstatus = ft_itoa(g_exit_status);
+	array = ft_calloc(n + 1, sizeof (char *));
 	if (array == NULL)
 		return (NULL);
-	while (*s != '\0')
+	if (is_var(s) == 0)
+		array[i++] = s;
+	while (*s != 0)
 	{
-		if (is_var(s) == 0)
-			array[i++] = s;
-		s = skip_to_var(s);
-		while (is_var(s) == 1)
+		s = skip_to_var_token(s);
+		while (*s == '\"')
 		{
-			s = null_increment(s);
-			var_name = alloc_var_name(s);
-			if (var_name[0] == '?')
-				array[i++] = ft_itoa(data->exit_status);
-			else
-				array[i++] = get_env_var(data->env, var_name);
-			if (array[i - 1] == NULL)
-				array[i - 1] = get_terminator(s);
-			var_name = ft_free(var_name);
-			s = skip_var(s);
+			quotes *= -1;
+			s++;
+		}
+		while (*s == '\'' && quotes == -1)
+			s = skip_single_quotes(s);
+		while (*s == '\'' && quotes == 1)
+			s++;
+		if (is_var(s) == 1)
+		{
+			while (is_var(s) == 1)
+			{
+				s = null_increment(s);
+				if (*s == '?')
+					array[i] = data->exitstatus;
+				else
+				{
+					var_name = alloc_var_name(s);
+					array[i] = get_env_var(data->env, var_name);
+					if (array[i] == NULL)
+						array[i] = get_terminator(s);
+					var_name = ft_free(var_name);
+				}
+				i++;
+				s = skip_var(s);
+			}
+			if (*s != 0)
+				array[i++] = s;
 		}
 	}
+	array[i] = NULL;
 	return (array);
 }
 
-/*Returns number of all needed strings for expansion. Returns 0 if no
-variable is found.*/
+/*Returns number of all needed strings for expansion.*/
 static int	count_var_strings(char *s)
 {
 	int	n;
-	int	env_var;
+	int	quotes;
 
-	n = 0;
-	env_var = 0;
+	n = 1;
+	if (is_var(s) == 1)
+		n = 0;
+	quotes = -1;
 	while (*s != '\0')
 	{
-		if (is_var(s) == 0)
-			n++;
-		s = skip_to_var(s);
-		if (*s == '\0')
-			break ;
-		s++;
-		s = skip_var(s);
-		env_var = 1;
-		n++;
+		s = skip_to_var_token(s);
+		while (*s == '\"')
+		{
+			quotes *= -1;
+			s++;
+		}
+		while (*s == '\'' && quotes == -1)
+			s = skip_single_quotes(s);
+		while (*s == '\'' && quotes == 1)
+			s++;
+		if (is_var(s) == 1)
+		{
+			while (is_var(s) == 1)
+			{
+				s = skip_var(s);
+				n++;
+			}
+			if (*s != 0)
+				n++;
+		}
 	}
-	if (env_var == 0)
-		return (0);
 	return (n);
 }
 
@@ -111,23 +135,16 @@ char	*expand_envvars(char *s, t_data *data)
 {
 	char	**array;
 	int		number_strings;
-	int		i;
-	char	*joined;
+	char	*search;
 
-	i = 0;
+	search = s;
+	while (*search != 0 && is_var(search) == 0)
+		search++;
+	if (*search == 0)
+		return (ft_strdup(s));
 	number_strings = count_var_strings(s);
 	if (number_strings == 0)
 		return (ft_strdup(s));
 	array = var_array(s, number_strings, data);
-	array[0] = ft_strdup(array[0]);
-	i = 1;
-	while (i < number_strings)
-	{
-		joined = array[0];
-		array[0] = ft_strjoin(array[0], array[i++]);
-		joined = ft_free(joined);
-	}
-	joined = array[0];
-	ft_free(array);
-	return (joined);
+	return (multijoin_array(array));
 }

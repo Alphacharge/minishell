@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/29 14:48:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 14:12:36 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	*free_ptr_array(void **array)
 		return (NULL);
 	while (array[i] != NULL)
 	{
-		free(array[i]);
+		ft_free(array[i]);
 		array[i++] = NULL;
 	}
 	free(array);

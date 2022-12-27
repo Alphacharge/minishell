@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:32:18 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/21 11:50:58 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:22:10 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pwd(char **argv)
 	char	*dir;
 
 	if (argv[1] != NULL)
-		return (ft_error(NULL, "pwd", "too many arguments"), -1);
+		return (ft_error("minishell: pwd", NULL, 3));
 	dir = getcwd(NULL, 0);
 	if (dir == NULL)
 		write(1, "\n", 1);

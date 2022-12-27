@@ -3,52 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/23 17:15:00 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 14:32:36 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_cmds(t_cmd *lst)
-{
-	t_param	*param;
-	t_redir	*redir;
-	int		i;
-
-	i = 0;
-	printf("\n-------------------\n");
-	while (lst != NULL)
-	{
-		param = lst->param;
-		redir = lst->redir;
-		if (lst->name != NULL)
-			printf("name: %s\n", lst->name);
-		while (param != NULL)
-		{
-			printf("param: %s\n", param->arg);
-			param = param->next;
-		redir = lst->redir;
-		}
-		while (redir != NULL)
-		{
-			printf("redir: %s\n", redir->file);
-			redir = redir->next;
-		}
-		printf("argv: ");
-		while (lst->argv != NULL && lst->argv[i] != NULL)
-			printf("|%s| ", lst->argv[i++]);
-		printf("\n");
-		if (lst->next != NULL)
-			printf("---pipe-->\n");
-		i = 0;
-		lst = lst->next;
-	}
-	printf("-------------------\n");
-}
-
+/*Creates a dynamic prompt.*/
 static t_prompt	*init_prompt(t_env *env)
 {
 	t_prompt	*prompt;
@@ -63,10 +27,12 @@ static t_prompt	*init_prompt(t_env *env)
 	return (prompt);
 }
 
+/*Initializes variables needed for minishell in data struct.*/
 static t_data	*initialize_minishell(char **envp)
 {
 	t_data	*data;
 
+	g_exit_status = 0;
 	data = ft_calloc(1, sizeof(t_data));
 	if (data == NULL)
 		return (NULL);
@@ -75,50 +41,59 @@ static t_data	*initialize_minishell(char **envp)
 	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
-	//this is not read from history yet
-	data->exit_status = 0;
+	data->exitstatus = NULL;
 	set_env_var(data->env, "SHLVL", \
 		ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
 	return (data);
+}
+
+/*Executes one command and returns.*/
+static int	commandline_mode(char *input, t_data *data)
+{
+	set_exec_signals();
+	data->cmd_head = parse(input, data);
+	execute_list(data->cmd_head, data);
+	free_cmds(data->cmd_head);
+	return (g_exit_status);
+}
+
+/*Reads from input and returns only if exit command is entered.*/
+static int	interactive_mode(t_data *data)
+{
+	int		ret;
+	char	*input;
+
+	ret = -1;
+	while (ret < 0)
+	{
+		set_rl_signals();
+		input = readline(data->prompt->prompt);
+		set_exec_signals();
+		if (input != NULL && input[0] != '\0' && input[0] != '\n')
+		{
+			add_history(input);
+			ft_putendl_fd(input, data->hist.fd);
+		}
+		if (input == NULL)
+			input = ft_strdup("exit");
+		data->cmd_head = parse(input, data);
+		ret = execute_list(data->cmd_head, data);
+		input = ft_free(input);
+		free_cmds(data->cmd_head);
+	}
+	return (ret);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_data		*data;
 	int			ret;
-	bool		c;
 
-	c = false;
 	data = initialize_minishell(envp);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0 && argv[2] != NULL)
-	{
-		data->input = ft_strdup(argv[2]);
-		c = true;
-	}
-	ret = -1;
-	while (ret < 0)
-	{
-		set_rl_signals();
-		if (data->input == NULL)
-			data->input = readline(data->prompt->prompt);
-		set_exec_signals();
-		if (data->input != NULL && data->input[0] != '\0' && data->input[0] != '\n')
-		{
-			add_history(data->input);
-			ft_putendl_fd(data->input, data->hist.fd);
-		}
-		if (data->input == NULL)
-			data->input = ft_strdup("exit");
-		data->cmd_head = parse(data->input, data);
-		if (VERBOSE == 1)
-			print_cmds(data->cmd_head);
-		ret = execute_list(data->cmd_head, data);
-		data->input = ft_free(data->input);
-		free_cmds(data->cmd_head);
-		if (c)
-			break ;
-	}
+		ret = commandline_mode(argv[2], data);
+	else
+		ret = interactive_mode(data);
 	ms_cleanup(data);
-	// system("leaks minishell");
 	return (ret);
 }

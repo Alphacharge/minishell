@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 12:02:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:07:17 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 	int	success;
 
 	success = 1;
-	if (access(redir->file, F_OK) != 0)
+	if (access(redir->file, F_OK) != 0 || access(redir->file, R_OK) != 0)
 	{
 		success = 0;
-		ft_error(NULL, NULL, "No such file or directory");
-	}
-	if (success == 1 && access(redir->file, R_OK) != 0)
-	{
-		success = 0;
-		ft_error(NULL, NULL, "Permission denied");
+		ft_error(NULL, redir->file, 1);
 	}
 	if (success == 0)
 	{
@@ -41,7 +36,7 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 			cmd->rats[READ] = open(redir->file, O_RDONLY);
 			if (cmd->rats[READ] == -1)
 			{
-				ft_error(NULL, NULL, "Error opening file");
+				ft_error(NULL, redir->file, 1);
 				cmd->error = true;
 			}
 		}

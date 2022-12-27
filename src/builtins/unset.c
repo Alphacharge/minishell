@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:22:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:22:13 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	unset(char **argv, t_data *data)
 	prev = tmp;
 	i = 1;
 	if (argv[1] == NULL)
-		return (ft_error(NULL, "unset", "not enough arguments"), EXIT_FAILURE);
+		return (ft_error("minishell: unset", NULL, 7));
 	if (tmp == NULL)
 		return (EXIT_FAILURE);
 	while (argv[i] != NULL)

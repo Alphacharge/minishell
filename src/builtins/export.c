@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:49:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2022/12/27 13:19:35 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ int	export(int argc, char **argv, t_data *data)
 		if (argv[i] != NULL && is_valid_var(argv[i]))
 			control_structur(&name, &value, argv[i], &tmp);
 		else
-			return (ft_error("export", argv[i], "not a valid identifier"), \
-					EXIT_FAILURE);
+			return (ft_error("minishell: export", argv[i], 6));
 		i++;
 	}
 	return (EXIT_SUCCESS);
