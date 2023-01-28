@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:25:39 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/25 17:52:54 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:06:41 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,12 @@ char	*get_word(char	*s);
 char	*ft_last_word(const char *str, char c, int rev);
 char	*multijoin_array(char **array);
 int		is_valid_var(char *var);
+
+
+//	VARIABLE EXPANSION UTILS
+int		is_var(char *s);
+char	*skip_var(char *s);
+char	*get_terminator(char *s);
+char	*alloc_var_name(char *s);
 
 #endif

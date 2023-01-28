@@ -1,12 +1,19 @@
 failing tests:
 
 cd '/////' 2>/dev/null
+cd bark bark (exit code 1)
 
 echo ~/123
 echo " " " """ '''
 echo $USER$12USER$USER=4$USER12
+'
 
+added variable validity check for unset builtin
+unset TES\T (???)		fixed
+unset TES;T				not fixed, semicolon not interpreted
+unset -TEST				not fixed, return value 2 for invalid option
 
+exit 0 0
 
 How does Bash:
 https://medium.com/geekculture/an-overview-of-the-working-of-the-bash-shell-f063e7f09945
