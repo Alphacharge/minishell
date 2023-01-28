@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 12:00:43 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:23:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:24 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "history.h"
+#include "minishell.h"
 
 t_hist	init_history(void)
 {

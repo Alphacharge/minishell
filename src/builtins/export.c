@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 13:19:35 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:52:40 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
-#include "builtins.h"
-#include "libft.h"
+#include "minishell.h"
 
 static void	set_name_value(char **name, char **value, char *argv, int flag)
 {

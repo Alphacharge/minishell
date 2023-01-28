@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 15:19:41 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/22 14:15:43 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:25 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 /*returns the differece of s1 and s2, -1 if a string is NULL*/
 /*returns 0 if there is no difference*/

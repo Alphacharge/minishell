@@ -6,11 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:00 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "redirects.h"
+#include "minishell.h"
 
 /*if its a path just strdup it, if not*/
 static void	check_outfiles(t_cmd *cmd, t_redir *redir)

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/22 19:27:50 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:03 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "redirects.h"
-#include "execute.h"
+#include "minishell.h"
 
 t_cmd	*create_redirs(t_cmd *cmd, t_data *data)
 {

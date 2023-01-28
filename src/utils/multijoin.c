@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multijoin.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/21 14:30:30 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:37 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include "libft.h"
+#include "minishell.h"
 
 static char	*copy_input(bool tofr, int n, char **input)
 {

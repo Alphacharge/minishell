@@ -6,12 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:50 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "redirects.h"
-#include "execute.h"
+#include "minishell.h"
 
 /*reading heredoc in a pipe*/
 static void	get_here(t_cmd *cmd, char *lim, t_data *data)

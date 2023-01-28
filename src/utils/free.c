@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/27 14:12:36 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:18 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include <stdio.h>
+#include "minishell.h"
 
 /*Frees an array and every pointer inside.*/
 void	*free_ptr_array(void **array)

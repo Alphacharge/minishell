@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_print.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 10:44:40 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:48:57 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:52:36 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
-#include "builtins.h"
-#include "libft.h"
+#include "minishell.h"
 
 void	export_print(t_env *env)
 {

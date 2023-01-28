@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   arraycount.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:53:27 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/25 10:43:58 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:11 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 /*Returns argc value for argv.*/
 int	arraycount(char **array)

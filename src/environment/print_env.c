@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 10:57:38 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 13:20:04 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:06 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
+#include "minishell.h"
 
 /*is printing env linklist to fd your choice*/
 void	print_env(t_env *env, int fd)

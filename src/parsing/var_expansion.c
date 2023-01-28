@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/27 14:28:19 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:40 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
 
 /*Returns pointer to first character after closing single quote or null byte.*/
 static char	*skip_single_quotes(char *s)

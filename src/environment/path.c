@@ -6,11 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/19 14:07:06 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:03 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
+#include "minishell.h"
 
 /*transfers the PATH variable in an double ** array*/
 char	**get_path_var(t_env *env)

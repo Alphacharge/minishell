@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 12:55:54 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:52:25 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtins.h"
+#include "minishell.h"
 
 /*Will ignore option -n if it is not the first parameter. Prints every argument
 to standard output, separated by a space.*/

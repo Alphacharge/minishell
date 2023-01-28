@@ -6,12 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 17:26:06 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/17 13:39:23 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:15 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include "libft.h"
+#include "minishell.h"
 
 /*Allocates a new string with path + / + programm*/
 char	*combine_pathprog(char *path, char *prog)

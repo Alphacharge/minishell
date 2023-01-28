@@ -6,11 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:51:01 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:13 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execute.h"
+#include "minishell.h"
 
 void	dup_pipe_fds(t_cmd *cmd)
 {

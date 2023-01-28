@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_last_word.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 11:28:23 by rbetz             #+#    #+#             */
-/*   Updated: 2022/11/25 15:48:03 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:22 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 /*Returns a malloced string to last occurens of c in str from end*/
 /*or if rev = 1 from start to the lim*/

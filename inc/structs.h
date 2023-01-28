@@ -6,30 +6,12 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:57:25 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
-
-# define INPUT		1
-# define OUTPUT		2
-# define HERE		3
-# define APPEND		4
-
-# define BLTIN		0
-# define EXEC		1
-# define REDIR		2
-# define PIPE		3
-# define LIST		4
-# define BACK		5
-
-# include <unistd.h>
-# include <stdbool.h>
-# include <sys/types.h>
-# include "environment.h"
-# include "history.h"
 
 typedef struct s_prompt
 {
@@ -40,12 +22,17 @@ typedef struct s_prompt
 	char	*prompt;
 }				t_prompt;
 
-// typedef struct s_pipe
-// {
-// 	int	type;
-// 	int	left;
-// 	int	right;
-// }				t_pipe;
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct s_hist
+{
+	int				fd;
+}					t_hist;
 
 typedef struct s_exec
 {

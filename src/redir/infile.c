@@ -6,11 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 15:11:09 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "redirects.h"
+#include "minishell.h"
 
 /*check if the input is the last one*/
 static int last_input(t_redir *redir)
@@ -37,12 +37,12 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 	if (access(redir->file, F_OK) != 0)
 	{
 		success = 0;
-		ft_error(NULL, NULL, "No such file or directory");
+		ft_error(NULL, redir->file, 1);
 	}
 	if (success == 1 && access(redir->file, R_OK) != 0)
 	{
 		success = 0;
-		ft_error(NULL, NULL, "Permission denied");
+		ft_error(NULL, redir->file, 1);
 	}
 	if (success == 0)
 	{
@@ -59,7 +59,7 @@ static void	read_infile(t_cmd *cmd, t_redir *redir)
 		cmd->reds[READ] = open(redir->file, O_RDONLY);
 		if (cmd->reds[READ] == -1)
 		{
-			ft_error(NULL, NULL, "Error opening file");
+			ft_error(NULL, redir->file, 1);
 			cmd->error = true;
 		}
 	}

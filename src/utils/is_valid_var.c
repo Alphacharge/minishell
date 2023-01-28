@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   is_valid_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:31:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 13:07:26 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 int	is_valid_var(char *var)
 {

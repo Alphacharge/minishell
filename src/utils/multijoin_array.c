@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   multijoin_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 16:08:04 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/25 18:24:27 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:34 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 static char	*copy_input(char **array, size_t len)
 {

@@ -6,11 +6,11 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:36:51 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/19 13:12:39 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:40 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include "minishell.h"
 
 /*Skips characters until it encounters whitespace, quote or token.*/
 char	*skip_word(char *s)

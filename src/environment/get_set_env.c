@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_set_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 09:44:03 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/25 18:24:55 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:52:59 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "environment.h"
+#include "minishell.h"
 
 /*returns a pointer to the value of a env variable*/
 char	*get_env_var(t_env *env, char *name)

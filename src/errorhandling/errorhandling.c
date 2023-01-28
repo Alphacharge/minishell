@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 13:19:53 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:10 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "errorhandling.h"
+#include "minishell.h"
 
 /*Prints Minishell/function:filename:message/strerror to stderr and returns 1.*/
 int	ft_error(char *function, char *filename, int ernum)

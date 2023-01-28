@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_word.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 18:50:50 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/11/23 13:41:45 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:54:28 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
-#include <stdio.h>
+#include "minishell.h"
 
 /*Returns the allocated first word in string delimited by whitespace.*/
 char	*get_word(char	*s)

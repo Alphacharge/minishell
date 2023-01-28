@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: humbi <humbi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2022/12/25 17:07:47 by fkernbac         ###   ########.fr        #
+#    Updated: 2023/01/28 15:16:42 by humbi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ OS		:=	$(shell uname)
 BREWU	:=	/Users/$(USER)/.brewconfig.zsh
 
 ###			###			MINISHELL		###			###
-CONFIG	:=	.ms_config
+CONFIG	:=	./.ms_config
 
 ###			###			COMPILER		###			###
 CC		:=	cc

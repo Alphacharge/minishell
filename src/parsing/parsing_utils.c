@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:44:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/02 22:34:11 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:46 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "minishell.h"
 
 /*Increments string by one and replaces skipped value with \0.*/
 char	*null_increment(char *s)
