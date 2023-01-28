@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:32:37 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 13:07:36 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 /*if its a path just strdup it, if not*/
 static void	check_outfiles(t_cmd *cmd, t_redir *redir)
 {
-	if (cmd->rats[WRITE] == FD_UNUSED && redir->type == OUTPUT)
-		cmd->rats[WRITE] = open(redir->file, \
+	if (cmd->reds[WRITE] == FD_UNUSED && redir->type == OUTPUT)
+		cmd->reds[WRITE] = open(redir->file, \
 							O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else if (cmd->rats[WRITE] == FD_UNUSED && redir->type == APPEND)
-		cmd->rats[WRITE] = open(redir->file, \
+	else if (cmd->reds[WRITE] == FD_UNUSED && redir->type == APPEND)
+		cmd->reds[WRITE] = open(redir->file, \
 							O_CREAT | O_WRONLY | O_APPEND, 0644);
 	else
 	{
-		close_and_neg(&cmd->rats[WRITE]);
+		close_and_neg(&cmd->reds[WRITE]);
 		check_outfiles(cmd, redir);
 	}
-	if (cmd->rats[WRITE] < 0)
+	if (cmd->reds[WRITE] < 0)
 		ft_error(NULL, redir->file, 1);
 }
 

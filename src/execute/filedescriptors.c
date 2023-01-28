@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filedescriptors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:03:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 11:00:19 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	close_pipe_fds(t_cmd *cmd)
 
 void	close_reds_fds(t_cmd *cmd)
 {
-	if (cmd->rats[READ] != FD_UNUSED)
-		close_and_neg(&cmd->rats[READ]);
-	if (cmd->rats[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->rats[WRITE]);
+	if (cmd->reds[READ] != FD_UNUSED)
+		close_and_neg(&cmd->reds[READ]);
+	if (cmd->reds[WRITE] != FD_UNUSED)
+		close_and_neg(&cmd->reds[WRITE]);
 }
 
 void	close_piping(t_cmd *cmd)

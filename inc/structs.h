@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 14:30:31 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct s_cmd
 	char			*name;
 	char			**argv;
 	int				fds[2];
-	int				rats[2];
+	int				reds[2];
 	bool			error;
 	bool			here;
 	struct s_data	*data;

@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:14:54 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,17 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 	if (success == 0)
 	{
 		cmd->error = true;
-		cmd->rats[READ] = dup(STDIN);
+		cmd->reds[READ] = dup(STDIN);
 	}
 }
 
 /*close fd from heredoc if exist and read from infile*/
 static void	read_infile(t_cmd *cmd, t_redir *redir)
 {
-	if (cmd->rats[READ] == FD_UNUSED)
+	if (cmd->reds[READ] == FD_UNUSED)
 	{
-		cmd->rats[READ] = open(redir->file, O_RDONLY);
-		if (cmd->rats[READ] == -1)
+		cmd->reds[READ] = open(redir->file, O_RDONLY);
+		if (cmd->reds[READ] == -1)
 		{
 			ft_error(NULL, NULL, "Error opening file");
 			cmd->error = true;
@@ -65,7 +65,7 @@ static void	read_infile(t_cmd *cmd, t_redir *redir)
 	}
 	else
 	{
-		close_and_neg(&cmd->rats[READ]);
+		close_and_neg(&cmd->reds[READ]);
 		read_infile(cmd, redir);
 	}
 }

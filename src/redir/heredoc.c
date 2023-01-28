@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 12:05:08 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 14:16:31 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	get_here(t_cmd *cmd, char *lim, t_data *data)
 	int		len;
 
 	limiter = ft_strjoin(lim, "\n");
-	pipe(cmd->rats);
+	pipe(cmd->reds);
 	while (1)
 	{
 		write(2, ">", 1);
@@ -36,11 +36,11 @@ static void	get_here(t_cmd *cmd, char *lim, t_data *data)
 			break ;
 		}
 		else
-			write(cmd->rats[WRITE], new, len);
+			write(cmd->reds[WRITE], new, len);
 		free(new);
 	}
 	free(limiter);
-	close_and_neg(&cmd->rats[WRITE]);
+	close_and_neg(&cmd->reds[WRITE]);
 }
 
 /*Check redirs for heredocs, ask 4 all but store only the last*/
@@ -57,7 +57,7 @@ t_cmd	*handle_heredocs(t_cmd *cmd, t_data *data)
 		{
 			if (tred->type == HERE)
 			{
-				if (tmp->rats[READ] != FD_UNUSED)
+				if (tmp->reds[READ] != FD_UNUSED)
 					close_reds_fds(tmp);
 				get_here(tmp, tred->file, data);
 				tmp->here = true;
