@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 17:33:49 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:19:53 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ int	ft_error(char *function, char *filename, int ernum)
 	else if (ernum == 5)
 		ft_putstr_fd("illegal option\n", 2);
 	else if (ernum == 6)
+	{
 		ft_putstr_fd("not a valid identifier\n", 2);
+		ernum = 1;
+	}
 	else if (ernum == 8)
 		ft_putstr_fd("empty environment\n", 2);
 	else if (ernum == 9)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_valid_var.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:31:50 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/24 10:54:48 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/01/28 13:07:26 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	is_valid_var(char *var)
 	if (var[i] == '\0' || (var[i] != '_' && !ft_isalpha(var[i])))
 		return (0);
 	i++;
-	while ((var[i] != '\0' || var[i] != '=') 
-			&& (ft_isalnum(var[i]) || var[i] == '_'))
+	while ((var[i] != '\0' || var[i] != '=')
+		&& (ft_isalnum(var[i]) || var[i] == '_'))
 		i++;
 	if (var[i] == '\0' || var[i] == '=')
 		return (1);

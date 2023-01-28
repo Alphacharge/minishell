@@ -6,11 +6,11 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 22:14:56 by fkernbac          #+#    #+#             */
-/*   Updated: 2022/12/25 17:22:26 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 13:04:49 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "utils.h"
 
 /*Returns 1 if sequence at start of s is a valid shell variable.*/
 int	is_var(char *s)
