@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:57:55 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 15:44:09 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define WHITE	"\x01\033[0m\x02"
 
 //History
-# define FILENAME "./.ms_history"
-# define ALTFILENAME "~/.ms_history"
+# define FILENAME "~/.ms_history"
+# define ALTFILENAME "./.ms_history"
 
 //Structs
 # define INPUT		1

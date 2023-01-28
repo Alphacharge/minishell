@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:58:12 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/28 15:43:23 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdbool.h> //true false
 //# include <dirent.h> //unbekannt von builtins
 # include <sys/stat.h> //unbekannt von parsing
-//# include <sys/types.h> //unbekannt von structs
+# include <sys/types.h> //unbekannt von structs
 
 # include "libft.h"
 # include "definitions.h"
