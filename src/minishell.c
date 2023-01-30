@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2022/12/27 14:32:36 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:17:35 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,15 @@ static t_data	*initialize_minishell(char **envp)
 /*Executes one command and returns.*/
 static int	commandline_mode(char *input, t_data *data)
 {
+	int	exitstatus;
+
 	set_exec_signals();
 	data->cmd_head = parse(input, data);
-	execute_list(data->cmd_head, data);
+	exitstatus = execute_list(data->cmd_head, data);
 	free_cmds(data->cmd_head);
-	return (g_exit_status);
+	if (exitstatus < 0)
+		return (g_exit_status);
+	return (exitstatus);
 }
 
 /*Reads from input and returns only if exit command is entered.*/

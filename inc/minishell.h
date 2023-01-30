@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 15:43:23 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 16:58:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h> // malloc, free, exit
+# include <stdlib.h> 			// malloc, free, exit
 # include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
-# include <fcntl.h> // open
-# include <sys/wait.h> // wait, waitpid
-# include <stdio.h> // fprintf(int fd, char *stringset, ...) perror
-# include <readline/history.h> //readline history
-# include <readline/readline.h> //readline
-# include <stdbool.h> //true false
-//# include <dirent.h> //unbekannt von builtins
-# include <sys/stat.h> //unbekannt von parsing
-# include <sys/types.h> //unbekannt von structs
+# include <fcntl.h>				// open
+# include <sys/wait.h>			// wait, waitpid
+# include <stdio.h>				// fprintf(int fd, char *stringset, ...) perror
+# include <readline/history.h>	//readline history
+# include <readline/readline.h>	//readline
+# include <stdbool.h>			//true false
+# include <sys/stat.h>			//stat
+# include <sys/types.h>			//stat macros
+# include <signal.h>			//sigaction
 
 # include "libft.h"
 # include "definitions.h"

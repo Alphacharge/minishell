@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:54:07 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 16:54:17 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	signal_redisplay(int signum)
 /*Resets signal handler to default actions.*/
 void	unset_signals(void)
 {
-	struct sigaction	dfl;
+	struct sigaction	dflt;
 
-	ft_memset(&dfl, 0, sizeof(dfl));
-	sigemptyset(&dfl.sa_mask);
-	dfl.sa_handler = SIG_DFL;
-	dfl.sa_flags = 0;
-	if (sigaction(SIGINT, &dfl, NULL) < 0)
+	ft_memset(&dflt, 0, sizeof(dflt));
+	sigemptyset(&dflt.sa_mask);
+	dflt.sa_handler = SIG_DFL;
+	dflt.sa_flags = 0;
+	if (sigaction(SIGINT, &dflt, NULL) < 0)
 		ft_error("minishell: default signals", NULL, 1);
 }
 

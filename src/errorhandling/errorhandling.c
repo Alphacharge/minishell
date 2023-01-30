@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:10 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 18:02:07 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	ft_error(char *function, char *filename, int ernum)
 		ft_putstr_fd(": ", 2);
 	}
 	if (ernum == 3)
+	{
 		ft_putstr_fd("too many arguments\n", 2);
+		ernum = 1;
+	}
 	else if (ernum == 4)
 		ft_putstr_fd("not enough arguments\n", 2);
 	else if (ernum == 5)
@@ -57,9 +60,12 @@ int	ft_error(char *function, char *filename, int ernum)
 	else if (ernum == 126)
 		ft_putstr_fd("is a directory\n", 2);
 	else if (ernum == 127)
-		ft_putstr_fd("command not found127\n", 2);
+		ft_putstr_fd("command not found\n", 2);
 	else if (ernum == 128)
+	{
 		ft_putstr_fd("invalid argument to exit\n", 2);
+		ernum = 255;
+	}
 	g_exit_status = ernum;
 	return (g_exit_status);
 }

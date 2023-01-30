@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:32 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 19:17:40 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,33 @@ static int	is_num(char *s)
 	return (1);
 }
 
+// -512 % 256 = 0		= 512 % 256
+// -513 % 256 = 255	= 513 % 256 * -1 + 256 = 1 * -1 + 256
+// -514 % 256 = 254	= 513 % 256 * -1 + 256 = 2 * -1 + 256
+
 /*Prints exit and returns exit status of given argument.*/
 int	shell_exit(char **argv)
 {
 	int	status;
 
-	if (argv && argv[1] != NULL && argv[2] != NULL)
-		return (ft_error("minishell: exit", NULL, 128));
-	write(1, "exit\n", 5);
-	if (argv == NULL || argv[1] == NULL)
-		return (EXIT_SUCCESS);
-	if (is_num(argv[1]) != 1)
-		return (ft_error("minishell: exit", argv[1], 128));
-	status = ft_atoi(argv[1]);
-	if (status > 255 || status < 0)
+	status = EXIT_SUCCESS;
+	if (argv == NULL)
 		return (EXIT_FAILURE);
+	if (argv[1] == NULL)
+		write(1, "exit\n", 5);
+	else
+	{
+		write(2, "exit\n", 5);
+		status = EXIT_FAILURE;
+		if (is_num(argv[1]) != 1)
+			status = ft_error("minishell: exit", argv[1], 128);
+		else if (argv[2] != NULL)
+			status = ft_error("minishell: exit", NULL, 3);
+		else
+			status = ft_atoi(argv[1]);
+		status = status % 256;
+		if (status < 0)
+			status += 256;
+	}
 	return (status);
 }
