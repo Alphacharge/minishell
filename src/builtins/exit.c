@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 19:17:40 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/30 19:19:30 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,6 @@ static int	is_num(char *s)
 	}
 	return (1);
 }
-
-// -512 % 256 = 0		= 512 % 256
-// -513 % 256 = 255	= 513 % 256 * -1 + 256 = 1 * -1 + 256
-// -514 % 256 = 254	= 513 % 256 * -1 + 256 = 2 * -1 + 256
 
 /*Prints exit and returns exit status of given argument.*/
 int	shell_exit(char **argv)

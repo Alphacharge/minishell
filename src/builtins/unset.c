@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:52 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 20:16:05 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ int	unset(char **argv, t_data *data)
 	prev = tmp;
 	i = 1;
 	if (argv[1] == NULL)
-		return (ft_error("minishell: unset", NULL, 7));
+		return (EXIT_SUCCESS);
 	if (tmp == NULL)
 		return (EXIT_FAILURE);
 	while (argv[i] != NULL)
 	{
-		//check if function is_valid_var can be changed to work here
 		if (*skip_var(argv[i]) != '\0')
 			return (ft_error("minishell: unset", argv[i], 6));
 		i++;
