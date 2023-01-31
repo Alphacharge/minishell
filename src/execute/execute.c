@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:16 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/31 20:15:23 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	execute_list(t_cmd *lst, t_data *data)
 	if (cmd == NULL)
 		return (-1);
 	cmd = create_redirs(cmd, data);
-	while (cmd != NULL)
+	while (cmd != NULL && cmd->error == false)
 	{
 		if (ft_strcmp(cmd->argv[0], "exit") == 0)
 			return (shell_exit(cmd->argv));

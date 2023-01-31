@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 15:11:09 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/31 21:05:22 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,16 @@ t_cmd	*handle_infiles(t_cmd *cmd)
 	t_redir	*tred;
 
 	tmp = cmd;
-	while (tmp != NULL)
+	while (tmp != NULL && cmd->error == false)
 	{
 		tred = tmp->redir;
-		while (tred != NULL)
+		while (tred != NULL && cmd->error == false)
 		{
 			if (tred->type == INPUT)
 			{
 				check_infiles(tmp, tred);
+				if (tmp->error == true)
+					cmd->error = true;
 				if (tmp->error == false && last_input(tred) == 1)
 					read_infile(tmp, tred);
 			}
