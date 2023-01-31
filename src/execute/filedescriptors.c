@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filedescriptors.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 11:03:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 20:40:32 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:21 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	close_and_neg(int *fd)
 
 void	close_pipe_fds(t_cmd *cmd)
 {
-	if (cmd->pipe[READ] != FD_UNUSED)
-		close_and_neg(&cmd->pipe[READ]);
-	if (cmd->pipe[WRITE] != FD_UNUSED)
-		close_and_neg(&cmd->pipe[WRITE]);
+	if (cmd->fds[READ] != FD_UNUSED)
+		close_and_neg(&cmd->fds[READ]);
+	if (cmd->fds[WRITE] != FD_UNUSED)
+		close_and_neg(&cmd->fds[WRITE]);
 }
 
 void	close_reds_fds(t_cmd *cmd)
@@ -39,12 +39,12 @@ void	close_reds_fds(t_cmd *cmd)
 void	close_piping(t_cmd *cmd)
 {
 	if (cmd->prev == NULL && cmd->next != NULL)
-		close_and_neg(&cmd->pipe[WRITE]);
+		close_and_neg(&cmd->fds[WRITE]);
 	else if (cmd->next == NULL && cmd->prev != NULL)
-		close_and_neg(&cmd->prev->pipe[READ]);
+		close_and_neg(&cmd->prev->fds[READ]);
 	else if (cmd->next != NULL && cmd->prev != NULL)
 	{
-		close_and_neg(&cmd->prev->pipe[READ]);
-		close_and_neg(&cmd->pipe[WRITE]);
+		close_and_neg(&cmd->prev->fds[READ]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
 }

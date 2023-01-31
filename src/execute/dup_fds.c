@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_fds.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 17:51:01 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 20:47:25 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 14:53:13 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,25 @@ void	dup_pipe_fds(t_cmd *cmd)
 {
 	if (cmd->reds[WRITE] == FD_UNUSED && cmd->prev == NULL && cmd->next != NULL)
 	{
-		if (dup2(cmd->pipe[WRITE], STDOUT) < 0)
+		if (dup2(cmd->fds[WRITE], STDOUT) < 0)
 			ft_error(NULL, NULL, 9);
-		close_and_neg(&cmd->pipe[WRITE]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
 	else if (cmd->reds[READ] == FD_UNUSED
 		&& cmd->next == NULL && cmd->prev != NULL)
 	{
-		if (dup2(cmd->prev->pipe[READ], STDIN) < 0)
+		if (dup2(cmd->prev->fds[READ], STDIN) < 0)
 			ft_error(NULL, NULL, 9);
-		close_and_neg(&cmd->prev->pipe[READ]);
+		close_and_neg(&cmd->prev->fds[READ]);
 	}
 	else if (cmd->reds[WRITE] == FD_UNUSED && cmd->reds[READ] == FD_UNUSED
 		&& cmd->next != NULL && cmd->prev != NULL)
 	{
-		if (dup2(cmd->pipe[WRITE], STDOUT) < 0
-			|| dup2(cmd->prev->pipe[READ], STDIN) < 0)
+		if (dup2(cmd->fds[WRITE], STDOUT) < 0
+			|| dup2(cmd->prev->fds[READ], STDIN) < 0)
 			ft_error(NULL, NULL, 9);
-		close_and_neg(&cmd->prev->pipe[READ]);
-		close_and_neg(&cmd->pipe[WRITE]);
+		close_and_neg(&cmd->prev->fds[READ]);
+		close_and_neg(&cmd->fds[WRITE]);
 	}
 }
 

@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 18:30:10 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/28 15:11:09 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// int	is_valid_file(char *file)
-// {
-// 	struct stat	info;
-
-// 	stat(file, &info);
-// 	if (S_ISREG(info.st_mode))
-// 		return (1);
-// 	return (0);
-// }
 
 /*check if the input is the last one*/
 static int last_input(t_redir *redir)
@@ -58,14 +48,12 @@ static void	check_infiles(t_cmd *cmd, t_redir *redir)
 	{
 		cmd->error = true;
 		cmd->reds[READ] = dup(STDIN);
-		// close(cmd->reds[READ]);
 	}
 }
 
 /*close fd from heredoc if exist and read from infile*/
 static void	read_infile(t_cmd *cmd, t_redir *redir)
 {
-printf("start of infile: reds[0]: %i, reds[1]: %i\n", cmd->reds[0], cmd->reds[1]);
 	if (cmd->reds[READ] == FD_UNUSED)
 	{
 		cmd->reds[READ] = open(redir->file, O_RDONLY);
@@ -98,8 +86,6 @@ t_cmd	*handle_infiles(t_cmd *cmd)
 			if (tred->type == INPUT)
 			{
 				check_infiles(tmp, tred);
-				// if (tmp->error == true)
-				// 	break ;
 				if (tmp->error == false && last_input(tred) == 1)
 					read_infile(tmp, tred);
 			}

@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 20:47:35 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:50:21 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 	else
 	{
 		if (cmd->next != NULL)
-			pipe(cmd->pipe);
+			pipe(cmd->fds);
 		pid = fork();
 		if (pid == 0)
 			exec_child(cmd, prompt);
 	}
+	close_piping(cmd);
 	close_reds_fds(cmd);
 	if (pid < 0)
 		return (ft_error("fork", NULL, 1));
@@ -77,12 +78,9 @@ int	execute_list(t_cmd *lst, t_data *data)
 	cmd = create_redirs(cmd, data);
 	while (cmd != NULL)
 	{
-		if (cmd->error == false)
-		{
-			if (ft_strcmp(cmd->argv[0], "exit") == 0)
-				return (shell_exit(cmd->argv));
-			g_exit_status = exec_cmd(cmd, data->prompt);
-		}
+		if (ft_strcmp(cmd->argv[0], "exit") == 0)
+			return (shell_exit(cmd->argv));
+		g_exit_status = exec_cmd(cmd, data->prompt);
 		cmd = cmd->next;
 	}
 	while ((waitpid(-1, &g_exit_status, WNOHANG)) != -1)
