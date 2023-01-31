@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:33 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/31 20:40:32 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ static t_cmd	*create_cmd(t_data *data)
 	cmd->redir = NULL;
 	cmd->here = false;
 	cmd->type = EXEC;
-	cmd->fds[0] = FD_UNUSED;
-	cmd->fds[1] = FD_UNUSED;
+	cmd->pipe[0] = FD_UNUSED;
+	cmd->pipe[1] = FD_UNUSED;
 	cmd->reds[0] = FD_UNUSED;
 	cmd->reds[1] = FD_UNUSED;
 	return (cmd);
