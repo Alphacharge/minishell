@@ -1,3 +1,8 @@
+- check missing history
+- stop execution on invalid input file
+- <invalid cat | cat
+- >eins <invalid <TODO cat >zwei ---> eins file is created; error; empty output
+
 failing tests:
 
 ..		minishell's output better than bash, I won't change it
