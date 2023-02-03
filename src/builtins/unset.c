@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 20:16:05 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/03 16:37:25 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	unset(char **argv, t_data *data)
 			return (ft_error("minishell: unset", argv[i], 6));
 		i++;
 	}
+	i = 1;
 	while (argv[i] != NULL)
 	{
 		tmp = data->env;
