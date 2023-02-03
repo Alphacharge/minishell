@@ -6,7 +6,7 @@
 /*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:52 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/03 16:54:14 by humbi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,9 @@ int	unset(char **argv, t_data *data)
 		return (EXIT_FAILURE);
 	while (argv[i] != NULL)
 	{
-		//check if function is_valid_var can be changed to work here
-		if (*skip_var(argv[i]) != '\0')
-			return (ft_error("minishell: unset", argv[i], 6));
-		i++;
-	}
-	while (argv[i] != NULL)
-	{
 		tmp = data->env;
+		if (*skip_var(argv[i]) != '\0')
+				ft_error("minishell: unset", argv[i], 6);
 		while (tmp != NULL && tmp->name != NULL && argv[i] != NULL)
 			skip_or_unset(&prev, &tmp, argv[i], &data);
 		i++;
