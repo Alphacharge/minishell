@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 18:17:35 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/03 17:30:58 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static t_data	*initialize_minishell(char **envp)
 	data->cmd_head = NULL;
 	data->input = NULL;
 	data->exitstatus = NULL;
-	set_env_var(data->env, "SHLVL", \
-		ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
+	if (get_env_var(data->env, "SHLVL") != NULL)
+		set_env_var(data->env, "SHLVL", \
+			ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
 	return (data);
 }
 

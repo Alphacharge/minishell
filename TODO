@@ -1,3 +1,4 @@
+- fixed segfault if SHLVL did not exist on startup; should cause no further problems(?)
 - check missing history
 - stop execution on invalid input file
 - <invalid cat | cat
