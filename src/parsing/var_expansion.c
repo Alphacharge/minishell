@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:40 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/04 16:07:00 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,8 @@ char	*expand_envvars(char *s, t_data *data)
 	char	*search;
 
 	search = s;
+	if (s == NULL)
+		return (NULL);
 	while (*search != 0 && is_var(search) == 0)
 		search++;
 	if (*search == 0)

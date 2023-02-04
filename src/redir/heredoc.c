@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:03:58 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:50 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/04 16:08:23 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	get_here(t_cmd *cmd, char *lim, t_data *data)
 		write(2, ">", 1);
 		tmp = get_next_line(0);
 		new = expand_envvars(tmp, data);
-		free(tmp);
+		ft_free(tmp);
 		len = ft_strlen(new);
-		if (ft_strcmp(new, limiter) == 0)
+		if (new == NULL || ft_strcmp(new, limiter) == 0)
 		{
-			free(new);
+			ft_free(new);
 			break ;
 		}
 		else
