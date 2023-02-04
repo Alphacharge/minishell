@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 19:19:30 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:26:16 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	shell_exit(char **argv)
 	{
 		write(2, "exit\n", 5);
 		status = EXIT_FAILURE;
-		if (is_num(argv[1]) != 1)
+		if (argv[1][0] == 0 || is_num(argv[1]) != 1)
 			status = ft_error("minishell: exit", argv[1], 128);
 		else if (argv[2] != NULL)
 			status = ft_error("minishell: exit", NULL, 3);

@@ -6,6 +6,8 @@
 
 failing tests:
 
+unset ?
+
 ..		minishell's output better than bash, I won't change it
 
 cd '/////' 2>/dev/null				2> not implemented

@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/03 17:18:58 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/04 15:52:31 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 static int	varname_error(char *var)
 {
-	if (*skip_var(var) != '\0')
-	{
-		ft_error("minishell: unset", var, 6);
-		return (0);
-	}
-	return (1);
+	if ( *var == 0 || *var == '$' || *var == '?' || *skip_var(var) != '\0')
+		return (ft_error("minishell: unset", var, 6));
+	return (0);
 }
 
 static void	skip_or_unset(t_env **prev, t_env **tmp, char *argv, t_data **data)
@@ -64,7 +61,7 @@ int	unset(char **argv, t_data *data)
 	while (argv[i] != NULL)
 	{
 		tmp = data->env;
-		if (varname_error(argv[i]) == 0)
+		if (varname_error(argv[i]) != 0)
 			error = 1;
 		else
 			while (argv[i] != NULL && tmp != NULL && tmp->name != NULL)
