@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/03 16:54:14 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/06 18:02:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	varname_error(char *var)
+{
+	if ( *var == 0 || *var == '$' || *var == '?' || *skip_var(var) != '\0')
+		return (ft_error("minishell: unset", var, 6));
+	return (0);
+}
 
 static void	skip_or_unset(t_env **prev, t_env **tmp, char *argv, t_data **data)
 {
@@ -41,22 +48,25 @@ int	unset(char **argv, t_data *data)
 	t_env	*tmp;
 	t_env	*prev;
 	int		i;
+	int		error;
 
 	tmp = data->env;
 	prev = tmp;
 	i = 1;
+	error = 0;
 	if (argv[1] == NULL)
-		return (ft_error("minishell: unset", NULL, 7));
+		return (EXIT_SUCCESS);
 	if (tmp == NULL)
 		return (EXIT_FAILURE);
 	while (argv[i] != NULL)
 	{
 		tmp = data->env;
-		if (*skip_var(argv[i]) != '\0')
-				ft_error("minishell: unset", argv[i], 6);
-		while (tmp != NULL && tmp->name != NULL && argv[i] != NULL)
-			skip_or_unset(&prev, &tmp, argv[i], &data);
+		if (varname_error(argv[i]) != 0)
+			error = 1;
+		else
+			while (argv[i] != NULL && tmp != NULL && tmp->name != NULL)
+				skip_or_unset(&prev, &tmp, argv[i], &data);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (error);
 }

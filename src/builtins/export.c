@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:40 by humbi            ###   ########.fr       */
+/*   Updated: 2023/01/30 19:56:07 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static t_env	*update_values(int argc, char **argv, t_env *env)
 	return (env);
 }
 
-static void	control_structur(char **name, char **value, char *argv, t_env **tmp)
+static void	control_structure(char **name, char **value, char *argv, t_env **tmp)
 {
 	if (ft_posinset('=', argv) < 0)
 		set_name_value(name, value, argv, 0);
@@ -98,7 +98,7 @@ int	export(int argc, char **argv, t_data *data)
 	{
 		data->env = tmp;
 		if (argv[i] != NULL && is_valid_var(argv[i]))
-			control_structur(&name, &value, argv[i], &tmp);
+			control_structure(&name, &value, argv[i], &tmp);
 		else
 			return (ft_error("minishell: export", argv[i], 6));
 		i++;
