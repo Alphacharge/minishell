@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:57:25 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:31:19 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_prompt
 	char	*seperator;
 	char	*endl;
 	char	*prompt;
+	int		fd_stdout;
 }				t_prompt;
 
 typedef struct s_env
@@ -62,6 +63,7 @@ typedef struct s_cmd
 	int				reds[2];
 	bool			error;
 	bool			here;
+	int				stdoutsaver;
 	struct s_data	*data;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;

@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/06 14:37:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/06 16:37:45 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
+	cmd->stdoutsaver = dup(STDOUT);
+	dup_reds_fds(cmd);
 	if (cmd->argv[0][0] == 'c')
 		return (cd(cmd->argv, cmd->data->env, prompt));
 	else if (cmd->argv[0][0] == 'p')
@@ -46,13 +48,22 @@ static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 	exit(EXIT_FAILURE);
 }
 
+static int	close_stdout(t_cmd *cmd, int ret)
+{
+	close_reds_fds(cmd);
+	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
+			ft_error(NULL, NULL, 9);
+	close(cmd->stdoutsaver);
+	return (ret);
+}
+
 static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = INT32_MAX;
 	if (cmd->next == NULL && cmd->type == BLTIN)
-		return (exec_bltin(cmd, prompt));
+		return (close_stdout(cmd, exec_bltin(cmd, prompt)));
 	else
 	{
 		if (cmd->next != NULL)
