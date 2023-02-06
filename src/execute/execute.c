@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 20:15:23 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/06 14:37:44 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 	if (cmd->type == BLTIN)
 		exit(exec_bltin(cmd, prompt));
 	envp = create_envp_from_env(cmd->data->env);
-	execve(cmd->argv[0], cmd->argv, envp);
+	if (cmd->error == false)
+		execve(cmd->argv[0], cmd->argv, envp);
 	free_ptr_array((void **) envp);
 	exit(EXIT_FAILURE);
 }
@@ -76,7 +77,7 @@ int	execute_list(t_cmd *lst, t_data *data)
 	if (cmd == NULL)
 		return (-1);
 	cmd = create_redirs(cmd, data);
-	while (cmd != NULL && cmd->error == false)
+	while (cmd != NULL)
 	{
 		if (ft_strcmp(cmd->argv[0], "exit") == 0)
 			return (shell_exit(cmd->argv));

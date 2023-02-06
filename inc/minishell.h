@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 15:43:23 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:12:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 //# include <dirent.h> //unbekannt von builtins
 # include <sys/stat.h> //unbekannt von parsing
 # include <sys/types.h> //unbekannt von structs
+# include <signal.h>
 
 # include "libft.h"
 # include "definitions.h"
@@ -87,7 +88,8 @@ int		count_parameters(t_cmd *cmd);
 t_cmd	*create_redirs(t_cmd *cmd, t_data *data);
 t_cmd	*handle_heredocs(t_cmd *cmd, t_data *data);
 t_cmd	*handle_infiles(t_cmd *cmd);
-t_cmd	*handle_outfiles(t_cmd *cmd);
+void	check_infiles(t_cmd *cmd, t_redir *redir);
+void	check_outfiles(t_cmd *cmd, t_redir *redir);
 
 //Signals
 void	set_rl_signals(void);

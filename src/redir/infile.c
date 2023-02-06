@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/31 21:05:22 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/06 15:11:33 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int last_input(t_redir *redir)
 
 /*check for an other fd, these one should be from a infile, and close it*/
 /*then call itsself and create a new one*/
-static void	check_infiles(t_cmd *cmd, t_redir *redir)
+void	check_infiles(t_cmd *cmd, t_redir *redir)
 {
 	int	success;
 
@@ -78,16 +78,13 @@ t_cmd	*handle_infiles(t_cmd *cmd)
 	t_redir	*tred;
 
 	tmp = cmd;
-	while (tmp != NULL && cmd->error == false)
+	while (tmp != NULL)
 	{
 		tred = tmp->redir;
-		while (tred != NULL && cmd->error == false)
+		while (tred != NULL)
 		{
 			if (tred->type == INPUT)
 			{
-				check_infiles(tmp, tred);
-				if (tmp->error == true)
-					cmd->error = true;
 				if (tmp->error == false && last_input(tred) == 1)
 					read_infile(tmp, tred);
 			}
