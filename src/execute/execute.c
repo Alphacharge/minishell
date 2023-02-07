@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 17:50:21 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:29:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,22 @@ static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 	exit(EXIT_FAILURE);
 }
 
+static int	close_stdout(t_cmd *cmd, int ret)
+{
+	close_reds_fds(cmd);
+	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
+		ft_error(NULL, NULL, 9);
+	close(cmd->stdoutsaver);
+	return (ret);
+}
+
 static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = INT32_MAX;
 	if (cmd->next == NULL && cmd->type == BLTIN)
-		return (exec_bltin(cmd, prompt));
+		return (close_stdout(cmd, exec_bltin(cmd, prompt)));
 	else
 	{
 		if (cmd->next != NULL)

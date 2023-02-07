@@ -1,16 +1,32 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:23 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/07 11:57:54 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static char	*my_getcwd(void)
+{
+	char	*dir;
+
+	dir = getcwd(NULL, 0);
+	if (dir == NULL)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: ",2);
+		ft_putstr_fd("cannot access parent directories: ", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+		dir = ft_strdup("");
+	}
+	return (dir);
+}
 
 /*change oldpwd to pwd and set new pwd*/
 static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
@@ -21,13 +37,13 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 	{
 		dir = get_env_var(env, "PWD");
 		if (dir == NULL)
-			dir = getcwd(NULL, 0);
+			dir = my_getcwd();
 		else
 			dir = ft_strdup(dir);
 		if (dir != NULL)
 			env = set_env_var(env, "OLDPWD", dir);
 		if (dir != NULL)
-			dir = getcwd(NULL, 0);
+			dir = my_getcwd();
 		if (dir != NULL)
 			env = set_env_var(env, "PWD", dir);
 		free(prompt->dir);

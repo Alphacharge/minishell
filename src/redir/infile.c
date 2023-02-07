@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 15:11:09 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/07 20:22:00 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*check if the input is the last one*/
-static int last_input(t_redir *redir)
+static int	last_input(t_redir *redir)
 {
 	if (redir == NULL)
 		return (0);

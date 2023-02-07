@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:33 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/07 20:13:13 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,40 +82,9 @@ static char	*add_arg(t_cmd *cmd, char *s)
 	return (s);
 }
 
-/*Creates an empty t_cmd node.*/
-static t_cmd	*create_cmd(t_data *data)
+/*Iterates over string and splits it into fitting structs.*/
+static int	split_input(char *s, t_cmd *cmd, t_data *data)
 {
-	t_cmd	*cmd;
-
-	cmd = ft_calloc(1, sizeof(t_cmd));
-	if (cmd == NULL)
-		return (ft_error("malloc", NULL, 1), NULL);
-	cmd->argv = NULL;
-	cmd->data = data;
-	cmd->name = NULL;
-	cmd->param = NULL;
-	cmd->next = NULL;
-	cmd->prev = NULL;
-	cmd->redir = NULL;
-	cmd->here = false;
-	cmd->type = EXEC;
-	cmd->fds[0] = FD_UNUSED;
-	cmd->fds[1] = FD_UNUSED;
-	cmd->reds[0] = FD_UNUSED;
-	cmd->reds[1] = FD_UNUSED;
-	return (cmd);
-}
-
-/*Converts the input string s to a linked list and returns head node.*/
-t_cmd	*input_to_lst(char *s, t_data *data)
-{
-	t_cmd	*head;
-	t_cmd	*current;
-
-	if (s == NULL || *s == 0)
-		return (NULL);
-	head = create_cmd(data);
-	current = head;
 	while (*s != 0)
 	{
 		s = null_whitespace(s);
@@ -123,21 +92,32 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 			break ;
 		if (*s == '>' || *s == '<')
 		{
-			s = new_redir(current, s);
+			s = new_redir(cmd, s);
 			if (s == NULL)
-				return (ft_error(NULL, NULL, 10), free_cmds_error(head));
+				return (EXIT_FAILURE);
 		}
 		else if (*s == '|')
 		{
-			if (current->name == NULL)
-				return (ft_error(NULL, NULL, 10), free_cmds_error(head));
-			current->next = create_cmd(data);
-			current->next->prev = current;
-			current = current->next;
+			if (cmd->name == NULL)
+				return (EXIT_FAILURE);
+			cmd->next = create_cmd(data);
+			cmd->next->prev = cmd;
+			cmd = cmd->next;
 			s = null_increment(s);
 		}
 		else
-			s = add_arg(current, s);
+			s = add_arg(cmd, s);
 	}
-	return (head);
+	return (EXIT_SUCCESS);
+}
+
+/*Converts the input string s to a linked list and returns head node.*/
+t_cmd	*input_to_lst(char *s, t_data *data)
+{
+	if (s == NULL || *s == 0)
+		return (NULL);
+	data->cmd_head = create_cmd(data);
+	if (split_input(s, data->cmd_head, data) != 0)
+		return (ft_error(NULL, NULL, 10), free_cmds_error(data->cmd_head));
+	return (data->cmd_head);
 }
