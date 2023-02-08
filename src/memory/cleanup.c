@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/08 11:24:21 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:37:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_redirs(t_redir *current)
 	while (current != NULL)
 	{
 		prev = current;
-		free(current->file);
 		current = current->next;
 		free (prev);
 	}
