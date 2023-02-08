@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 18:42:56 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:45:01 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	find_executable(t_cmd *cmd)
 		|| ft_strcmp("~", cmd->name) == 0)
 		return (ft_error(NULL, cmd->name, 126));
 	if (stat(cmd->name, &info) == 0 && S_ISREG(info.st_mode) \
-		&& (cmd->name[0] == '.' || cmd->name[0] == '/' ))
+		&& ft_posinset('/', cmd->name) > -1)
 	{
 		if (access(cmd->name, F_OK) < 0 || access(cmd->name, X_OK) < 0)
 			return (ft_error(NULL, cmd->name, 1));
