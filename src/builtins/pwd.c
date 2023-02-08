@@ -3,22 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 10:32:18 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:46 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:28:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*accepts no args*/
-int	pwd(char **argv)
+int	pwd(void)
 {
 	char	*dir;
 
-	if (argv[1] != NULL)
-		return (ft_error("minishell: pwd", NULL, 3));
 	dir = getcwd(NULL, 0);
 	if (dir == NULL)
 		write(1, "\n", 1);

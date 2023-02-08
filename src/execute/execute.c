@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 10:18:15 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:28:22 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 	if (cmd->argv[0][0] == 'c')
 		return (cd(cmd->argv, cmd->data->env, prompt));
 	else if (cmd->argv[0][0] == 'p')
-		return (pwd(cmd->argv));
+		return (pwd());
 	else if (cmd->argv[0][0] == 'u')
 		return (unset(cmd->argv, cmd->data));
 	else if (ft_strcmp(cmd->argv[0], "echo") == 0)

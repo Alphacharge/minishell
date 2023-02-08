@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 10:43:41 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 13:28:32 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		env(char **argv, t_env *env);
 int		shell_exit(char **argv);
 int		export(int argc, char **argv, t_data *data);
 void	export_print(t_env *env);
-int		pwd(char **argv);
+int		pwd(void);
 int		unset(char **argv, t_data *data);
 
 //Environment
