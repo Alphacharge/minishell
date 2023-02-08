@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expansion.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 20:13:01 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:10:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static char	**var_array(char *s, int n, t_data *data)
 {
 	char	**array;
 
+	if (data->exitstatus != NULL)
+		data->exitstatus = ft_free(data->exitstatus);
 	data->exitstatus = ft_itoa(g_exit_status);
 	array = ft_calloc(n + 1, sizeof (char *));
 	if (array == NULL)

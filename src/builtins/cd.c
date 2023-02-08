@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 11:01:12 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 17:18:56 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	cd(char **argv, t_env *env, t_prompt *prompt)
 	if (dir == NULL || ft_strcmp(dir, "~") == 0)
 	{
 		dir = get_env_var(env, "HOME");
+		if (dir == NULL)
+			return (ft_error("minishell: cd", dir, 5));
 		ret = chdir(dir);
 	}
 	else if (argv[2] != NULL)
