@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 17:28:07 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 17:38:40 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static t_data	*initialize_minishell(char **envp)
 		return (NULL);
 	data->env = extract_env(envp);
 	data->prompt = init_prompt(data->env);
-	data->hist = NULL;
 	data->cmd_head = NULL;
 	data->input = NULL;
 	data->exitstatus = NULL;
