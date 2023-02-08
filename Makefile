@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: humbi <humbi@student.42.fr>                +#+  +:+       +#+         #
+#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2023/01/28 15:16:42 by humbi            ###   ########.fr        #
+#    Updated: 2023/02/07 20:09:43 by fkernbac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,9 @@ SRC_F	+=	execute.c
 SRC_F	+=	cleanup.c
 SRC_F	+=
 SRC_F	+=
-SRC_F	+=	parser.c
-SRC_F	+=	parsing_utils.c var_expansion.c var_utils.c input_list.c
+SRC_F	+=	parser.c parsing_utils.c
+SRC_F	+=	var_expansion.c var_utils.c remove_quotes.c quote_utils.c
+SRC_F	+=	input_list.c create_cmd.c
 SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c export_print.c
 SRC_F	+=	redir.c heredoc.c infile.c outfile.c filedescriptors.c

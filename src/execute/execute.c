@@ -6,7 +6,11 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/02/06 18:02:59 by rbetz            ###   ########.fr       */
+=======
+/*   Updated: 2023/02/07 20:29:09 by fkernbac         ###   ########.fr       */
+>>>>>>> origin/fk_bugfix
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +56,7 @@ static int	close_stdout(t_cmd *cmd, int ret)
 {
 	close_reds_fds(cmd);
 	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
-			ft_error(NULL, NULL, 9);
+		ft_error(NULL, NULL, 9);
 	close(cmd->stdoutsaver);
 	return (ret);
 }

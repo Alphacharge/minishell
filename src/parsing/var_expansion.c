@@ -6,90 +6,64 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:52:36 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/04 16:07:00 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/07 20:13:01 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Returns pointer to first character after closing single quote or null byte.*/
-static char	*skip_single_quotes(char *s)
+/*Returns non-allocated pointer to value of given variable name.*/
+static char	*pointer_to_var(char *s, t_data *data)
 {
-	if (*s == '\'')
-		s++;
-	else
-		return (s);
-	while (*s != '\0' && *s != '\'')
-		s++;
-	if (*s == '\'')
-		s++;
-	return (s);
+	char	*var_name;
+	char	*var_value;
+
+	if (*s == '?')
+		return (data->exitstatus);
+	var_name = alloc_var_name(s);
+	var_value = get_env_var(data->env, var_name);
+	if (var_value == NULL)
+		var_value = get_terminator(s);
+	var_name = ft_free(var_name);
+	return (var_value);
 }
 
-/*Returns pointer to next variable or quote character.*/
-static char	*skip_to_var_token(char *s)
+static void	fill_var_array(char *s, char **array, t_data *data)
 {
-	while (*s != '\0')
+	int		i;
+	int		quote_status;
+
+	i = 0;
+	quote_status = -1;
+	if (is_var(s) == 0)
+		array[i++] = s;
+	while (*s != 0)
 	{
-		if (is_var(s) == 1 || *s == '\'' || *s == '\"')
-			return (s);
-		s++;
+		s = skip_to_var_token(s);
+		s = skip_quotes(s, &quote_status);
+		if (is_var(s) == 1)
+		{
+			s = null_increment(s);
+			array[i++] = pointer_to_var(s, data);
+			s = skip_var(s);
+			if (is_var(s) == 0 && *s != 0)
+				array[i++] = s;
+		}
 	}
-	return (s);
+	array[i] = NULL;
 }
 
 /*Creates an array of pointers to variable values and input strings that can
 be joined to a single string.*/
 static char	**var_array(char *s, int n, t_data *data)
 {
-	int		i;
-	char	*var_name;
 	char	**array;
-	int		quotes;
 
-	i = 0;
-	quotes = -1;
 	data->exitstatus = ft_itoa(g_exit_status);
 	array = ft_calloc(n + 1, sizeof (char *));
 	if (array == NULL)
 		return (NULL);
-	if (is_var(s) == 0)
-		array[i++] = s;
-	while (*s != 0)
-	{
-		s = skip_to_var_token(s);
-		while (*s == '\"')
-		{
-			quotes *= -1;
-			s++;
-		}
-		while (*s == '\'' && quotes == -1)
-			s = skip_single_quotes(s);
-		while (*s == '\'' && quotes == 1)
-			s++;
-		if (is_var(s) == 1)
-		{
-			while (is_var(s) == 1)
-			{
-				s = null_increment(s);
-				if (*s == '?')
-					array[i] = data->exitstatus;
-				else
-				{
-					var_name = alloc_var_name(s);
-					array[i] = get_env_var(data->env, var_name);
-					if (array[i] == NULL)
-						array[i] = get_terminator(s);
-					var_name = ft_free(var_name);
-				}
-				i++;
-				s = skip_var(s);
-			}
-			if (*s != 0)
-				array[i++] = s;
-		}
-	}
-	array[i] = NULL;
+	fill_var_array(s, array, data);
 	return (array);
 }
 
@@ -97,24 +71,16 @@ static char	**var_array(char *s, int n, t_data *data)
 static int	count_var_strings(char *s)
 {
 	int	n;
-	int	quotes;
+	int	quote_status;
 
 	n = 1;
+	quote_status = -1;
 	if (is_var(s) == 1)
 		n = 0;
-	quotes = -1;
 	while (*s != '\0')
 	{
 		s = skip_to_var_token(s);
-		while (*s == '\"')
-		{
-			quotes *= -1;
-			s++;
-		}
-		while (*s == '\'' && quotes == -1)
-			s = skip_single_quotes(s);
-		while (*s == '\'' && quotes == 1)
-			s++;
+		s = skip_quotes(s, &quote_status);
 		if (is_var(s) == 1)
 		{
 			while (is_var(s) == 1)

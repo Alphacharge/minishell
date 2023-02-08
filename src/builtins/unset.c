@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:36 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/06 18:02:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:50:04 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	varname_error(char *var)
 {
-	if ( *var == 0 || *var == '$' || *var == '?' || *skip_var(var) != '\0')
+	if (*var == 0 || *var == '$' || *var == '?' || *skip_var(var) != '\0')
 		return (ft_error("minishell: unset", var, 6));
 	return (0);
 }

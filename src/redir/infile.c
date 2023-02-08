@@ -6,14 +6,14 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 10:13:54 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/06 15:11:33 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 09:50:13 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*check if the input is the last one*/
-static int last_input(t_redir *redir)
+static int	last_input(t_redir *redir)
 {
 	if (redir == NULL)
 		return (0);

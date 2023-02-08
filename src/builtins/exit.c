@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:33 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/04 15:26:16 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:43:15 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	shell_exit(char **argv)
 	if (argv == NULL)
 		return (EXIT_FAILURE);
 	if (argv[1] == NULL)
-		write(1, "exit\n", 5);
+		write(2, "exit\n", 5);
 	else
 	{
 		write(2, "exit\n", 5);

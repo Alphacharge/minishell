@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/30 16:54:17 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:59:47 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void	set_exec_signals(void)
 	sigemptyset(&action.sa_mask);
 	action.sa_handler = signal_ignore;
 	action.sa_flags = 0;
-	// sigaddset(&action.sa_mask, SIGINT);
-	// sigaddset(&action.sa_mask, SIGQUIT);
 	if (sigaction(SIGINT, &action, NULL) < 0
 		|| sigaction(SIGQUIT, &action, NULL) < 0)
 		ft_error("minishell: executor signals", NULL, 1);
@@ -78,8 +76,6 @@ void	set_rl_signals(void)
 	sigemptyset(&action.sa_mask);
 	action.sa_handler = signal_redisplay;
 	action.sa_flags = 0;
-	// sigaddset(&action.sa_mask, SIGINT);
-	// sigaddset(&action.sa_mask, SIGQUIT);
 	if (sigaction(SIGINT, &action, NULL) < 0
 		|| sigaction(SIGQUIT, &action, NULL) < 0)
 		ft_error("minishell: readline signals", NULL, 1);
