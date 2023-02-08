@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+         #
+#    By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/30 12:38:23 by rbetz             #+#    #+#              #
-#    Updated: 2023/02/07 20:09:43 by fkernbac         ###   ########.fr        #
+#    Updated: 2023/02/08 11:08:58 by rbetz            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,6 @@ NAME	:=	minishell
 ###			###			COMPABILITY		###			###
 OS		:=	$(shell uname)
 BREWU	:=	/Users/$(USER)/.brewconfig.zsh
-
-###			###			MINISHELL		###			###
-CONFIG	:=	./.ms_config
 
 ###			###			COMPILER		###			###
 CC		:=	cc
@@ -47,17 +44,13 @@ VPATH	:=	src/ src/builtins/ src/environment/ src/errorhandling/ src/execute/ \
 			src/parsing/ src/redir/ src/signals/ src/utils/
 
 SRC_F	:=	minishell.c
-SRC_F	+=
 SRC_F	+=	environment.c path.c get_set_env.c print_env.c
 SRC_F	+=	errorhandling.c
 SRC_F	+=	execute.c
 SRC_F	+=	cleanup.c
-SRC_F	+=
-SRC_F	+=
 SRC_F	+=	parser.c parsing_utils.c
 SRC_F	+=	var_expansion.c var_utils.c remove_quotes.c quote_utils.c
 SRC_F	+=	input_list.c create_cmd.c
-SRC_F	+=
 SRC_F	+=	cd.c echo.c env.c exit.c export.c pwd.c unset.c export_print.c
 SRC_F	+=	redir.c heredoc.c infile.c outfile.c filedescriptors.c
 SRC_F	+=	dup_fds.c
@@ -108,14 +101,14 @@ $(OBJ_D):
 $(CONFIG):
 	@if [ ! -f "$(CONFIG)" ]; then \
 		if [ "$(OS)" = "Linux" ]; then \
-			apt-get install -y libreadline-dev >> /dev/null 2>&1 && touch $(CONFIG) \
+			apt-get install -y libreadline-dev >> /dev/null 2>&1 \
 		;else \
 			if [ -f $(BREWU) ]; then \
 				echo "check brew for readline"; \
-				brew install readline >> /dev/null 2>&1 && touch $(CONFIG) \
+				brew install readline >> /dev/null 2>&1 \
 			;else \
 				curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | bash; \
-				brew install readline >> /dev/null 2>&1 && touch $(CONFIG); \
+				brew install readline >> /dev/null 2>&1; \
 			fi; \
 		fi; \
 	fi;

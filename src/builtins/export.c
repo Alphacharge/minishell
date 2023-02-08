@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 09:54:35 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:18:53 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	export(int argc, char **argv, t_data *data)
 		if (is_valid_var(argv[i]))
 			control_structure(argv[i], data->env);
 		else
-			add_new_env(name, ft_strdup(""), data->env);
+			return (ft_error("minishell: export", argv[i], 6));
 		i++;
 	}
 	return (EXIT_SUCCESS);

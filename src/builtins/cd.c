@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/07 11:57:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:01:12 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +19,7 @@ static char	*my_getcwd(void)
 	dir = getcwd(NULL, 0);
 	if (dir == NULL)
 	{
-		ft_putstr_fd("cd: error retrieving current directory: getcwd: ",2);
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
 		ft_putstr_fd("cannot access parent directories: ", 2);
 		ft_putstr_fd("No such file or directory\n", 2);
 		dir = ft_strdup("");

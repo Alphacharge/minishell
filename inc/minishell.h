@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 09:49:39 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 10:43:41 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include "structs.h"
 
 //Globals
-int		g_exit_status;
+extern int	g_exit_status;
 
 //Builtins
 int		cd(char **argv, t_env *env, t_prompt *prompt);

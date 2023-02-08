@@ -3,32 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   errorhandling.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:29:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/30 18:02:07 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/08 10:57:09 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*Prints Minishell/function:filename:message/strerror to stderr and returns 1.*/
-int	ft_error(char *function, char *filename, int ernum)
+static int	ft_error_num(int ernum)
 {
-	if (function == NULL)
-		ft_putstr_fd("minishell: ", 2);
-	else
-	{
-		ft_putstr_fd(function, 2);
-		ft_putstr_fd(": ", 2);
-	}
-	if (ernum == 1 || ernum == 2)
-		perror(filename);
-	else if (filename != NULL)
-	{
-		ft_putstr_fd(filename, 2);
-		ft_putstr_fd(": ", 2);
-	}
 	if (ernum == 3)
 	{
 		ft_putstr_fd("too many arguments\n", 2);
@@ -52,7 +37,12 @@ int	ft_error(char *function, char *filename, int ernum)
 		ft_putstr_fd("syntax error\n", 2);
 		ernum = 2;
 	}
-	else if (ernum == 11)
+	return (ernum);
+}
+
+static int	ft_error_num2(int ernum)
+{
+	if (ernum == 11)
 	{
 		ft_putstr_fd("filename argument required\n", 2);
 		ernum = 2;
@@ -66,6 +56,28 @@ int	ft_error(char *function, char *filename, int ernum)
 		ft_putstr_fd("invalid argument to exit\n", 2);
 		ernum = 255;
 	}
+	return (ernum);
+}
+
+/*Prints Minishell/function:filename:message/strerror to stderr and returns 1.*/
+int	ft_error(char *function, char *filename, int ernum)
+{
+	if (function == NULL)
+		ft_putstr_fd("minishell: ", 2);
+	else
+	{
+		ft_putstr_fd(function, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	if (ernum == 1 || ernum == 2)
+		perror(filename);
+	else if (filename != NULL)
+	{
+		ft_putstr_fd(filename, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ernum = ft_error_num(ernum);
+	ernum = ft_error_num2(ernum);
 	g_exit_status = ernum;
 	return (g_exit_status);
 }

@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 14:04:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/01/28 14:52:25 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/08 11:03:23 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	print(char **argv, int i)
+{
+	ft_putstr_fd(argv[i], 1);
+	i++;
+	if (argv[i] != NULL)
+		write(1, " ", 1);
+	return (i);
+}
 
 /*Will ignore option -n if it is not the first parameter. Prints every argument
 to standard output, separated by a space.*/
@@ -36,12 +45,7 @@ int	echo(char **argv)
 	if (n == false)
 		i = 1;
 	while (argv[i] != NULL)
-	{
-		ft_putstr_fd(argv[i], 1);
-		i++;
-		if (argv[i] != NULL)
-			write(1, " ", 1);
-	}
+		i = print(argv, i);
 	if (n == false)
 		write(1, "\n", 1);
 	return (0);
