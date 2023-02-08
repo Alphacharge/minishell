@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 10:43:55 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/08 17:28:07 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_data	*initialize_minishell(char **envp)
 		return (NULL);
 	data->env = extract_env(envp);
 	data->prompt = init_prompt(data->env);
-	data->hist = init_history();
+	data->hist = NULL;
 	data->cmd_head = NULL;
 	data->input = NULL;
 	data->exitstatus = NULL;
@@ -71,6 +71,7 @@ static int	interactive_mode(t_data *data)
 	char	*input;
 
 	ret = -1;
+	data->hist = init_history();
 	while (ret < 0)
 	{
 		set_rl_signals();
