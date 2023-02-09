@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:42:16 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/09 09:58:02 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:27:22 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*remove_quotes(char *s)
 	i = -1;
 	if (s == NULL)
 		return (NULL);
-	if (*s == 0)
+	if (*s == '\0')
 		return (ft_free(s));
 	overwrite_quotes(s);
 	new = ft_calloc(ft_strlen(s) + 1, sizeof(char));

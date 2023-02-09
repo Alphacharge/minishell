@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/09 10:01:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:28:29 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	**create_argv(t_cmd *cmd, t_data *data)
 		return (NULL);
 	cmd->name = remove_quotes(expand_envvars(cmd->name, data));
 	if (cmd->name == NULL)
-		return (NULL);
+		return (ft_free(cmd->argv), NULL);
 	cmd->argv[0] = cmd->name;
 	while (current != NULL)
 	{
