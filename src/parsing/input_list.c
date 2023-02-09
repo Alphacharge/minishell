@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 20:13:13 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:26:04 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static char	*new_redir(t_cmd *cmd, char *s)
 
 	r = ft_calloc(1, sizeof(t_redir));
 	if (r == NULL)
-		return (ft_error("malloc", NULL, 1), NULL);
+		return (cmd->data->exitstatus = ft_error("malloc", NULL, 1), NULL);
+	r->file = NULL;
 	r->next = NULL;
 	if (*s == '<' && *(s + 1) == '<')
 		r->type = HERE;
@@ -118,6 +119,10 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 		return (NULL);
 	data->cmd_head = create_cmd(data);
 	if (split_input(s, data->cmd_head, data) != 0)
-		return (ft_error(NULL, NULL, 10), free_cmds_error(data->cmd_head));
+	{
+		data->exitstatus = ft_error(NULL, NULL, 10);
+		free_cmds_error(data->cmd_head);
+		return (NULL);
+	}
 	return (data->cmd_head);
 }

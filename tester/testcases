@@ -249,3 +249,24 @@ echo '"---$HOME---"'
 echo "'---$HOME---''"
 echo e'i'"'n'"s
 echo "test part" | cut -d' ' -f1
+ls
+ls -la
+" ls     -la   "
+ls "   -l   -a   "
+' ls     -la   '
+ls '   -l   -a   '
+ls > redirect
+ls >redirect
+ls> redirect
+ls>redirect
+ls > redirect -la
+ls < redirect -la
+ls >> redirect -la
+ls > redirect > redirect2
+echo '$USER' \$USER "$USER" $USER
+echo $
+echo 'foo " \' bar
+echo "foo \" bar ' "   baz
+echo \\ foo\ bar \\\\\\
+echo \
+unset TES;T

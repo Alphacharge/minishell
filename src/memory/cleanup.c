@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:29 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/09 19:25:54 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	free_redirs(t_redir *current)
 	while (current != NULL)
 	{
 		prev = current;
+		ft_free(current->file);
 		current = current->next;
 		free (prev);
 	}
@@ -41,11 +42,19 @@ within.*/
 void	*free_cmds_error(t_cmd *cmd)
 {
 	t_cmd	*prev;
+	t_redir	*prev_redir;
+	t_redir	*current_redir;
 
 	while (cmd != NULL)
 	{
 		free_params(cmd->param);
-		free_redirs(cmd->redir);
+		current_redir = cmd->redir;
+		while (current_redir != NULL)
+		{
+			prev_redir = current_redir;
+			current_redir = current_redir->next;
+			ft_free(prev_redir);
+		}
 		prev = cmd;
 		cmd = cmd->next;
 		ft_free(prev);
@@ -80,6 +89,5 @@ void	ms_cleanup(t_data *data)
 	free(data->prompt->prompt);
 	free(data->prompt->dir);
 	free(data->prompt);
-	ft_free(data->exitstatus);
 	free(data);
 }

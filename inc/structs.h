@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/07 20:27:19 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:24:58 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_data
 	char			*input;
 	struct s_prompt	*prompt;
 	struct s_hist	hist;
-	char			*exitstatus;
+	int				exitstatus;
 	struct s_env	*env;
 	struct s_cmd	*cmd_head;
 }					t_data;

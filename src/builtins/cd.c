@@ -4,10 +4,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/07 11:57:54 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/09 19:18:38 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 		dir = get_env_var(env, "PWD");
 		if (dir == NULL)
 			dir = my_getcwd();
-		else
-			dir = ft_strdup(dir);
 		if (dir != NULL)
 			env = set_env_var(env, "OLDPWD", dir);
 		if (dir != NULL)

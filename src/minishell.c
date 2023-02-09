@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/04 16:01:47 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 19:27:41 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static t_data	*initialize_minishell(char **envp)
 {
 	t_data	*data;
 
-	g_exit_status = 0;
 	data = ft_calloc(1, sizeof(t_data));
 	if (data == NULL)
 		return (NULL);
@@ -41,7 +40,7 @@ static t_data	*initialize_minishell(char **envp)
 	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
-	data->exitstatus = NULL;
+	data->exitstatus = 0;
 	if (get_env_var(data->env, "SHLVL") != NULL)
 		set_env_var(data->env, "SHLVL", \
 			ft_itoa(ft_atoi(get_env_var(data->env, "SHLVL")) + 1));
@@ -56,10 +55,21 @@ static int	commandline_mode(char *input, t_data *data)
 	set_exec_signals();
 	data->cmd_head = parse(input, data);
 	exitstatus = execute_list(data->cmd_head, data);
+	if (exitstatus == -1)
+		exitstatus = data->exitstatus;
 	free_cmds(data->cmd_head);
 	if (exitstatus < 0)
-		return (g_exit_status);
+		return (exitstatus);
 	return (exitstatus);
+}
+
+static void	termios_setup(void)
+{
+	struct termios	t;
+
+	tcgetattr(0, &t);
+	t.c_iflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
 }
 
 /*Reads from input and returns only if exit command is entered.*/
@@ -69,6 +79,8 @@ static int	interactive_mode(t_data *data)
 	char	*input;
 
 	ret = -1;
+	data->hist = init_history();
+	termios_setup();
 	while (ret < 0)
 	{
 		set_rl_signals();
