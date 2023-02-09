@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:42:16 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 18:52:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 09:58:02 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ char	*remove_quotes(char *s)
 	int		i;
 
 	i = -1;
+	if (s == NULL)
+		return (NULL);
 	if (*s == 0)
 		return (ft_free(s));
 	overwrite_quotes(s);

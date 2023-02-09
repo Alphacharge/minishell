@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/08 17:45:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:01:11 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ int	find_executable(t_cmd *cmd)
 	if ((stat(cmd->name, &info) == 0 && S_ISDIR(info.st_mode)) \
 		|| ft_strcmp("~", cmd->name) == 0)
 		return (ft_error(NULL, cmd->name, 126));
-	if (stat(cmd->name, &info) == 0 && S_ISREG(info.st_mode) \
-		&& ft_posinset('/', cmd->name) > -1)
+	// if (stat(cmd->name, &info) == 0 && S_ISREG(info.st_mode) 
+	if (ft_posinset('/', cmd->name) > -1)
 	{
 		if (access(cmd->name, F_OK) < 0 || access(cmd->name, X_OK) < 0)
-			return (ft_error(NULL, cmd->name, 1));
+			return (ft_error(NULL, cmd->name, 127));
 		return (0);
 	}
 	cmd->argv[0] = get_path(cmd->name, cmd->data->env);
@@ -76,6 +76,8 @@ static char	**create_argv(t_cmd *cmd, t_data *data)
 	if (cmd->argv == NULL)
 		return (NULL);
 	cmd->name = remove_quotes(expand_envvars(cmd->name, data));
+	if (cmd->name == NULL)
+		return (NULL);
 	cmd->argv[0] = cmd->name;
 	while (current != NULL)
 	{
