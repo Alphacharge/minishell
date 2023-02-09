@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 20:13:13 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 10:51:55 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	*new_redir(t_cmd *cmd, char *s)
 		s = null_increment(s);
 	s = null_increment(s);
 	s = null_whitespace(s);
-	if (is_token(*s) == true || *s == 0)
+	if (is_token(*s) == true || *s == '\0')
 		return (ft_free(r));
 	r->file = s;
 	append_redir(cmd, r);
@@ -66,7 +66,10 @@ static char	*add_arg(t_cmd *cmd, char *s)
 	if (*s == '\0' || cmd == NULL)
 		return (s);
 	if (cmd->name == NULL)
-		return (cmd->name = s, skip_argument(s));
+	{
+		cmd->name = s;
+		return (skip_argument(s));
+	}
 	param = ft_calloc(1, sizeof(t_param));
 	param->arg = s;
 	param->next = NULL;
@@ -85,10 +88,10 @@ static char	*add_arg(t_cmd *cmd, char *s)
 /*Iterates over string and splits it into fitting structs.*/
 static int	split_input(char *s, t_cmd *cmd, t_data *data)
 {
-	while (*s != 0)
+	while (*s != '\0')
 	{
 		s = null_whitespace(s);
-		if (*s == 0)
+		if (*s == '\0')
 			break ;
 		if (*s == '>' || *s == '<')
 		{
@@ -114,7 +117,7 @@ static int	split_input(char *s, t_cmd *cmd, t_data *data)
 /*Converts the input string s to a linked list and returns head node.*/
 t_cmd	*input_to_lst(char *s, t_data *data)
 {
-	if (s == NULL || *s == 0)
+	if (s == NULL || *s == '\0')
 		return (NULL);
 	data->cmd_head = create_cmd(data);
 	if (split_input(s, data->cmd_head, data) != 0)

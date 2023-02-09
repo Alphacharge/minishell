@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:44:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:53:46 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/09 10:47:25 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,11 @@ int	is_token(char c)
 Returns pointer to next non-whitespace character.*/
 char	*null_whitespace(char *s)
 {
-	if (s == NULL || *s == 0)
+	if (s == NULL || *s == '\0')
 		return (s);
 	while (ft_isspace(*s) == 1)
 	{
-		*s = 0;
+		*s = '\0';
 		s++;
 	}
 	return (s);
