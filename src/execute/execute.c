@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 13:28:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 13:00:07 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ int	execute_list(t_cmd *lst, t_data *data)
 	{
 		if (ft_strcmp(cmd->argv[0], "exit") == 0)
 			return (shell_exit(cmd->argv));
-		g_exit_status = exec_cmd(cmd, data->prompt);
+		data->exitstatus = exec_cmd(cmd, data->prompt);
 		cmd = cmd->next;
 	}
-	while ((waitpid(-1, &g_exit_status, WNOHANG)) != -1)
+	while ((waitpid(-1, &data->exitstatus, WNOHANG)) != -1)
 	{
-		if (WIFEXITED(g_exit_status) == true)
-			g_exit_status = WEXITSTATUS(g_exit_status);
+		if (WIFEXITED(data->exitstatus) == true)
+			data->exitstatus = WEXITSTATUS(data->exitstatus);
 	}
 	return (-1);
 }

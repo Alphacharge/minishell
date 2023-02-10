@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 09:49:53 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 12:59:03 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_data
 	char			*input;
 	struct s_prompt	*prompt;
 	struct s_hist	hist;
-	char			*exitstatus;
+	int				exitstatus;
 	struct s_env	*env;
 	struct s_cmd	*cmd_head;
 }					t_data;

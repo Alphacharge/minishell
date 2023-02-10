@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/09 12:38:47 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 13:00:36 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,19 @@ within.*/
 void	*free_cmds_error(t_cmd *cmd)
 {
 	t_cmd	*prev;
+	t_redir	*prev_redir;
+	t_redir	*current_redir;
 
 	while (cmd != NULL)
 	{
 		free_params(cmd->param);
-		free_redirs(cmd->redir);
+		current_redir = cmd->redir;
+		while (current_redir != NULL)
+		{
+			prev_redir = current_redir;
+			current_redir = current_redir->next;
+			ft_free(prev_redir);
+		}
 		prev = cmd;
 		cmd = cmd->next;
 		ft_free(prev);
@@ -82,6 +90,5 @@ void	ms_cleanup(t_data *data)
 	free(data->prompt->prompt);
 	free(data->prompt->dir);
 	free(data->prompt);
-	ft_free(data->exitstatus);
 	free(data);
 }

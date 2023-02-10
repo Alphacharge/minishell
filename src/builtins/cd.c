@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/08 17:18:56 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 12:59:31 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 		dir = get_env_var(env, "PWD");
 		if (dir == NULL)
 			dir = my_getcwd();
-		else
-			dir = ft_strdup(dir);
 		if (dir != NULL)
 			env = set_env_var(env, "OLDPWD", dir);
 		if (dir != NULL)

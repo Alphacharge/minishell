@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 18:59:47 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:55:32 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,13 @@
 void	signal_ignore(int signum)
 {
 	if (signum == SIGQUIT)
-		write(1, "Quit: 3", 7);
-	write(1, "\n", 1);
+		write(2, "Quit: 3", 7);
+	write(2, "\n", 1);
 }
 
 //key inputs are still displayed
 void	signal_redisplay(int signum)
 {
-	if (signum == SIGQUIT)
-	{
-		rl_replace_line("  ", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		rl_replace_line("", 0);
-	}
 	if (signum == SIGINT)
 	{
 		rl_replace_line("  ", 0);
@@ -76,7 +69,7 @@ void	set_rl_signals(void)
 	sigemptyset(&action.sa_mask);
 	action.sa_handler = signal_redisplay;
 	action.sa_flags = 0;
-	if (sigaction(SIGINT, &action, NULL) < 0
-		|| sigaction(SIGQUIT, &action, NULL) < 0)
+	signal(SIGQUIT, SIG_IGN);
+	if (sigaction(SIGINT, &action, NULL) < 0)
 		ft_error("minishell: readline signals", NULL, 1);
 }

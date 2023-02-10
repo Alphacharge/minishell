@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:57:22 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/07 18:58:09 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/09 17:07:51 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*create_cmd(t_data *data)
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (cmd == NULL)
-		return (ft_error("malloc", NULL, 1), NULL);
+		return (set_error("malloc", NULL, 1, data), NULL);
 	cmd->argv = NULL;
 	cmd->data = data;
 	cmd->name = NULL;
