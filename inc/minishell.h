@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 14:17:18 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 14:23:45 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 # include <stdlib.h> 			// malloc, free, exit
-# include <unistd.h> // close, read, write, dup2, access, fork, pipe, execve
+# include <unistd.h>	// close, read, write, dup2, access, fork, pipe, execve
 # include <fcntl.h>				// open
 # include <sys/wait.h>			// wait, waitpid
 # include <stdio.h>				// fprintf(int fd, char *stringset, ...) perror
