@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: humbi <humbi@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 20:57:09 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/01/28 14:54:18 by humbi            ###   ########.fr       */
+/*   Updated: 2023/02/10 19:04:10 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	*free_ptr_array(void **array)
 	return (NULL);
 }
 
-/*Frees memory of n arguments if they are not pointing to NULL.
-Pointers are only freed, but not NULL pointers.*/
+/*Frees memory of n arguments if they are not pointing to NULL.*/
 void	free_multiple(int n, ...)
 {
 	va_list	args;
