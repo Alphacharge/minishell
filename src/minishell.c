@@ -6,13 +6,11 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 13:02:38 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 14:17:31 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	g_exit_status;
 
 /*Creates a dynamic prompt.*/
 static t_prompt	*init_prompt(t_env *env)
@@ -64,15 +62,6 @@ static int	commandline_mode(char *input, t_data *data)
 	return (exitstatus);
 }
 
-static void	termios_setup(void)
-{
-	struct termios	t;
-
-	tcgetattr(0, &t);
-	t.c_iflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &t);
-}
-
 /*Reads from input and returns only if exit command is entered.*/
 static int	interactive_mode(t_data *data)
 {
@@ -81,7 +70,6 @@ static int	interactive_mode(t_data *data)
 
 	ret = -1;
 	data->hist = init_history();
-	termios_setup();
 	while (ret < 0)
 	{
 		set_rl_signals();

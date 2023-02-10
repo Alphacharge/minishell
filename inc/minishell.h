@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 12:58:57 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 14:17:18 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <sys/stat.h>			//stat
 # include <sys/types.h>			//stat macros
 # include <signal.h>			//sigaction
-# include <termios.h>			//tcgetattr control character display
 
 # include "libft.h"
 # include "definitions.h"

@@ -1,0 +1,36 @@
+needs fixing (maybe):
+- OLDPWD will always appear in bash, even if it is not set
+- exit -> output to stderr
+- pwd multiple arguments
+- check global Variable (doesn't compile everywhere with linker)
+
+failing tests:
+
+>eins >>zwei echo >drei test		??????
+
+..									minishell's output better than bash, I won't change it
+cd '/////' 2>/dev/null				2> not implemented
+
+echo ~								~ not implemented
+echo " " " """ '''					unclosed quotes
+echo $USER$12USER$USER=4$USER12		'$1 not implemented
+unset TES;T							not fixed, semicolon not interpreted
+unset -TEST							not fixed, return value 2 for invalid option
+export T+=99								sounds unnecessary
+export -T=99 exit code 1 instead of 2		our export accepts no options
+export TE\ST=99								\ not required by subject
+
+How does Bash:
+https://medium.com/geekculture/an-overview-of-the-working-of-the-bash-shell-f063e7f09945
+
+1 Amount of Commands
+2 syntaxcheck for every command
+3 Variable expansion
+4 Filename expansion
+5 builtin or extern?
+6 redirections and pipes
+7 execution
+8
+9
+
+https://pubs.opengroup.org/onlinepubs/007904975/utilities/xcu_chap02.html
