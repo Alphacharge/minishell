@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 14:17:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 17:16:20 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static t_data	*initialize_minishell(char **envp)
 		return (NULL);
 	data->env = extract_env(envp);
 	data->prompt = init_prompt(data->env);
+	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
 	data->exitstatus = 0;
@@ -62,6 +63,15 @@ static int	commandline_mode(char *input, t_data *data)
 	return (exitstatus);
 }
 
+static void	termios_setup(void)
+{
+	struct termios	t;
+
+	tcgetattr(0, &t);
+	t.c_iflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
+}
+
 /*Reads from input and returns only if exit command is entered.*/
 static int	interactive_mode(t_data *data)
 {
@@ -70,6 +80,7 @@ static int	interactive_mode(t_data *data)
 
 	ret = -1;
 	data->hist = init_history();
+	termios_setup();
 	while (ret < 0)
 	{
 		set_rl_signals();
@@ -96,6 +107,8 @@ int	main(int argc, char **argv, char **envp)
 	int			ret;
 
 	data = initialize_minishell(envp);
+	if (argc > 3)
+		return (1);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0 && argv[2] != NULL)
 		ret = commandline_mode(argv[2], data);
 	else
