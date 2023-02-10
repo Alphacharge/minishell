@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 17:16:20 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:29:20 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static t_data	*initialize_minishell(char **envp)
 		return (NULL);
 	data->env = extract_env(envp);
 	data->prompt = init_prompt(data->env);
-	data->hist = init_history();
 	data->cmd_head = NULL;
 	data->input = NULL;
 	data->exitstatus = 0;
@@ -63,15 +62,6 @@ static int	commandline_mode(char *input, t_data *data)
 	return (exitstatus);
 }
 
-static void	termios_setup(void)
-{
-	struct termios	t;
-
-	tcgetattr(0, &t);
-	t.c_iflag &= ~ECHOCTL;
-	tcsetattr(0, TCSANOW, &t);
-}
-
 /*Reads from input and returns only if exit command is entered.*/
 static int	interactive_mode(t_data *data)
 {
@@ -80,7 +70,6 @@ static int	interactive_mode(t_data *data)
 
 	ret = -1;
 	data->hist = init_history();
-	termios_setup();
 	while (ret < 0)
 	{
 		set_rl_signals();
