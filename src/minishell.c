@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 14:17:31 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 17:29:20 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	main(int argc, char **argv, char **envp)
 	int			ret;
 
 	data = initialize_minishell(envp);
+	if (argc > 3)
+		return (1);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0 && argv[2] != NULL)
 		ret = commandline_mode(argv[2], data);
 	else
