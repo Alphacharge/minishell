@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/10 18:59:14 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:28:01 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	find_executable(t_cmd *cmd)
 	}
 	cmd->argv[0] = get_path(cmd->name, cmd->data->env);
 	if (cmd->argv[0] == NULL)
-		return (cmd->argv[0] = cmd->name, \
-			set_error(NULL, cmd->name, 127, cmd->data));
+	{
+		cmd->argv[0] = cmd->name;
+		return (set_error(NULL, cmd->name, 127, cmd->data));
+	}
 	cmd->name = ft_free(cmd->name);
 	return (0);
 }
@@ -91,6 +93,22 @@ static char	**create_argv(t_cmd *cmd, t_data *data)
 	return (cmd->argv);
 }
 
+static void	null_filenames(t_cmd *lst)
+{
+	t_redir	*tmp;
+
+	while (lst != NULL)
+	{
+		tmp = lst->redir;
+		while (tmp != NULL)
+		{
+			tmp->file = NULL;
+			tmp = tmp->next;
+		}
+		lst = lst->next;
+	}
+}
+
 t_cmd	*parse(char *s, t_data *data)
 {
 	t_cmd	*lst;
@@ -105,7 +123,7 @@ t_cmd	*parse(char *s, t_data *data)
 	{
 		current_cmd->argv = create_argv(current_cmd, data);
 		if (current_cmd->argv == NULL)
-			return (free_cmds(lst), NULL);
+			return (null_filenames(current_cmd), free_cmds(lst), NULL);
 		current_redir = current_cmd->redir;
 		while (current_redir != NULL)
 		{
