@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/10 14:15:44 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/10 18:59:14 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ t_cmd	*parse(char *s, t_data *data)
 	t_redir	*current_redir;
 
 	lst = input_to_lst(s, data);
+	if (lst == NULL || lst->name == NULL)
+		return (ft_free(lst));
 	current_cmd = lst;
 	while (current_cmd != NULL)
 	{
