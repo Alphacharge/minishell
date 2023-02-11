@@ -6,7 +6,7 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:03:07 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 17:29:20 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:55:00 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ int	main(int argc, char **argv, char **envp)
 	t_data		*data;
 	int			ret;
 
-	data = initialize_minishell(envp);
 	if (argc > 3)
 		return (1);
+	data = initialize_minishell(envp);
 	if (argc == 3 && ft_strcmp(argv[1], "-c") == 0 && argv[2] != NULL)
 		ret = commandline_mode(argv[2], data);
 	else
