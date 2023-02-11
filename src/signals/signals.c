@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 13:04:15 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/09 18:55:32 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:40:28 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	signal_redisplay(int signum)
 {
 	if (signum == SIGINT)
 	{
-		rl_replace_line("  ", 0);
-		rl_redisplay();
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
