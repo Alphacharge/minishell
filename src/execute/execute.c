@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 13:00:07 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 12:56:49 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 	pid_t	pid;
 
 	pid = INT32_MAX;
-	if (cmd->next == NULL && cmd->type == BLTIN)
+	if (cmd->prev == NULL && cmd->next == NULL && cmd->type == BLTIN)
 		return (close_stdout(cmd, exec_bltin(cmd, prompt)));
 	else
 	{
