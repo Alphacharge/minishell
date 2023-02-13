@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/13 15:25:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:56:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 	if (s == NULL || *s == '\0')
 		return (NULL);
 	data->cmd_head = create_cmd(data);
-	if (split_input(s, data->cmd_head, data) != 0)
+	if (split_input(s, data->cmd_head, data) != 0 || (!data->cmd_head && !data->cmd_head->name))
 	{
 		data->exitstatus = ft_error(NULL, NULL, 10);
 		free_cmds_error(data->cmd_head);
