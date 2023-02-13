@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 14:44:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 17:27:43 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	ms_cleanup(t_data *data);
 //Parsing
 t_cmd	*parse(char *s, t_data *data);
 t_cmd	*create_cmd(t_data *data);
+char	*new_redir(t_cmd *cmd, char *s);
 char	*expand_envvars(char *s, t_data *data);
 char	*skip_to_var_token(char *s);
 char	*skip_quotes(char *s, int *quotes);
