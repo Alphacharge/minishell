@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 14:23:11 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 17:51:23 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 19:22:21 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Takes new working directory path and updates minishell prompt.*/
+static void	update_prompt(char *pwd, t_prompt *prompt)
+{
+	free(prompt->dir);
+	prompt->dir = ft_last_word(pwd, '/', 0);
+	free(prompt->prompt);
+	prompt->prompt = multijoin(false, 8, GREEN, prompt->name, \
+		RED, prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
+}
 
 static char	*my_getcwd(void)
 {
@@ -31,12 +41,12 @@ static char	*my_getcwd(void)
 static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 {
 	char	*dir;
-	
+
 	dir = NULL;
 	if (var != NULL && env != NULL)
 	{
 		dir = get_env_var(env, "PWD");
-		if (dir != NULL)
+		if (dir == NULL)
 			return (env);
 		if (dir != NULL)
 			dir = ft_strdup(dir);
@@ -44,15 +54,12 @@ static t_env	*update_pwd(char *var, t_env *env, t_prompt *prompt)
 			dir = my_getcwd();
 		if (dir != NULL && get_env_var(env, "OLDPWD"))
 			env = set_env_var(env, "OLDPWD", dir);
-		if (dir != NULL)
-			dir = my_getcwd();
+		else
+			dir = ft_free(dir);
+		dir = my_getcwd();
 		if (dir != NULL)
 			env = set_env_var(env, "PWD", dir);
-		free(prompt->dir);
-		prompt->dir = ft_last_word(dir, '/', 0);
-		free(prompt->prompt);
-		prompt->prompt = multijoin(false, 8, GREEN, prompt->name, \
-			RED, prompt->seperator, YELL, prompt->dir, prompt->endl, WHITE);
+		update_prompt(dir, prompt);
 	}
 	return (env);
 }

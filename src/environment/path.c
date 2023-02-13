@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:46:33 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 13:06:21 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 19:12:09 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**get_path_var(t_env *env)
 	ptr = NULL;
 	while (env != NULL)
 	{
-		if (env->name != NULL  && ft_strncmp(env->name, "PATH", 4) == 0)
+		if (env->name != NULL && ft_strncmp(env->name, "PATH", 4) == 0)
 		{
 			ptr = ft_split(env->value, ':');
 			break ;

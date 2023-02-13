@@ -3,53 +3,53 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 14:22:42 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 19:34:34 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	close_stdout(t_cmd *cmd, int ret)
-{
-	close_reds_fds(cmd);
-	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
-		ft_error(NULL, NULL, 9);
-	close(cmd->stdoutsaver);
-	return (ret);
-}
-
-static int	close_stdin(t_cmd *cmd, int ret)
+static void	reset_fds(t_cmd *cmd)
 {
 	close_reds_fds(cmd);
 	if (dup2(cmd->stdinsaver, STDIN) < 0)
 		ft_error(NULL, NULL, 9);
 	close(cmd->stdinsaver);
-	return (ret);
+	close_reds_fds(cmd);
+	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
+		ft_error(NULL, NULL, 9);
+	close(cmd->stdoutsaver);
 }
 
+/*Executes builtin and resets fd.*/
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
+	int	ret;
+
+	ret = 0;
 	cmd->stdinsaver = dup(STDIN);
 	cmd->stdoutsaver = dup(STDOUT);
 	dup_reds_fds(cmd);
 	if (cmd->argv[0][0] == 'c')
-		return (cd(cmd->argv, cmd->data->env, prompt));
+		ret = cd(cmd->argv, cmd->data->env, prompt);
 	else if (cmd->argv[0][0] == 'p')
-		return (pwd());
+		ret = pwd();
 	else if (cmd->argv[0][0] == 'u')
-		return (unset(cmd->argv, cmd->data));
+		ret = unset(cmd->argv, cmd->data);
 	else if (ft_strcmp(cmd->argv[0], "echo") == 0)
-		return (echo(cmd->argv));
+		ret = echo(cmd->argv);
 	else if (ft_strcmp(cmd->argv[0], "export") == 0)
-		return (export(arraycount(cmd->argv), cmd->argv, cmd->data));
+		ret = export(arraycount(cmd->argv), cmd->argv, cmd->data);
 	else if (ft_strcmp(cmd->argv[0], "env") == 0)
-		return (env(cmd->argv, cmd->data->env));
-	return (1);
+		ret = env(cmd->argv, cmd->data->env);
+	reset_fds(cmd);
+	return (ret);
 }
 
+/*Child process routine. Runs execve or builtin.*/
 static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 {
 	char	**envp;
@@ -67,13 +67,14 @@ static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 	exit(EXIT_FAILURE);
 }
 
+/*Executes one cmd node. Only forks builtins if needed.*/
 static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = INT32_MAX;
 	if (cmd->prev == NULL && cmd->next == NULL && cmd->type == BLTIN)
-		return (close_stdout(cmd, close_stdin(cmd, exec_bltin(cmd, prompt))));
+		return (exec_bltin(cmd, prompt));
 	else
 	{
 		if (cmd->next != NULL)

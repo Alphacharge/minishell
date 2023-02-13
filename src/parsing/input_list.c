@@ -6,13 +6,11 @@
 /*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 16:49:45 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/13 17:26:06 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/13 19:42:46 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 /*Adds string as next parameter or as command name if no command is set yet.*/
 static char	*add_arg(t_cmd *cmd, char *s)
@@ -44,7 +42,7 @@ static char	*add_arg(t_cmd *cmd, char *s)
 }
 
 /*Iterates over string and splits it into fitting structs.*/
-static void	split_input(char *s, t_cmd *cmd, t_data *data)
+static int	split_input(char *s, t_cmd *cmd, t_data *data)
 {
 	while (*s != '\0')
 	{
@@ -52,9 +50,15 @@ static void	split_input(char *s, t_cmd *cmd, t_data *data)
 		if (*s == '\0')
 			break ;
 		if (*s == '>' || *s == '<')
+		{
 			s = new_redir(cmd, s);
+			if (s == NULL)
+				return (1);
+		}
 		else if (*s == '|')
 		{
+			if (cmd->name == NULL)
+				return (1);
 			cmd->next = create_cmd(data);
 			cmd->next->prev = cmd;
 			cmd = cmd->next;
@@ -63,6 +67,7 @@ static void	split_input(char *s, t_cmd *cmd, t_data *data)
 		else
 			s = add_arg(cmd, s);
 	}
+	return (0);
 }
 
 /*Checks entire linked list for possible input errors.*/
@@ -92,8 +97,8 @@ t_cmd	*input_to_lst(char *s, t_data *data)
 	if (s == NULL || *s == '\0')
 		return (NULL);
 	data->cmd_head = create_cmd(data);
-	split_input(s, data->cmd_head, data);
-	if (check_syntax(data->cmd_head) != 0)
+	if (split_input(s, data->cmd_head, data) != 0 \
+		||check_syntax(data->cmd_head) != 0)
 	{
 		data->exitstatus = ft_error(NULL, NULL, 10);
 		free_cmds_error(data->cmd_head);
