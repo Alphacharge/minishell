@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 13:14:35 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 12:59:03 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 13:53:47 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_cmd
 	int				reds[2];
 	bool			error;
 	bool			here;
+	int				stdinsaver;
 	int				stdoutsaver;
 	struct s_data	*data;
 	struct s_cmd	*next;

@@ -6,14 +6,33 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 12:56:49 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:22:42 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	close_stdout(t_cmd *cmd, int ret)
+{
+	close_reds_fds(cmd);
+	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
+		ft_error(NULL, NULL, 9);
+	close(cmd->stdoutsaver);
+	return (ret);
+}
+
+static int	close_stdin(t_cmd *cmd, int ret)
+{
+	close_reds_fds(cmd);
+	if (dup2(cmd->stdinsaver, STDIN) < 0)
+		ft_error(NULL, NULL, 9);
+	close(cmd->stdinsaver);
+	return (ret);
+}
+
 static int	exec_bltin(t_cmd *cmd, t_prompt *prompt)
 {
+	cmd->stdinsaver = dup(STDIN);
 	cmd->stdoutsaver = dup(STDOUT);
 	dup_reds_fds(cmd);
 	if (cmd->argv[0][0] == 'c')
@@ -48,22 +67,13 @@ static void	exec_child(t_cmd *cmd, t_prompt *prompt)
 	exit(EXIT_FAILURE);
 }
 
-static int	close_stdout(t_cmd *cmd, int ret)
-{
-	close_reds_fds(cmd);
-	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
-		ft_error(NULL, NULL, 9);
-	close(cmd->stdoutsaver);
-	return (ret);
-}
-
 static int	exec_cmd(t_cmd *cmd, t_prompt *prompt)
 {
 	pid_t	pid;
 
 	pid = INT32_MAX;
 	if (cmd->prev == NULL && cmd->next == NULL && cmd->type == BLTIN)
-		return (close_stdout(cmd, exec_bltin(cmd, prompt)));
+		return (close_stdout(cmd, close_stdin(cmd, exec_bltin(cmd, prompt))));
 	else
 	{
 		if (cmd->next != NULL)

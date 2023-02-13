@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 18:57:22 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/09 17:07:51 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:12:27 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_cmd	*create_cmd(t_data *data)
 	cmd->redir = NULL;
 	cmd->here = false;
 	cmd->type = EXEC;
+	cmd->stdinsaver = FD_UNUSED;
+	cmd->stdoutsaver = FD_UNUSED;
 	cmd->fds[0] = FD_UNUSED;
 	cmd->fds[1] = FD_UNUSED;
 	cmd->reds[0] = FD_UNUSED;

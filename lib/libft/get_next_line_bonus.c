@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 12:05:03 by rbetz             #+#    #+#             */
-/*   Updated: 2022/06/02 09:43:22 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 13:28:43 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	ft_posinset(char const c, char const *ptr)
 	int	i;
 
 	i = 0;
-	while (ptr[i] != c && ptr[i] != '\0')
+	while (ptr != NULL && ptr[i] != c && ptr[i] != '\0')
 		i++;
-	if (ptr[i] == c)
+	if (ptr != NULL && ptr[i] == c)
 		return (i);
 	else
 		return (-1);
