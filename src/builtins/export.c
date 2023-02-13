@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 15:47:11 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 17:47:06 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,46 +26,24 @@ static void	set_name_value(char **name, char **value, char *argv, int flag)
 	}
 }
 
-static void	add_new_env(t_env *env, char *name, char *value)
+static t_env	*add_new_env(t_env *env, char *name, char *value)
 {
 	t_env	*new;
-	t_env	*tmp;
 
-	tmp = env;
 	new = new_env();
 	if (new == NULL)
 		free_multiple(2, name, value);
 	new->name = name;
 	new->value = value;
-	new->next = NULL;
-	while (tmp != NULL && tmp->next != NULL)
-		tmp = tmp->next;
-	if (tmp == NULL)
-		env = new;
+	if (env != NULL)
+		new->next = env;
 	else
-		tmp->next = new;
+		new->next = NULL;
+	env = new;
+	return (env);
 }
-// static void	add_new_env(t_env *env, char *name, char *value)
-// {
-// 	t_env	*new;
-// 	// t_env	*tmp;
 
-// 	// tmp = env;
-// 	new = new_env();
-// 	if (new == NULL)
-// 		free_multiple(2, name, value);
-// 	new->name = name;
-// 	new->value = value;
-// 	new->next = env;
-// 	env = new;
-// 	// while (tmp != NULL && tmp->next != NULL)
-// 	// 	tmp = tmp->next;
-// 	// if (tmp == NULL)
-// 	// 	env = new;
-// 	// else
-// 	// 	tmp->next = new;
-// }
-static void	control_structure(char *argv, t_env *env)
+static t_env	*control_structure(char *argv, t_env *env)
 {
 	char	*name;
 	char	*value;
@@ -75,12 +53,13 @@ static void	control_structure(char *argv, t_env *env)
 	else
 		set_name_value(&name, &value, argv, 1);
 	if (get_env_var(env, name) == NULL)
-		add_new_env(env, name, value);
+		env = add_new_env(env, name, value);
 	else
 	{
 		set_env_var(env, name, value);
 		name = ft_free(name);
 	}
+	return (env);
 }
 
 int	export(int argc, char **argv, t_data *data)
@@ -93,7 +72,7 @@ int	export(int argc, char **argv, t_data *data)
 	while (i < argc)
 	{
 		if (is_valid_var(argv[i]))
-			control_structure(argv[i], data->env);
+			env = control_structure(argv[i], data->env);
 		else
 			return (ft_error("minishell: export", argv[i], 6));
 		i++;
