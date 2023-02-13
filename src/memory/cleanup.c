@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 18:52:46 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/10 13:00:36 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:25:45 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	*free_cmds_error(t_cmd *cmd)
 			current_redir = current_redir->next;
 			ft_free(prev_redir);
 		}
+		ft_free(prev_redir);
 		prev = cmd;
 		cmd = cmd->next;
 		ft_free(prev);

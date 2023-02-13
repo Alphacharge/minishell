@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/23 16:50:07 by fkernbac          #+#    #+#             */
-/*   Updated: 2023/02/11 15:28:01 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 15:35:30 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_cmd	*parse(char *s, t_data *data)
 
 	lst = input_to_lst(s, data);
 	if (lst == NULL || lst->name == NULL)
-		return (ft_free(lst));
+		return (null_filenames(lst), free_redirs(lst->redir), ft_free(lst));
 	current_cmd = lst;
 	while (current_cmd != NULL)
 	{
