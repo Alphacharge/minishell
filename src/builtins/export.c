@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 14:27:25 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 13:19:04 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static void	add_new_env(t_env *env, char *name, char *value)
 	new->next = NULL;
 	while (tmp != NULL && tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->next = new;
+	if (tmp = NULL)
+		env = new;
+	else
+		tmp->next = new;
 }
 
 static void	control_structure(char *argv, t_env *env)
