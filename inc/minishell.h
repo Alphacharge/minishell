@@ -6,7 +6,7 @@
 /*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/26 16:18:50 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/10 14:23:45 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 14:44:22 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	close_and_neg(int *fd);
 t_hist	init_history(void);
 
 //Memory
+void	free_redirs(t_redir *current);
 void	*free_cmds(t_cmd *cmd);
 void	*free_cmds_error(t_cmd *cmd);
 void	ms_cleanup(t_data *data);
