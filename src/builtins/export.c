@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 10:52:27 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 17:47:06 by rbetz            ###   ########.fr       */
+/*   Updated: 2023/02/13 17:57:16 by fkernbac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	export(int argc, char **argv, t_data *data)
 	while (i < argc)
 	{
 		if (is_valid_var(argv[i]))
-			env = control_structure(argv[i], data->env);
+			data->env = control_structure(argv[i], data->env);
 		else
 			return (ft_error("minishell: export", argv[i], 6));
 		i++;
