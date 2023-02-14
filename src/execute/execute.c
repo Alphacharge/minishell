@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkernbac <fkernbac@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rbetz <rbetz@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 09:27:23 by rbetz             #+#    #+#             */
-/*   Updated: 2023/02/13 19:34:34 by fkernbac         ###   ########.fr       */
+/*   Updated: 2023/02/14 09:12:42 by rbetz            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	reset_fds(t_cmd *cmd)
 	if (dup2(cmd->stdinsaver, STDIN) < 0)
 		ft_error(NULL, NULL, 9);
 	close(cmd->stdinsaver);
-	close_reds_fds(cmd);
 	if (dup2(cmd->stdoutsaver, STDOUT) < 0)
 		ft_error(NULL, NULL, 9);
 	close(cmd->stdoutsaver);
