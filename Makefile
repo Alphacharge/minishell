@@ -14,16 +14,15 @@ NAME	:=	minishell
 
 ###			###			COMPABILITY		###			###
 OS		:=	$(shell uname)
-BREWU	:=	/Users/$(USER)/.brewconfig.zsh
 
 ###			###			COMPILER		###			###
 CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
-CDFLAGS	:=	-g #-fsanitize=address
+# CFLAGS	+=	-g #-fsanitize=address
 
 ###			###			LIBRARIES		###			###
 LIBFT_D	:=	./lib/libft/
-LIB_MAC	:=	-L $(LIBFT_D) -l ft -L ~/.brew/opt/readline/lib -l readline
+LIB_MAC	:=	-L $(LIBFT_D) -l ft -l readline
 LIB		:=	-L $(LIBFT_D) -l ft -l readline
 
 ###			###			HEADER			###			###
@@ -31,7 +30,7 @@ INC_D	:=	./inc
 INC_ALL	:=	-I $(INC_D)/ -I $(LIBFT_D)
 
 ifeq ($(OS), Darwin)
-	INC_MAC	:=	$(INC_ALL) -I ~/.brew/opt/readline/include
+	INC_MAC	:=	$(INC_ALL)
 	CFLAGS	+=	$(INC_MAC)
 else
 	INC		:=	$(INC_ALL) -I /usr/include/readline
@@ -76,42 +75,27 @@ all:
 	@$(MAKE) $(NAME) -j
 
 ifeq ($(OS), Darwin)
-$(NAME): $(CONFIG) $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 else
-$(NAME): $(CONFIG) $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
+$(NAME): $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled.$(WHITE)"
 endif
 
 debug: $(LIBFT_D)libft.a $(OBJ_D) $(OBJ_F)
-	$(CC) $(CDFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_F) $(LIB_MAC)
 	@echo "$(RED)--->$(BLUE)$(NAME) is compiled in $(YELL)DEBUG$(RED)MODE!$(WHITE)"
 
 $(OBJ_D)/%.o: %.c
-	$(CC) $(CFLAGS) $(CDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_D):
 	mkdir $@
 
 %.a:
 	make -j -C $(LIBFT_D)
-
-$(CONFIG):
-	@if [ ! -f "$(CONFIG)" ]; then \
-		if [ "$(OS)" = "Linux" ]; then \
-			apt-get install -y libreadline-dev >> /dev/null 2>&1 \
-		;else \
-			if [ -f $(BREWU) ]; then \
-				echo "check brew for readline"; \
-				brew install readline >> /dev/null 2>&1 \
-			;else \
-				curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | bash; \
-				brew install readline >> /dev/null 2>&1; \
-			fi; \
-		fi; \
-	fi;
 
 clean:
 	@if [ -d "$(OBJ_D)" ]; then \
@@ -130,4 +114,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug
